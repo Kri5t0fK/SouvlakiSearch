@@ -1,0 +1,15 @@
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\bin\Debug\net7.0\SouvlakMVP.exe
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\bin\Debug\net7.0\SouvlakMVP.deps.json
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\bin\Debug\net7.0\SouvlakMVP.runtimeconfig.json
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\bin\Debug\net7.0\SouvlakMVP.dll
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\bin\Debug\net7.0\SouvlakMVP.pdb
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\SouvlakMVP.csproj.AssemblyReference.cache
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\SouvlakMVP.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\SouvlakMVP.AssemblyInfoInputs.cache
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\SouvlakMVP.AssemblyInfo.cs
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\SouvlakMVP.csproj.CoreCompileInputs.cache
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\SouvlakMVP.dll
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\refint\SouvlakMVP.dll
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\SouvlakMVP.pdb
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\SouvlakMVP.genruntimeconfig.cache
+C:\Users\swirs\Documents\GitHub\SouvlakSearch\SouvlakMVP\SouvlakMVP\obj\Debug\net7.0\ref\SouvlakMVP.dll
