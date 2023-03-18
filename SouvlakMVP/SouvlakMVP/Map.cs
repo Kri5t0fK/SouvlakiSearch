@@ -275,8 +275,14 @@ internal class Map
             {
                 for (int i=0; i<intersection.roads.Count; i++)
                 {
-                    if (intersection.roads[i].targetIdx == idx) { intersection.roads.RemoveAt(i); }
-                    else if (intersection.roads[i].targetIdx > idx) { intersection.roads[i] = new Road(intersection.roads[i].targetIdx-1, intersection.roads[i].distance); }
+                    if (intersection.roads[i].targetIdx == idx) 
+                    { 
+                        intersection.roads.RemoveAt(i); 
+                    }
+                    else if (intersection.roads[i].targetIdx > idx) 
+                    { 
+                        intersection.roads[i] = new Road(intersection.roads[i].targetIdx-1, intersection.roads[i].distance); 
+                    }
                 }
             }
         }
