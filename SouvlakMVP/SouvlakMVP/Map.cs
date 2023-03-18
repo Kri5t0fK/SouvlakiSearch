@@ -1,19 +1,19 @@
-﻿using System;
+﻿// Most of those can probably be removed
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Numerics;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.VisualBasic;
+using System.Numerics;
+using System.ComponentModel;
+using System.Text.Json;
 
 using indexT = System.Int32;
 using distanceT = System.Single;    // no maidens?
 
-
 namespace SouvlakMVP;
-
 
 /// <summary>
 /// Class for storing city's map (aka. graph in which vertices = intersections and edges = roads)
@@ -21,40 +21,85 @@ namespace SouvlakMVP;
 internal class Map
 {
     /// <summary>
-    /// Struct for holding data of a single intersection.
-    /// Field "position" holds data used to display intersection on screen.
-    /// Field "connections" stores all connections in form of tuples (targetID, distance).
+    /// Class responsible for holding data about single connection, aka. target's ID and distance 
     /// </summary>
-    public struct Intersection
+    public struct Road
     {
-        public Vector2 position;
-        public List<(indexT targetID, distanceT distance)> connections;
+        public indexT targetIdx;
+        public distanceT distance;
 
-
-        public Intersection(Vector2 position, List<(indexT targetID, distanceT distance)> connections)
-        {
-            this.position = position;
-            this.connections = connections;
-        }
-
-        public Intersection(Vector2 position)
-        {
-            this.position = position;
-            this.connections = new List<(indexT targetID, distanceT distance)>();
+        public Road(indexT targetIdx, distanceT distance)
+        { 
+            this.targetIdx = targetIdx;
+            this.distance = distance; 
         }
 
         public override string ToString()
         {
-            string str = "(" + this.position.ToString() + ") : <";
-            for (int i = 0; i < this.connections.Count - 1; i++)
+            return this.targetIdx.ToString() + ": " + this.distance.ToString("n2");
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj != null && obj is Road)
             {
-                str += this.connections[i].targetID.ToString() + ":" + this.connections[i].distance.ToString() + ", ";
+                Road other = (Road)obj;
+                return this.targetIdx == other.targetIdx;
             }
-            str += this.connections[this.connections.Count].targetID.ToString() + ":" + this.connections[this.connections.Count].distance.ToString() + ">";
+            else
+            {
+                return false;
+            };
+        }
+
+        public override int GetHashCode()
+        {
+            return this.targetIdx.GetHashCode() * 997 + this.distance.GetHashCode();    // just multiply one value by big prime number
+        }
+
+        public static bool operator ==(Road r1, Road r2) => r1.targetIdx == r2.targetIdx;
+        public static bool operator !=(Road r1, Road r2) => r1.targetIdx != r2.targetIdx;
+    }
+
+
+    /// <summary>
+    /// Struct for holding data of a single intersection, that is it's position and list of roads (connections)
+    /// </summary>
+    public struct Intersection
+    {
+        public Vector2 position;
+        public List<Road> roads;
+
+        public Intersection(Vector2 position, List<Road> roads)
+        {
+            this.position = position;
+            this.roads = roads;
+        }
+
+        public Intersection(Vector2 position, Road[] roads)
+        {
+            this.position = position;
+            this.roads = new List<Road>(roads);
+        }
+
+        public Intersection(Vector2 position)
+        { 
+            this.position = position;
+            this.roads = new List<Road>();
+        }
+
+        public override string ToString()
+        {
+            string str = this.position.ToString() + " : [";
+            for (int i = 0; i < this.roads.Count - 1; i++)
+            {
+                str += this.roads[i].ToString() + ",  ";
+            }
+            str += this.roads[this.roads.Count - 1].ToString() + "]";
             return str;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj != null && obj is Intersection)
             {
@@ -62,8 +107,8 @@ internal class Map
                 return this.position == other.position;
             }
             else
-            { 
-                return false; 
+            {
+                return false;
             }
         }
 
@@ -75,12 +120,13 @@ internal class Map
         public static bool operator ==(Intersection i1, Intersection i2) => i1.position == i2.position;
         public static bool operator !=(Intersection i1, Intersection i2) => i1.position != i2.position;
 
-        public (indexT targetID, distanceT distance) this[int id]
+        public Road this[int id]
         {
-            get { return this.connections[id];  }
-            set { this.connections[id] = value; }
-        } 
+            get { return this.roads[id]; }
+            set { this.roads[id] = value; }
+        }
     }
+
 
     public class DuplicateIntersectionException : Exception
     {
@@ -89,120 +135,223 @@ internal class Map
     }
 
 
-    private List<Intersection> graph;
+    /// <summary>
+    /// Field that holds all intersections, aka. graph
+    /// </summary>
+    private List<Intersection> map;
 
 
-    public Map(List<Intersection> graph)
+    public Map(List<Intersection> map)
     {
-        this.graph = graph;
+        this.map = map;
     }
 
-    public Map(Intersection intersection)
+    public Map(Intersection[] map) 
     {
-        this.graph = new List<Intersection>() { intersection };
+        this.map = new List<Intersection>(map);
     }
 
-    public Map()
+    public Map(Intersection intersection) 
     {
-        this.graph = new List<Intersection>();
+        this.map = new List<Intersection> { intersection };
+    }
+
+    public Map(string path)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Map() 
+    {
+        this.map = new List<Intersection>();
+    }
+
+    public void ToFile(string path)
+    {
+        throw new NotImplementedException();
     }
 
     public override string ToString()
     {
-        string str = "";
-        foreach (Intersection intersection in this.graph)
+        string str = string.Empty;
+        foreach (Intersection intersection in this.map) 
         {
             str += intersection.ToString() + "\n";
         }
         return str;
     }
 
+    public bool ContainsIntersection(Intersection intersection)
+    {
+        return this.map.Contains(intersection);         // This should work thanks to custom hash functions
+        // return this.map.Any(inter => inter.position== intersection.position);
+    }
+
+    public bool ContainsIntersection(Vector2 position)
+    {
+        return this.map.Any(inter => inter.position== position);
+    }
+
+    public indexT GetIntersectionIdx(Intersection intersection)
+    {
+        return this.map.IndexOf(intersection);          // This should work thanks to custom hash functions
+        // return this.map.FindIndex(inter => inter.position == intersection.position);
+    }
+
+    public indexT GetIntersectionIdx(Vector2 position)
+    {
+        return this.map.FindIndex(inter => inter.position == position);
+    }
+
     public void AddIntersection(Intersection intersection)
     {
-        if (this.graph.Any(inter => inter.position == intersection.position))
+        if (this.ContainsIntersection(intersection)) 
         {
             throw new DuplicateIntersectionException();
         }
         else
         {
-            indexT thisID = this.graph.Count();
-            this.graph.Add(intersection);
-            foreach ((indexT targetID, distanceT distance) connection in intersection.connections)
+            indexT thisIdx = this.map.Count;
+            this.map.Add(intersection);                 // Add intersection
+            foreach (Road road in intersection.roads)   // Add remaining connections
             {
-                this.graph[connection.targetID].connections.Add((thisID, connection.distance));
+                this.map[road.targetIdx].roads.Add(new Road(thisIdx, road.distance));
             }
         }
     }
 
-    public void AddIntersection(Vector2 position, List<(indexT targetID, distanceT distance)> connections)
+    public void AddIntersection(Vector2 position, List<Road> roads)
     {
-        this.AddIntersection(new Intersection(position, connections));
+        this.AddIntersection(new Intersection(position, roads));
+    }
+
+    public void AddIntersection(Vector2 position, Road[] roads)
+    {
+        this.AddIntersection(new Intersection(position, roads));
     }
 
     public void UpdateIntersection(Intersection intersection)
     {
-        indexT thisID = this.graph.IndexOf(intersection);
-        if (thisID < 0)
+        indexT thisIdx = this.GetIntersectionIdx(intersection);
+        if (thisIdx < 0)
         {
-            throw new IndexOutOfRangeException("Cannot update intersection that does not exist!");
+            throw new IndexOutOfRangeException();
         }
         else
         {
-            foreach (Intersection inter in this.graph)
+            foreach (Road road in this.map[thisIdx].roads)  // Less secure but faster for big maps
             {
-                inter.connections.RemoveAll(connection => connection.targetID == thisID);
+                this.map[road.targetIdx].roads.RemoveAll(conn => conn.targetIdx == thisIdx);
             }
-            this.graph[thisID] = intersection;
-            foreach ((int targetID, int distance) connection in intersection.connections)
+            //foreach (Intersection inter in this.map)
+            //{
+            //    inter.roads.RemoveAll(conn => conn.targetIdx == thisIdx);
+            //}
+            this.map[thisIdx] = intersection;
+            foreach (Road road in intersection.roads)
             {
-                this.graph[connection.targetID].connections.Add((thisID, connection.distance));
+                this.map[road.targetIdx].roads.Add(new Road(thisIdx, road.distance));
             }
         }
     }
 
-    public void UpdateIntersection(Vector2 position, List<(indexT targetID, distanceT distance)> connections)
+    public void UpdateIntersection(Vector2 position, List<Road> roads)
     {
-        this.UpdateIntersection(new Intersection(position, connections));
+        this.UpdateIntersection(new Intersection(position, roads));
+    }
+
+    public void UpdateIntersection(Vector2 position, Road[] roads)
+    {
+        this.UpdateIntersection(new Intersection(position, roads));
+    }
+
+    public void RemoveIntersection(indexT idx)
+    {
+        if (0 <= idx && idx < this.map.Count)
+        {
+            this.map.RemoveAt(idx);
+            // Here we can't escape looping over entire graph/map
+            foreach(Intersection intersection in this.map)
+            {
+                for (int i=0; i<intersection.roads.Count; i++)
+                {
+                    if (intersection.roads[i].targetIdx == idx) { intersection.roads.RemoveAt(i); }
+                    else if (intersection.roads[i].targetIdx > idx) { intersection.roads[i] = new Road(intersection.roads[i].targetIdx-1, intersection.roads[i].distance); }
+                }
+            }
+        }
+        else
+        {
+            throw new IndexOutOfRangeException();
+        }
     }
 
     public void RemoveIntersection(Vector2 position)
     {
-        throw new NotImplementedException();
+        this.RemoveIntersection(this.GetIntersectionIdx(position));
     }
 
     public void RemoveIntersection(Intersection intersection)
     {
-        throw new NotImplementedException();
+        this.RemoveIntersection(this.GetIntersectionIdx(intersection));
     }
 
-
-    public void AddConnection(indexT firstID, indexT secondID, distanceT distance) 
+    public void AddRoad(indexT idx1, indexT idx2, distanceT distance)
     {
-        // No checking for duplicates, we can have multiple connections between two intersections
-        this.graph[firstID].connections.Add((secondID, distance));
-        this.graph[secondID].connections.Add((firstID, distance));
+        if ((0 <= idx1 && idx1 < this.map.Count) && (0 <= idx2 && idx2 < this.map.Count)) 
+        {
+            this.map[idx1].roads.Add(new Road(idx2, distance));
+            this.map[idx2].roads.Add(new Road(idx1, distance));
+        }
+        else 
+        { 
+            throw new IndexOutOfRangeException(); 
+        }
     }
 
-    public void UpdateConnection(indexT firstID, indexT secondID, distanceT distance)
+    public void UpdateRoad(indexT idx1, indexT idx2, distanceT distance)
     {
-        throw new NotImplementedException();
+        if ((0 <= idx1 && idx1 < this.map.Count) && (0 <= idx2 && idx2 < this.map.Count))
+        {
+            // At this point I've realized I could've used named tuples
+            // I could also make Road a class, but I prefer safety of copying rather than having some problems with references
+            for (int i=0; i < this.map[idx1].roads.Count; i++)
+            {
+                if (this.map[idx1].roads[i].targetIdx == idx2) { this.map[idx1].roads[i] = new Road(this.map[idx1].roads[i].targetIdx, distance); }
+            }
+            for (int i = 0; i < this.map[idx2].roads.Count; i++)
+            {
+                if (this.map[idx2].roads[i].targetIdx == idx1) { this.map[idx2].roads[i] = new Road(this.map[idx2].roads[i].targetIdx, distance); }
+            }
+        }
+        else
+        {
+            throw new IndexOutOfRangeException();
+        }
     }
 
-    public void RemoveConnection(indexT firstID, indexT secondID)
+    public void RemoveRoad(indexT idx1, indexT idx2)
     {
-        this.graph[firstID].connections.RemoveAll(connection => connection.targetID == secondID);
-        this.graph[secondID].connections.RemoveAll(connection => connection.targetID == firstID);
+        if ((0 <= idx1 && idx1 < this.map.Count) && (0 <= idx2 && idx2 < this.map.Count))
+        {
+            this.map[idx1].roads.RemoveAll(r => r.targetIdx == idx2);
+            this.map[idx2].roads.RemoveAll(r => r.targetIdx == idx1);
+        }
+        else
+        {
+            throw new IndexOutOfRangeException();
+        }
     }
-   
+
     public Intersection this[indexT i]
     {
-        get { return this.graph[i]; }
-        set { this.AddIntersection(value); }
+        get { return this.map[i]; }
+        set { this.UpdateIntersection(value); }
     }
 
-    public distanceT this[indexT i, indexT j] 
-    { 
-        get { return this.graph[i].connections[j].distance; }
-        set { this.AddConnection(i, j, value); }
-    }   
+    public distanceT this[indexT i, indexT j]
+    {
+        get { return this.map[i].roads[j].distance; }
+        set { this.UpdateRoad(i, j, value); }
+    }
 }
