@@ -181,6 +181,11 @@ internal class Map
         return str;
     }
 
+    public int Count() 
+    {
+        return this.map.Count;
+    }
+
     public bool ContainsIntersection(Intersection intersection)
     {
         return this.map.Contains(intersection);         // This should work thanks to custom hash functions
