@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 
 namespace SouvlakMVP;
 
-internal class Dijkstra
+public class Dijkstra
 {
     public static (List<indexT>, distanceT) FindShortestPath(Graph graph, indexT startVertex, indexT endVertex)
     {
