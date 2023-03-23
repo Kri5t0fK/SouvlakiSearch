@@ -34,7 +34,7 @@ class Program
         // Map visualization
         Console.WriteLine(graph.ToString());
 
-        /*
+        
         indexT startIntersection = 0;
         indexT endIntersection = 5;
         (List<indexT>, distanceT) result = Dijkstra.FindShortestPath(graph, startIntersection, endIntersection);
@@ -42,7 +42,7 @@ class Program
 
         Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Item1)); ;
         Console.WriteLine("Minimal cost: " + result.Item2);
-        */
+        
         
     }
 }

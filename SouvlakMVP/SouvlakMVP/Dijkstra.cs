@@ -13,9 +13,9 @@ namespace SouvlakMVP;
 
 internal class Dijkstra
 {
-    public static (List<indexT>, distanceT) FindShortestPath(Map graph, indexT startVertex, indexT endVertex)
+    public static (List<indexT>, distanceT) FindShortestPath(Graph graph, indexT startVertex, indexT endVertex)
     {
-        int verticesN = graph.Count();
+        int verticesN = graph.GetVertexCount();
 
         // Array containing the minimum costs to reach each vertex from the starting vertex
         distanceT[] minCostToVertex = new distanceT[verticesN];
@@ -55,11 +55,11 @@ internal class Dijkstra
             }
 
             // Reviewing all neighbors of the relocated vertex
-            for (indexT i = 0; i < graph[processedVertex].roads.Count(); i++)
+            for (indexT i = 0; i < graph[processedVertex].edgeList.Count(); i++)
             {
-                Map.Road edge= graph[processedVertex].roads[i];
+                Graph.Edge edge= graph[processedVertex].edgeList[i];
                 indexT nextVertex = edge.targetIdx;
-                distanceT edgeCost = edge.distance;
+                distanceT edgeCost = edge.weight;
 
                 // Check if neighbour has not yet been processed
                 if (verticesToProcess.Contains(nextVertex))
