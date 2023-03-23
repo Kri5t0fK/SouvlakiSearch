@@ -12,13 +12,14 @@ using System.ComponentModel;
 
 using indexT = System.Int32;
 using distanceT = System.Single;    // no maidens?
+using roadCountT = System.Int32;
 
 namespace SouvlakMVP;
 
 /// <summary>
 /// Class for storing city's map (aka. graph in which vertices = intersections and edges = roads)
 /// </summary>
-internal class Map
+public class Map
 {
     /// <summary>
     /// Class responsible for holding data about single connection, aka. target's ID and distance 
@@ -27,16 +28,18 @@ internal class Map
     {
         public indexT targetIdx;
         public distanceT distance;
+        public roadCountT roadCount;
 
-        public Road(indexT targetIdx, distanceT distance)
+        public Road(indexT targetIdx, distanceT distance, roadCountT roadCount=1)
         { 
             this.targetIdx = targetIdx;
             this.distance = distance; 
+            this.roadCount = roadCount;
         }
 
         public override string ToString()
         {
-            return this.targetIdx.ToString() + ": " + this.distance.ToString("n2");
+            return this.targetIdx.ToString() + ": " + this.roadCount.ToString() + "x"+ this.distance.ToString("n2");
         }
 
         public override bool Equals(object? obj)
@@ -90,13 +93,20 @@ internal class Map
 
         public override string ToString()
         {
-            string str = this.position.ToString() + " : [";
-            for (int i = 0; i < this.roads.Count - 1; i++)
+            if (this.roads.Count == 0)
             {
-                str += this.roads[i].ToString() + ",  ";
+                return "[]";
             }
-            str += this.roads[this.roads.Count - 1].ToString() + "]";
-            return str;
+            else
+            {
+                string str = this.position.ToString() + " : [";
+                for (int i = 0; i < this.roads.Count - 1; i++)
+                {
+                    str += this.roads[i].ToString() + ",  ";
+                }
+                str += this.roads[this.roads.Count - 1].ToString() + "]";
+                return str;
+            }
         }
 
         public override bool Equals(object? obj)
