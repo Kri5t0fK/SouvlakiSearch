@@ -5,8 +5,6 @@ using System.Linq;
 using indexT = System.Int32;
 using edgeWeightT = System.Single;    // no maidens?
 using edgeCountT = System.Int32;
-using static SouvlakMVP.Map;
-using static SouvlakMVP.Graph;
 
 
 /// <summary>
@@ -375,7 +373,7 @@ public class Graph
     {
         if (this.ContainsVertex(vertex))
         {
-            throw new DuplicateIntersectionException();
+            throw new DuplicateVertexException();
         }
         else
         {
