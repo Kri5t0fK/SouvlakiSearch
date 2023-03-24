@@ -6,19 +6,24 @@ using System.Threading.Tasks;
 using System.Numerics;
 
 using indexT = System.Int32;
-using distanceT = System.Single;
+using edgeWeightT = System.Single;
 using System.Runtime.InteropServices;
 
 namespace SouvlakMVP;
 
 public class Dijkstra
 {
-    public static (List<indexT>, distanceT) FindShortestPath(Graph graph, indexT startVertex, indexT endVertex)
+    /// <summary>Finds the shortest path between a starting vertex and final vertex in a graph using Dijkstra's algorithm.</summary>
+    /// <param name="graph">The graph to search.</param>
+    /// <param name="startVertex">The vertex to start the search from.</param>
+    /// <param name="endVertex">The destination vertex of the search.</param>
+    /// <returns>A tuple containing the shortest path and the distance from the start to end vertex in the graph.</returns>
+    public static (List<indexT>, edgeWeightT) FindShortestPath(Graph graph, indexT startVertex, indexT endVertex)
     {
         int verticesN = graph.GetVertexCount();
 
         // Array containing the minimum costs to reach each vertex from the starting vertex
-        distanceT[] minCostToVertex = new distanceT[verticesN];
+        edgeWeightT[] minCostToVertex = new edgeWeightT[verticesN];
         // Array containing the preceding vertices on the path from the starting vertex
         indexT?[] precedingVertices = new indexT?[verticesN];
 
@@ -29,14 +34,14 @@ public class Dijkstra
         // Filing out verticesToProcess and minCostToVertex
         for (int i = 0; i < verticesN; i++)
         {
-            minCostToVertex[i] = (i == startVertex) ? 0f : distanceT.MaxValue;
+            minCostToVertex[i] = (i == startVertex) ? 0f : edgeWeightT.MaxValue;
             verticesToProcess.Add(i);
         }
 
         while (verticesToProcess.Count > 0)
         {
             indexT processedVertex = indexT.MaxValue;
-            distanceT tempMinCost = distanceT.MaxValue;
+            edgeWeightT tempMinCost = edgeWeightT.MaxValue;
 
             // Finding the vertex to process (with the minimum cost to reach from the starting vertex)
             foreach (indexT vertex in verticesToProcess)
@@ -57,14 +62,14 @@ public class Dijkstra
             // Reviewing all neighbors of the relocated vertex
             for (indexT i = 0; i < graph[processedVertex].edgeList.Count(); i++)
             {
-                Graph.Edge edge= graph[processedVertex].edgeList[i];
+                Graph.Edge edge = graph[processedVertex].edgeList[i];
                 indexT nextVertex = edge.targetIdx;
-                distanceT edgeCost = edge.weight;
+                edgeWeightT edgeCost = edge.weight;
 
                 // Check if neighbour has not yet been processed
                 if (verticesToProcess.Contains(nextVertex))
                 {
-                    distanceT CostToVertex = minCostToVertex[processedVertex] + edgeCost;
+                    edgeWeightT CostToVertex = minCostToVertex[processedVertex] + edgeCost;
 
                     // Check the new cost and update if it is smaller than the old one
                     if (minCostToVertex[nextVertex] > CostToVertex)
@@ -87,7 +92,87 @@ public class Dijkstra
         }
 
         // Prepare finall results 
-        distanceT totalCost = minCostToVertex[endVertex];
+        edgeWeightT totalCost = minCostToVertex[endVertex];
+        List<indexT> shortestPathFromStart = Enumerable.Reverse(shortestPathFromEnd).ToList();
+
+        return (shortestPathFromStart, totalCost);
+    }
+
+    public static (List<indexT>, edgeWeightT) FindShortestPath(Graph graph, indexT startVertex)
+    {
+        int verticesN = graph.GetVertexCount();
+
+        // Array containing the minimum costs to reach each vertex from the starting vertex
+        edgeWeightT[] minCostToVertex = new edgeWeightT[verticesN];
+        // Array containing the preceding vertices on the path from the starting vertex
+        indexT?[] precedingVertices = new indexT?[verticesN];
+
+        // Working lists of vertices
+        List<indexT> verticesToProcess = new List<indexT>();
+        List<indexT> processedVertices = new List<indexT>();
+
+        // Filing out verticesToProcess and minCostToVertex
+        for (int i = 0; i < verticesN; i++)
+        {
+            minCostToVertex[i] = (i == startVertex) ? 0f : edgeWeightT.MaxValue;
+            verticesToProcess.Add(i);
+        }
+
+        while (verticesToProcess.Count > 0)
+        {
+            indexT processedVertex = indexT.MaxValue;
+            edgeWeightT tempMinCost = edgeWeightT.MaxValue;
+
+            // Finding the vertex to process (with the minimum cost to reach from the starting vertex)
+            foreach (indexT vertex in verticesToProcess)
+            {
+                if (minCostToVertex[vertex] < tempMinCost)
+                {
+                    tempMinCost = minCostToVertex[vertex];
+                    processedVertex = vertex;
+                }
+            }
+
+            // Moving the current vertex to processed vertices
+            if (verticesToProcess.Remove(processedVertex))
+            {
+                processedVertices.Add(processedVertex);
+            }
+
+            // Reviewing all neighbors of the relocated vertex
+            for (indexT i = 0; i < graph[processedVertex].edgeList.Count(); i++)
+            {
+                Graph.Edge edge = graph[processedVertex].edgeList[i];
+                indexT nextVertex = edge.targetIdx;
+                edgeWeightT edgeCost = edge.weight;
+
+                // Check if neighbour has not yet been processed
+                if (verticesToProcess.Contains(nextVertex))
+                {
+                    edgeWeightT CostToVertex = minCostToVertex[processedVertex] + edgeCost;
+
+                    // Check the new cost and update if it is smaller than the old one
+                    if (minCostToVertex[nextVertex] > CostToVertex)
+                    {
+                        minCostToVertex[nextVertex] = CostToVertex;
+                        precedingVertices[nextVertex] = processedVertex;
+                    }
+                }
+            }
+        }
+
+        indexT? tempVertex = endVertex;
+        List<indexT> shortestPathFromEnd = new List<indexT>();
+
+        // Create the shortest path
+        while (tempVertex != null)
+        {
+            shortestPathFromEnd.Add(tempVertex.Value);
+            tempVertex = precedingVertices[tempVertex.Value];
+        }
+
+        // Prepare finall results 
+        edgeWeightT totalCost = minCostToVertex[endVertex];
         List<indexT> shortestPathFromStart = Enumerable.Reverse(shortestPathFromEnd).ToList();
 
         return (shortestPathFromStart, totalCost);
