@@ -3,7 +3,7 @@ using System;
 using System.Numerics;
 
 using indexT = System.Int32;
-using distanceT = System.Single;
+using edgeWeightT = System.Single;
 
 namespace SouvlakMVP;
 
@@ -34,15 +34,39 @@ class Program
         // Map visualization
         Console.WriteLine(graph.ToString());
 
-        
-        indexT startIntersection = 0;
-        indexT endIntersection = 5;
-        (List<indexT>, distanceT) result = Dijkstra.FindShortestPath(graph, startIntersection, endIntersection);
-        // Co właściwie powinna zwracać metoda? Obecnie zwraca zwykłą listę indexT oraz koszt distanceT
-
+        // Method1: Giving start and end vertex -> one path
+        /*        
+        indexT startstartVertex = 0;
+        indexT endstartVertex = 5;
+        (List<indexT>, distanceT) result = Dijkstra.FindShortestPath(graph, startstartVertex, endstartVertex);
         Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Item1)); ;
         Console.WriteLine("Minimal cost: " + result.Item2);
-        
-        
+        */
+
+        // Method2: Giving only start vertex -> all paths from start vertex 
+        /*
+        indexT startVertex = 0;
+        Dictionary<indexT, (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, startVertex);
+        foreach (var result in results)
+        {
+            Console.WriteLine("\nResult for (" + startVertex + ", " + result.Key + "):");
+            Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Value.Item1));
+            Console.WriteLine("Minimal cost: " + result.Value.Item2);
+        }
+        */
+
+        // Method2: Giving list of vertices -> Paths and costs for every combination of vertices pairs 
+
+        List<indexT> vertices = new List<indexT> { 0, 1, 2, 3, 4, 5};
+        Dictionary<(indexT, indexT), (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, vertices);
+        foreach (var result in results)
+        {
+            (indexT, indexT) pair = result.Key;
+            (List<indexT>, edgeWeightT) pathAndCost = result.Value;
+            Console.WriteLine("\nResult for (" + pair.Item1 + ", " + pair.Item2 + "):");
+            Console.WriteLine("Order of intersections: " + String.Join(" -> ", pathAndCost.Item1));
+            Console.WriteLine("Minimal cost: " + pathAndCost.Item2);
+        }
+
     }
 }
