@@ -21,7 +21,7 @@ public class Dijkstra
     public static (List<indexT>, edgeWeightT) FindShortestPath(Graph graph, indexT startVertex, indexT endVertex)
     {
         // Calculate precedingVertices and minCostToVertex tables with Dijkstra's algorithm
-        (indexT?[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcBasicDijkstra(graph, startVertex);
+        (indexT?[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcClassicDijkstra(graph, startVertex, endVertex);
 
         indexT? tempVertex = endVertex;
         List<indexT> shortestPathFromEnd = new List<indexT>();
@@ -47,7 +47,7 @@ public class Dijkstra
     public static Dictionary<indexT, (List<indexT>, edgeWeightT)> FindShortestPath(Graph graph, indexT startVertex)
     {
         // Calculate precedingVertices and minCostToVertex tables with Dijkstra's algorithm
-        (indexT?[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcBasicDijkstra(graph, startVertex);
+        (indexT?[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcClassicDijkstra(graph, startVertex);
 
         List<indexT> tempVertices = new List<indexT>();
 
@@ -117,11 +117,12 @@ public class Dijkstra
         return result;
     }
 
-    /// <summary>Calculate preceding vertices list and list of minimal costs to vertices using Dijkstra's algorithm.</summary>
+    /// <summary>Calculate preceding vertices list and list of minimal costs using Dijkstra's algorithm.</summary>
     /// <param name="graph">The graph to search.</param>
     /// <param name="startVertex">The vertex to start the search from.</param>
+    /// <param name="endVertex">The destination vertex of the search.</param>
     /// <returns>A tuple containing 2 lists: preceding vertices; minimal costs to vertices.</returns>
-    public static (indexT?[], edgeWeightT[]) CalcBasicDijkstra(Graph graph, indexT startVertex)
+    public static (indexT?[], edgeWeightT[]) CalcClassicDijkstra(Graph graph, indexT startVertex, indexT? endVertex = null)
     {
         int verticesN = graph.GetVertexCount();
 
@@ -131,35 +132,40 @@ public class Dijkstra
         indexT?[] precedingVertices = new indexT?[verticesN];
 
         // Working lists of vertices
-        List<indexT> verticesToProcess = new List<indexT>();
-        List<indexT> processedVertices = new List<indexT>();
+        List<indexT> unvisitedVertices = new List<indexT>();
+        List<indexT> visitedVertices = new List<indexT>();
 
         // Filing out verticesToProcess and minCostToVertex
         for (int i = 0; i < verticesN; i++)
         {
             minCostToVertex[i] = (i == startVertex) ? 0f : edgeWeightT.MaxValue;
-            verticesToProcess.Add(i);
+            unvisitedVertices.Add(i);
         }
 
-        while (verticesToProcess.Count > 0)
+        while (unvisitedVertices.Count > 0)
         {
             indexT processedVertex = indexT.MaxValue;
             edgeWeightT tempMinCost = edgeWeightT.MaxValue;
 
             // Finding the vertex to process (with the minimum cost to reach from the starting vertex)
-            foreach (indexT vertex in verticesToProcess)
+            foreach (indexT vertex in unvisitedVertices)
             {
                 if (minCostToVertex[vertex] < tempMinCost)
                 {
                     tempMinCost = minCostToVertex[vertex];
                     processedVertex = vertex;
+
+                    if (processedVertex == endVertex)
+                    {
+                        return (precedingVertices, minCostToVertex);
+                    }
                 }
             }
 
             // Moving the current vertex to processed vertices
-            if (verticesToProcess.Remove(processedVertex))
+            if (unvisitedVertices.Remove(processedVertex))
             {
-                processedVertices.Add(processedVertex);
+                visitedVertices.Add(processedVertex);
             }
 
             // Reviewing all neighbors of the relocated vertex
@@ -170,7 +176,7 @@ public class Dijkstra
                 edgeWeightT edgeCost = edge.weight;
 
                 // Check if neighbour has not yet been processed
-                if (verticesToProcess.Contains(nextVertex))
+                if (unvisitedVertices.Contains(nextVertex))
                 {
                     edgeWeightT CostToVertex = minCostToVertex[processedVertex] + edgeCost;
 
