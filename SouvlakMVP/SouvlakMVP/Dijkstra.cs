@@ -6,65 +6,160 @@ using System.Threading.Tasks;
 using System.Numerics;
 
 using indexT = System.Int32;
-using distanceT = System.Single;
+using edgeWeightT = System.Single;
 using System.Runtime.InteropServices;
 
 namespace SouvlakMVP;
 
-internal class Dijkstra
+public class Dijkstra
 {
-    public static (List<indexT>, distanceT) FindShortestPath(Map graph, indexT startVertex, indexT endVertex)
+    /// <summary>Finds the shortest path between a starting vertex and final vertex in a graph using Dijkstra's algorithm.</summary>
+    /// <param name="graph">The graph to search.</param>
+    /// <param name="startVertex">The vertex to start the search from.</param>
+    /// <param name="endVertex">The destination vertex of the search.</param>
+    /// <returns>A tuple containing the shortest path and the distance.</returns>
+    public static (List<indexT>, edgeWeightT) FindShortestPath(Graph graph, indexT startVertex, indexT endVertex)
     {
-        int verticesN = graph.Count();
+        // Calculate precedingVertices and minCostToVertex tables with Dijkstra's algorithm
+        (indexT?[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcClassicDijkstra(graph, startVertex, endVertex);
+
+        // Extract the shortest path and its cost
+        (List<indexT>, edgeWeightT) pathAndCost = GetPathAndCost(precedingVertices, minCostToVertex, endVertex);
+
+        return pathAndCost;
+    }
+
+    /// <summary>Finds the shortest paths from a starting vertex to all other vertices in the graph using the Dijkstra algorithm.</summary>
+    /// <param name="graph">The graph to search.</param>
+    /// <param name="startVertex">The vertex to start the search from.</param>
+    /// <returns>A list of tuples containing shortest path and the distance.</returns>
+    public static Dictionary<indexT, (List<indexT>, edgeWeightT)> FindShortestPath(Graph graph, indexT startVertex)
+    {
+        // Calculate precedingVertices and minCostToVertex tables with Dijkstra's algorithm
+        (indexT?[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcClassicDijkstra(graph, startVertex);
+
+        List<indexT> endVertices = new List<indexT>();
+
+        // Fill in list for all end vertices for which path will be searched
+        for (int i = 0; i < graph.GetVertexCount(); i++)
+        {
+            if (i != startVertex)
+            {
+                endVertices.Add(i);
+            }
+        }
+
+        Dictionary<indexT, (List<indexT>, edgeWeightT)> pathsAndCosts = new Dictionary<indexT, (List<indexT>, edgeWeightT)>();
+
+        // Create paths and costs for all possible end vertices
+        foreach (indexT endVertex in endVertices) 
+        {
+            // Extract the shortest path and its cost
+            (List<indexT>, edgeWeightT) pathAndCost = GetPathAndCost(precedingVertices, minCostToVertex, endVertex);
+
+            pathsAndCosts.Add(endVertex, pathAndCost);
+        }
+
+        return pathsAndCosts;
+    }
+
+    /// <summary>Finds the shortest paths between all combinations of vertices pairs (RoundRobin)</summary>
+    /// <param name="graph">The graph to search.</param>
+    /// <param name="vertices">The list of vertices.</param>
+    /// <returns>A dictionary containing the shortest path and weight for every vertices pair.</returns>
+    public static Dictionary<HashSet<indexT>, (List<indexT>, edgeWeightT)> FindShortestPath(Graph graph, List<indexT> vertices)
+    {
+        List<(indexT, indexT)> verticesPairs = GetAllPairs(vertices);
+        List<indexT> uniqueStartVertices = new List<indexT>();
+
+        // Fill in the list of unique staring vertices
+        foreach ((indexT, indexT) pair in verticesPairs) 
+        {
+            if (!uniqueStartVertices.Contains(pair.Item1))
+            {
+                uniqueStartVertices.Add(pair.Item1);
+            }
+        }
+
+        Dictionary<HashSet<indexT>, (List<indexT>, edgeWeightT)> result = new Dictionary<HashSet<indexT>, (List<indexT>, edgeWeightT)>();
+
+        // Calculate paths and costs for every unique verices
+        foreach (indexT StartVertex in uniqueStartVertices)
+        {
+            Dictionary<indexT, (List<indexT>, edgeWeightT)> pathsAndCosts = FindShortestPath(graph, StartVertex);
+            foreach ((indexT, indexT) pair in verticesPairs.Where(pair => pair.Item1 == StartVertex))
+            {
+                (List<indexT>, edgeWeightT) pathAndCost = pathsAndCosts[pair.Item2];
+                HashSet<indexT> pairSet = new HashSet<indexT>() { pair.Item1, pair.Item2 };
+                result.Add(pairSet, pathAndCost);
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>Calculate preceding vertices list and list of minimal costs using Dijkstra's algorithm.</summary>
+    /// <param name="graph">The graph to search.</param>
+    /// <param name="startVertex">The vertex to start the search from.</param>
+    /// <param name="endVertex">The destination vertex of the search.</param>
+    /// <returns>A tuple containing 2 lists: preceding vertices; minimal costs to vertices.</returns>
+    public static (indexT?[], edgeWeightT[]) CalcClassicDijkstra(Graph graph, indexT startVertex, indexT? endVertex = null)
+    {
+        int verticesN = graph.GetVertexCount();
 
         // Array containing the minimum costs to reach each vertex from the starting vertex
-        distanceT[] minCostToVertex = new distanceT[verticesN];
+        edgeWeightT[] minCostToVertex = new edgeWeightT[verticesN];
         // Array containing the preceding vertices on the path from the starting vertex
         indexT?[] precedingVertices = new indexT?[verticesN];
 
         // Working lists of vertices
-        List<indexT> verticesToProcess = new List<indexT>();
-        List<indexT> processedVertices = new List<indexT>();
+        List<indexT> unvisitedVertices = new List<indexT>();
+        List<indexT> visitedVertices = new List<indexT>();
 
         // Filing out verticesToProcess and minCostToVertex
         for (int i = 0; i < verticesN; i++)
         {
-            minCostToVertex[i] = (i == startVertex) ? 0f : distanceT.MaxValue;
-            verticesToProcess.Add(i);
+            minCostToVertex[i] = (i == startVertex) ? 0f : edgeWeightT.MaxValue;
+            unvisitedVertices.Add(i);
         }
 
-        while (verticesToProcess.Count > 0)
+        while (unvisitedVertices.Count > 0)
         {
             indexT processedVertex = indexT.MaxValue;
-            distanceT tempMinCost = distanceT.MaxValue;
+            edgeWeightT tempMinCost = edgeWeightT.MaxValue;
 
             // Finding the vertex to process (with the minimum cost to reach from the starting vertex)
-            foreach (indexT vertex in verticesToProcess)
+            foreach (indexT vertex in unvisitedVertices)
             {
                 if (minCostToVertex[vertex] < tempMinCost)
                 {
                     tempMinCost = minCostToVertex[vertex];
                     processedVertex = vertex;
+
+                    if (processedVertex == endVertex)
+                    {
+                        return (precedingVertices, minCostToVertex);
+                    }
                 }
             }
 
             // Moving the current vertex to processed vertices
-            if (verticesToProcess.Remove(processedVertex))
+            if (unvisitedVertices.Remove(processedVertex))
             {
-                processedVertices.Add(processedVertex);
+                visitedVertices.Add(processedVertex);
             }
 
             // Reviewing all neighbors of the relocated vertex
-            for (indexT i = 0; i < graph[processedVertex].roads.Count(); i++)
+            for (indexT i = 0; i < graph[processedVertex].edgeList.Count(); i++)
             {
-                Map.Road edge= graph[processedVertex].roads[i];
+                Graph.Edge edge = graph[processedVertex].edgeList[i];
                 indexT nextVertex = edge.targetIdx;
-                distanceT edgeCost = edge.distance;
+                edgeWeightT edgeCost = edge.weight;
 
                 // Check if neighbour has not yet been processed
-                if (verticesToProcess.Contains(nextVertex))
+                if (unvisitedVertices.Contains(nextVertex))
                 {
-                    distanceT CostToVertex = minCostToVertex[processedVertex] + edgeCost;
+                    edgeWeightT CostToVertex = minCostToVertex[processedVertex] + edgeCost;
 
                     // Check the new cost and update if it is smaller than the old one
                     if (minCostToVertex[nextVertex] > CostToVertex)
@@ -76,20 +171,51 @@ internal class Dijkstra
             }
         }
 
+        return (precedingVertices, minCostToVertex);
+    }
+
+    /// <summary>Calculates path and cost using preceding vertices list and minimal costs to vertices list.</summary>
+    /// <param name="precedingVertices">The list of vertex-predecessor on the path from starting vertex.</param>
+    /// <param name="minCostToVertex">The list of minimal costs of reaching individual vertices from the starting vertex.</param>
+    /// <param name="endVertex">The destination vertex of the search.</param>
+    /// <returns>A tuple containing the shortest path and the distance.</returns>
+    public static (List<indexT>, edgeWeightT) GetPathAndCost(indexT?[] precedingVertices, edgeWeightT[] minCostToVertex, indexT endVertex)
+    {
         indexT? tempVertex = endVertex;
-        List<indexT> shortestPathFromEnd = new List<indexT>();
+        List<indexT> shortestPath = new List<indexT>();
 
         // Create the shortest path
         while (tempVertex != null)
         {
-            shortestPathFromEnd.Add(tempVertex.Value);
+            shortestPath.Add(tempVertex.Value);
             tempVertex = precedingVertices[tempVertex.Value];
         }
 
-        // Prepare finall results 
-        distanceT totalCost = minCostToVertex[endVertex];
-        List<indexT> shortestPathFromStart = Enumerable.Reverse(shortestPathFromEnd).ToList();
+        // Reverse the shortest path
+        shortestPath.Reverse();
 
-        return (shortestPathFromStart, totalCost);
+        // Get the path total cost
+        edgeWeightT totalCost = minCostToVertex[endVertex];
+        
+        return (shortestPath, totalCost);
     }
+
+    /// <summary>Calculates all combinations of vertices pairs.</summary>
+    /// <param name="vertices">The list of vertices.</param>
+    /// <returns>A list of tuples containing vertices pairs.</returns>
+    private static List<(indexT, indexT)> GetAllPairs(List<indexT> vertices)
+    {
+        List<(indexT, indexT)> pairs = new List<(indexT, indexT)>();
+
+        for (int i = 0; i < vertices.Count; i++)
+        {
+            for (int j = i + 1; j < vertices.Count; j++)
+            {
+                pairs.Add((vertices[i], vertices[j]));
+            }
+        }
+
+        return pairs;
+    }
+
 }

@@ -3,7 +3,7 @@ using System;
 using System.Numerics;
 
 using indexT = System.Int32;
-using distanceT = System.Single;
+using edgeWeightT = System.Single;
 
 namespace SouvlakMVP;
 
@@ -12,35 +12,61 @@ class Program
     static void Main(string[] args)
     {
         // Example map (graph) with 6 intersections (vertices) 
-        Map map = new Map();
+        Graph graph = new Graph();
         // Intersections from 0 to 5 
-        map.AddIntersection(new Map.Intersection(new Vector2(0, 0)));
-        map.AddIntersection(new Map.Intersection(new Vector2(1, 0)));
-        map.AddIntersection(new Map.Intersection(new Vector2(0, 1)));
-        map.AddIntersection(new Map.Intersection(new Vector2(1, 1)));
-        map.AddIntersection(new Map.Intersection(new Vector2(2, 1)));
-        map.AddIntersection(new Map.Intersection(new Vector2(1, 2)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(0, 0)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(1, 0)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(0, 1)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(1, 1)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(2, 1)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(1, 2)));
         // 9 roads and their distances 
-        map.AddRoad(0, 1, 3f);
-        map.AddRoad(0, 5, 6f);
-        map.AddRoad(0, 4, 3f);
-        map.AddRoad(1, 2, 1f);
-        map.AddRoad(1, 3, 3f);
-        map.AddRoad(2, 3, 3f);
-        map.AddRoad(2, 5, 1f);
-        map.AddRoad(3, 5, 1f);
-        map.AddRoad(4, 5, 2f);
+        graph.AddEdge(0, 1, 3f);
+        graph.AddEdge(0, 5, 6f);
+        graph.AddEdge(0, 4, 3f);
+        graph.AddEdge(1, 2, 1f);
+        graph.AddEdge(1, 3, 3f);
+        graph.AddEdge(2, 3, 3f);
+        graph.AddEdge(2, 5, 1f);
+        graph.AddEdge(3, 5, 1f);
+        graph.AddEdge(4, 5, 2f);
 
         // Map visualization
-        Console.WriteLine(map.ToString());
+        Console.WriteLine(graph.ToString());
 
-        indexT startIntersection = 0;
-        indexT endIntersection = 5;
-        (List<indexT>, distanceT) result = Dijkstra.FindShortestPath(map, startIntersection, endIntersection);
-        // Co właściwie powinna zwracać metoda? Obecnie zwraca zwykłą listę indexT oraz koszt distanceT
-
+        // Method1: Giving start and end vertex -> one path
+        /*      
+        indexT startstartVertex = 0;
+        indexT endstartVertex = 5;
+        (List<indexT>, edgeWeightT) result = Dijkstra.FindShortestPath(graph, startstartVertex, endstartVertex);
         Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Item1)); ;
         Console.WriteLine("Minimal cost: " + result.Item2);
+        */
+
+        // Method2: Giving only start vertex -> all paths from start vertex 
         
+        indexT startVertex = 0;
+        Dictionary<indexT, (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, startVertex);
+        foreach (var result in results)
+        {
+            Console.WriteLine("\nResult for (" + startVertex + ", " + result.Key + "):");
+            Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Value.Item1));
+            Console.WriteLine("Minimal cost: " + result.Value.Item2);
+        }
+        
+
+        // Method2: Giving list of vertices -> Paths and costs for every combination of vertices pairs 
+        /*
+        List<indexT> vertices = new List<indexT> { 0, 1, 2, 3, 4, 5};
+        Dictionary<HashSet<indexT>, (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, vertices);
+        foreach (var result in results)
+        {
+            List<indexT> pair = result.Key.ToList();
+            (List<indexT>, edgeWeightT) pathAndCost = result.Value;
+            Console.WriteLine("\nResult for (" + pair[0] + ", " + pair[1] + "):");
+            Console.WriteLine("Order of intersections: " + String.Join(" -> ", pathAndCost.Item1));
+            Console.WriteLine("Minimal cost: " + pathAndCost.Item2);
+        }
+        */
     }
 }
