@@ -44,7 +44,7 @@ class Program
         */
 
         // Method2: Giving only start vertex -> all paths from start vertex 
-        /*
+        
         indexT startVertex = 0;
         Dictionary<indexT, (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, startVertex);
         foreach (var result in results)
@@ -53,10 +53,10 @@ class Program
             Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Value.Item1));
             Console.WriteLine("Minimal cost: " + result.Value.Item2);
         }
-        */
+        
 
         // Method2: Giving list of vertices -> Paths and costs for every combination of vertices pairs 
-        
+        /*
         List<indexT> vertices = new List<indexT> { 0, 1, 2, 3, 4, 5};
         Dictionary<HashSet<indexT>, (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, vertices);
         foreach (var result in results)
@@ -67,6 +67,6 @@ class Program
             Console.WriteLine("Order of intersections: " + String.Join(" -> ", pathAndCost.Item1));
             Console.WriteLine("Minimal cost: " + pathAndCost.Item2);
         }
-        
+        */
     }
 }
