@@ -58,12 +58,12 @@ class Program
         // Method2: Giving list of vertices -> Paths and costs for every combination of vertices pairs 
 
         List<indexT> vertices = new List<indexT> { 0, 1, 2, 3, 4, 5};
-        Dictionary<(indexT, indexT), (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, vertices);
+        Dictionary<HashSet<indexT>, (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, vertices);
         foreach (var result in results)
         {
-            (indexT, indexT) pair = result.Key;
+            List<indexT> pair = result.Key.ToList();
             (List<indexT>, edgeWeightT) pathAndCost = result.Value;
-            Console.WriteLine("\nResult for (" + pair.Item1 + ", " + pair.Item2 + "):");
+            Console.WriteLine("\nResult for (" + pair[0] + ", " + pair[1] + "):");
             Console.WriteLine("Order of intersections: " + String.Join(" -> ", pathAndCost.Item1));
             Console.WriteLine("Minimal cost: " + pathAndCost.Item2);
         }

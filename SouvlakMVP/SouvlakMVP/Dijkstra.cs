@@ -193,7 +193,7 @@ public class Dijkstra
     /// <param name="graph">The graph to search.</param>
     /// <param name="vertices">The list of vertices.</param>
     /// <returns>A dictionary containing the shortest path and weight for every vertices pair.</returns>
-    public static Dictionary<(indexT, indexT), (List<indexT>, edgeWeightT)> FindShortestPath(Graph graph, List<indexT> vertices)
+    public static Dictionary<HashSet<indexT>, (List<indexT>, edgeWeightT)> FindShortestPath(Graph graph, List<indexT> vertices)
     {
         List<(indexT, indexT)> verticesPairs = GetAllPairs(vertices);
         List<indexT> uniqueStartVertices = new List<indexT>();
@@ -207,7 +207,7 @@ public class Dijkstra
             }
         }
 
-        Dictionary<(indexT, indexT), (List<indexT>, edgeWeightT)> result = new Dictionary<(indexT, indexT), (List<indexT>, edgeWeightT)>();
+        Dictionary<HashSet<indexT>, (List<indexT>, edgeWeightT)> result = new Dictionary<HashSet<indexT>, (List<indexT>, edgeWeightT)>();
 
         // Calculate paths and costs for every unique verices
         foreach (indexT StartVertex in uniqueStartVertices)
@@ -216,7 +216,8 @@ public class Dijkstra
             foreach ((indexT, indexT) pair in verticesPairs.Where(pair => pair.Item1 == StartVertex))
             {
                 (List<indexT>, edgeWeightT) pathAndCost = pathsAndCosts[pair.Item2];
-                result.Add(pair, pathAndCost);
+                HashSet<indexT> pairSet = new HashSet<indexT>() { pair.Item1, pair.Item2 };
+                result.Add(pairSet, pathAndCost);
             }
         }
 
@@ -240,4 +241,5 @@ public class Dijkstra
 
         return pairs;
     }
+
 }
