@@ -35,10 +35,10 @@ class Program
         Console.WriteLine(graph.ToString());
 
         // Method1: Giving start and end vertex -> one path
-        /*        
+        /*      
         indexT startstartVertex = 0;
         indexT endstartVertex = 5;
-        (List<indexT>, distanceT) result = Dijkstra.FindShortestPath(graph, startstartVertex, endstartVertex);
+        (List<indexT>, edgeWeightT) result = Dijkstra.FindShortestPath(graph, startstartVertex, endstartVertex);
         Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Item1)); ;
         Console.WriteLine("Minimal cost: " + result.Item2);
         */
