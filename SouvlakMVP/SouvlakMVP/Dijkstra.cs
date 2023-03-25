@@ -117,24 +117,6 @@ public class Dijkstra
         return result;
     }
 
-    /// <summary>Calculates all combinations of vertices pairs.</summary>
-    /// <param name="vertices">The list of vertices.</param>
-    /// <returns>A list of tuples containing vertices pairs.</returns>
-    private static List<(indexT, indexT)> GetAllPairs(List<indexT> vertices)
-    {
-        List<(indexT, indexT)> pairs = new List<(indexT, indexT)>();
-
-        for (int i = 0; i < vertices.Count; i++)
-        {
-            for (int j = i + 1; j < vertices.Count; j++)
-            {
-                pairs.Add((vertices[i], vertices[j]));
-            }
-        }
-
-        return pairs;
-    }
-
     /// <summary>Calculate preceding vertices list and list of minimal costs to vertices using Dijkstra's algorithm.</summary>
     /// <param name="graph">The graph to search.</param>
     /// <param name="startVertex">The vertex to start the search from.</param>
@@ -203,6 +185,35 @@ public class Dijkstra
         }
 
         return (precedingVertices, minCostToVertex);
+    }
+
+    /// <summary>Calculates path and cost using preceding vertices list and minimal costs to vertices list.</summary>
+    /// <param name="precedingVertices">The list of vertex-predecessor on the path from starting vertex.</param>
+    /// <param name="minCostToVertex">The list of minimal costs of reaching individual vertices from the starting vertex.</param>
+    /// <param name="startVertex">The vertex to start the search from.</param>
+    /// <param name="endVertex">The destination vertex of the search.</param>
+    /// <returns>A tuple containing the shortest path and the distance.</returns>
+    public static (List<indexT>, edgeWeightT) GetPathAndCost(indexT?[] precedingVertices, edgeWeightT[] minCostToVertex, indexT startVertex, indexT endVertex)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>Calculates all combinations of vertices pairs.</summary>
+    /// <param name="vertices">The list of vertices.</param>
+    /// <returns>A list of tuples containing vertices pairs.</returns>
+    private static List<(indexT, indexT)> GetAllPairs(List<indexT> vertices)
+    {
+        List<(indexT, indexT)> pairs = new List<(indexT, indexT)>();
+
+        for (int i = 0; i < vertices.Count; i++)
+        {
+            for (int j = i + 1; j < vertices.Count; j++)
+            {
+                pairs.Add((vertices[i], vertices[j]));
+            }
+        }
+
+        return pairs;
     }
 
 }
