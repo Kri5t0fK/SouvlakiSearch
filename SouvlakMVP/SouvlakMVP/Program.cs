@@ -31,8 +31,15 @@ class Program
         graph.AddEdge(3, 5, 1f);
         graph.AddEdge(4, 5, 2f);
 
+
         // Map visualization
         Console.WriteLine(graph.ToString());
+
+        VerticesConnections vercon = new VerticesConnections(graph);
+        Console.WriteLine(vercon.ToString());
+        var con = vercon[0, 2];
+        // Console.WriteLine(con.ToStringFull()); // <- THIS RAISES ERROR CAUSE IT IS NULL
+        Console.WriteLine(vercon.ToString());
 
         // Method1: Giving start and end vertex -> one path
         /*      
@@ -44,7 +51,7 @@ class Program
         */
 
         // Method2: Giving only start vertex -> all paths from start vertex 
-        
+
         indexT startVertex = 0;
         Dictionary<indexT, (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, startVertex);
         foreach (var result in results)
