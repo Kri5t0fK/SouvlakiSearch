@@ -31,8 +31,20 @@ class Program
         graph.AddEdge(3, 5, 1f);
         graph.AddEdge(4, 5, 2f);
 
+
         // Map visualization
         Console.WriteLine(graph.ToString());
+
+        VerticesConnections vercon = new VerticesConnections(graph);
+        Console.WriteLine(vercon.ToString());
+        
+        var con = vercon[0, 2];
+        var p1 = con[1];
+        var con2 = vercon[0, 3];
+        var con3 = vercon[2, 3];
+        Console.WriteLine();
+
+        Console.WriteLine(vercon.ToString());
 
         // Method1: Giving start and end vertex -> one path
         /*      
@@ -44,7 +56,7 @@ class Program
         */
 
         // Method2: Giving only start vertex -> all paths from start vertex 
-        
+        /*
         indexT startVertex = 0;
         Dictionary<indexT, (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, startVertex);
         foreach (var result in results)
@@ -53,7 +65,7 @@ class Program
             Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Value.Item1));
             Console.WriteLine("Minimal cost: " + result.Value.Item2);
         }
-        
+        */
 
         // Method2: Giving list of vertices -> Paths and costs for every combination of vertices pairs 
         /*

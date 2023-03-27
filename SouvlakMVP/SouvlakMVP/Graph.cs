@@ -109,7 +109,7 @@ public class Graph
                 {
                     str += e.ToString() + ";  ";
                 }
-                str = str.Remove(str.Length - 3);
+                str = str.Remove(str.Length - 3) + "]";
                 return str;
             }
         }
@@ -342,6 +342,19 @@ public class Graph
             }
         }
         return vertices;
+    }
+
+    public List<indexT> GetUnevenVerticesIdxs()
+    {
+        List<indexT> verticesIdxs = new List<indexT>();
+        for (indexT i=0; i<this.graph.Count(); i++)
+        {
+            if (this.graph[i].GetEdgeCount() % 2 != 0)
+            {
+                verticesIdxs.Add(i);
+            }
+        }
+        return verticesIdxs;
     }
 
     public bool ContainsVertex(Vector2 position)
