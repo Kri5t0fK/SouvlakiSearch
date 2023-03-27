@@ -39,8 +39,7 @@ class Program
         Console.WriteLine(vercon.ToString());
         
         var con = vercon[0, 2];
-        con.path[0] = 4;
-        Console.WriteLine(vercon[0, 2].ToStringFull());
+        var p1 = con[1];
         var con2 = vercon[0, 3];
         var con3 = vercon[2, 3];
         Console.WriteLine();

@@ -3,8 +3,6 @@
 using System.Linq;
 using indexT = System.Int32;
 using edgeWeightT = System.Single;
-using System.Dynamic;
-using System.Collections.Generic;
 
 /// <summary>
 /// Interface for easy use of dijkstra algorithm
@@ -16,8 +14,10 @@ public class VerticesConnections
     /// </summary>
     public class Connection
     {
-        public readonly edgeWeightT weight;
-        public readonly List<indexT> path;
+        private readonly edgeWeightT weight;
+        public edgeWeightT Weight { get; }
+        private readonly List<indexT> path;
+        public IReadOnlyCollection<indexT> Path { get { return this.path.AsReadOnly(); } }
 
         public Connection(edgeWeightT weight, List<indexT> path)
         {
@@ -46,6 +46,11 @@ public class VerticesConnections
                 str = str.Remove(str.Length - 2) + "]";
                 return str;
             }
+        }
+
+        public indexT this[indexT idx]
+        {
+            get { return this.path[idx]; }
         }
     }
 
