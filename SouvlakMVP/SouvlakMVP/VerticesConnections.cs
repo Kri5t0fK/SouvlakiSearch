@@ -34,7 +34,7 @@ public class VerticesConnections
         {
             if (this.path.Count == 0)   // There shouldn't be a case where weight exists but path is empty, but hey
             {
-                return this.weight.ToString() + " : []";
+                return this.weight.ToString("n2") + " : []";
             }
             else
             {
@@ -111,14 +111,14 @@ public class VerticesConnections
         return str;
     }
 
-    private (indexT[], edgeWeightT[]) CalcClassicDijkstra(indexT startVertex)
+    private (indexT?[], edgeWeightT[]) CalcClassicDijkstra(indexT startVertex)
     {
         int verticesN = this.graph.GetVertexCount();
 
         // Array containing the minimum costs to reach each vertex from the starting vertex
         edgeWeightT[] minCostToVertex = new edgeWeightT[verticesN];
         // Array containing the preceding vertices on the path from the starting vertex
-        indexT[] precedingVertices = new indexT[verticesN];
+        indexT?[] precedingVertices = new indexT?[verticesN];
 
         // Working lists of vertices
         List<indexT> unvisitedVertices = new List<indexT>();
@@ -177,7 +177,7 @@ public class VerticesConnections
         return (precedingVertices, minCostToVertex);
     }
 
-    private (List<indexT>, edgeWeightT) GetPathAndCost(indexT[] precedingVertices, edgeWeightT[] minCostToVertex, indexT endVertex)
+    private (List<indexT>, edgeWeightT) GetPathAndCost(indexT?[] precedingVertices, edgeWeightT[] minCostToVertex, indexT endVertex)
     {
         indexT? tempVertex = endVertex;
         List<indexT> shortestPath = new List<indexT>();
@@ -215,12 +215,12 @@ public class VerticesConnections
 
             if (this.connectionMatrix[start, stop] == null)
             {
-                (indexT[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcClassicDijkstra(start);
+                (indexT?[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcClassicDijkstra(start);
 
                 List<indexT> endVertices = new List<indexT>();
                 for (indexT j = 0; j < this.connectionMatrix.GetLength(1); j++)
                 {
-                    if (j != stop && this.connectionMatrix[start, j] != null)
+                    if (j != start && this.connectionMatrix[start, j] == null)
                     {
                         endVertices.Add(j);
                     }
@@ -229,8 +229,7 @@ public class VerticesConnections
                 foreach (indexT endVertex in endVertices)
                 {
                     (List<indexT> path, edgeWeightT weight) pAc = GetPathAndCost(precedingVertices, minCostToVertex, endVertex);
-                    List<indexT> pathReverse = new List<indexT>(pAc.path);
-                    pathReverse.Reverse();
+                    List<indexT> pathReverse = Enumerable.Reverse(pAc.path).ToList();
 
                     this.connectionMatrix[start, endVertex] = new Connection(pAc.weight, pAc.path);
                     this.connectionMatrix[endVertex, start] = new Connection(pAc.weight, pathReverse);
