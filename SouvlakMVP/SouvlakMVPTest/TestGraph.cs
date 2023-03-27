@@ -7,51 +7,25 @@ namespace SouvlakMVPTest
     [TestClass]
     public class TestGraph
     {
-
-        // this doesnt pass
-        //[TestMethod]
-        //public void AddEdge_withNewEdge()
-        //{
-
-        //    Graph testGraph = new Graph();
-        //    testGraph.AddVertex(new Graph.Vertex(new Vector2(0, 0)));
-        //    testGraph.AddVertex(new Graph.Vertex(new Vector2(1, 0)));
-
-        //    // add edge between two above vertices
-        //    testGraph.AddEdge(0, 1, 3f);
-        //    Graph.Edge expected = new Graph.Edge(1, 3, 1);
-
-        //    Assert.AreEqual(testGraph.GetEdge(0,1), expected);
-        //}
-
         [TestMethod]
-        public void ContainsEdge_withEdgeBetweenVertices()
+        public void GetVertexCount_zeroVertices()
         {
 
             Graph testGraph = new Graph();
-            testGraph.AddVertex(new Graph.Vertex(new Vector2(0, 0)));
-            testGraph.AddVertex(new Graph.Vertex(new Vector2(1, 0)));
-
-            // add edge between two above vertices
-            testGraph.AddEdge(0, 1, 3f);
-
-            Assert.AreEqual(testGraph.ContainsEdge(0,1), true);
+            int expected = 0;
+            Assert.AreEqual(testGraph.GetVertexCount(), expected);
         }
 
         [TestMethod]
-        public void ContainsEdge_withoutEdgeBetweenVertices()
+        public void GetVertexCount_aboveZeroVertices()
         {
 
             Graph testGraph = new Graph();
-            testGraph.AddVertex(new Graph.Vertex(new Vector2(0, 0)));
-            testGraph.AddVertex(new Graph.Vertex(new Vector2(1, 0)));
-            testGraph.AddVertex(new Graph.Vertex(new Vector2(2, 0)));
+            testGraph.AddVertex(new Graph.Vertex(new Vector2(-7, 0)));
+            testGraph.AddVertex(new Graph.Vertex(new Vector2(1, 0.5f)));
 
-            // add edge between two above vertices
-            testGraph.AddEdge(0, 1, 3f);
-
-            // graph doesnt contain edge from 0 to 2 so they should not be equal
-            Assert.AreNotEqual(testGraph.ContainsEdge(0, 2), true);
+            int expected = 2;
+            Assert.AreEqual(testGraph.GetVertexCount(), expected);
         }
 
         [TestMethod]

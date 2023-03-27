@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SouvlakMVP", "SouvlakMVP.csproj", "{EA2DDEE0-905C-4796-B52C-91D79BF1AF9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SouvlakMVPTest", "..\SouvlakMVPTest\SouvlakMVPTest.csproj", "{B42F54B4-8C28-4FF6-A928-17F0E9A9F322}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SouvlakMVPTest", "..\SouvlakMVPTest\SouvlakMVPTest.csproj", "{B42F54B4-8C28-4FF6-A928-17F0E9A9F322}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
