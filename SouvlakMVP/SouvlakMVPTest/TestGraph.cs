@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SouvlakMVP;
+using System.Globalization;
 using System.Numerics;
 using indexT = System.Int32;
 
@@ -138,5 +139,18 @@ namespace SouvlakMVPTest
 
         }
 
+        [TestMethod]
+        public void ToString_GraphwithEdges()
+        {
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            Graph.Vertex[] vertices_position = { new Graph.Vertex(new Vector2(1, 1), new Graph.Edge[1] { new Graph.Edge(1, 2f) }),
+                                                     new Graph.Vertex(new Vector2(2, 2), new Graph.Edge[1] { new Graph.Edge(0, 3f) })};
+            List<Graph.Vertex> vertices = new List<Graph.Vertex>(vertices_position);
+            Graph graph = new Graph(vertices);
+            string expected = "<1, 1> : [1 : 1 x 2.00]\n<2, 2> : [0 : 1 x 3.00]\n";
+
+            Assert.AreEqual(expected, graph.ToString());
+
+        }
     }
 }
