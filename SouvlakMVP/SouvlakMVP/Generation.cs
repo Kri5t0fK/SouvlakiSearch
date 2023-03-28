@@ -6,31 +6,36 @@ using System.Text;
 using System.Threading.Tasks;
 using static SouvlakMVP.Genotype;
 
+
 namespace SouvlakMVP;
 
-/// <summary>
-/// Class representing a single Generation of genetic algorithm.
-/// </summary>
-public class Generation
+
+public partial class GeneticAlgorithm
 {
-    private int populationSize;
-    private Genotype[] population;
-    public Generation(int size)
+    /// <summary>
+    /// Class representing a single Generation of genetic algorithm.
+    /// </summary>
+    public class Generation
     {
-        this.populationSize = size;
-        this.population = new Genotype[populationSize];
+        private int populationSize;
+        private Genotype[] population;
+        public Generation(int size)
+        {
+            this.populationSize = size;
+            this.population = new Genotype[populationSize];
 
-    }
+        }
 
-    public Generation(Genotype[] population)
-    {
-        // @TODO Verify length
-        this.populationSize = population.Length;
-        this.population = population;
-    }
+        public Generation(Genotype[] population)
+        {
+            // @TODO Verify length
+            this.populationSize = population.Length;
+            this.population = population;
+        }
 
-    public void GeneratePopulation()
-    {
-        //     @TODO  Implement Initialization
+        public void GeneratePopulation()
+        {
+            //     @TODO  Implement Initialization
+        }
     }
 }
