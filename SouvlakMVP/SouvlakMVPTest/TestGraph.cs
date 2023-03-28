@@ -161,7 +161,7 @@ namespace SouvlakMVPTest
             Graph graph = new Graph(vertices);
             string expected = "<1  1> : [1 : 1 x 2,00]\n<2  2> : [0 : 1 x 3,00]\n";
 
-            Assert.AreEqual(expected, graph.ToString().Replace("\u00A0", " "));
+            Assert.AreEqual(expected, graph.ToString().Replace("\u00A0", "\u0020"));
 
         }
 
