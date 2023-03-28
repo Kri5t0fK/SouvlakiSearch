@@ -121,7 +121,7 @@ public class Graph
         }
 
         /// <summary>
-        /// Represents vertex in a form of a string
+        /// Represents vertex in a string form
         /// </summary>
         /// <returns>String representation of an vertex</returns>
         public override string ToString()
