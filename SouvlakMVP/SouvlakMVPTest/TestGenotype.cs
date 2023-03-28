@@ -2,7 +2,8 @@
 using System;
 using SouvlakMVP;
 using System.Numerics;
-using static SouvlakMVP.Genotype;
+using static SouvlakMVP.GeneticAlgorithm;
+using static SouvlakMVP.GeneticAlgorithm.Genotype;
 
 namespace SouvlakMVPTest
 {
