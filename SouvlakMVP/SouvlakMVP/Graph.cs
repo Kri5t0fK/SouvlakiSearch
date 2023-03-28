@@ -184,7 +184,7 @@ public class Graph
         }
 
         /// <summary>
-        /// Get edge with given target idx
+        /// Get edge from [this] Vertex to given target Vertex
         /// </summary>
         /// <param name="targetIdx">Target Idx of an edge we want to get</param>
         /// <returns>Edge ogject if found</returns>
