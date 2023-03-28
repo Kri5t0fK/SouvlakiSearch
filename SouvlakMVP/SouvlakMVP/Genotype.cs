@@ -27,7 +27,7 @@ public class Genotype
     /// Odd vertices - vertices with odd number of neighbours.
     /// </summary>
     private readonly List<Graph.Vertex> _oddVertices;
-
+    public List<Graph.Vertex> OddVertices { get { return new List<Graph.Vertex>(this._oddVertices); } }
     // Read-only Indexer for accesing the list
     public Graph.Vertex this[int i]
     {
