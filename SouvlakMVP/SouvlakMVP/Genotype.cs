@@ -65,7 +65,7 @@ public partial class GeneticAlgorithm
 
             // Get number of pairs in vertex list, list count is always even
             int pairsCount = this.Size / 2;
-            for (int pairID = 0; pairID < pairsCount; pairID++)
+            for (int pairID = 0; pairID < pairsCount; pairID+=2)
             {
                 (Graph.Vertex, Graph.Vertex) pair = (this[pairID], this[pairID + 1]);
                 output.Add(pair);
