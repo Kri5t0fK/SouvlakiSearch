@@ -17,19 +17,32 @@ public class VerticesConnections
         private readonly edgeWeightT weight;
         public edgeWeightT Weight { get; }
         private readonly List<indexT> path;
-        public IReadOnlyCollection<indexT> Path { get { return this.path.AsReadOnly(); } }
+        public List<indexT> Path { get { return new List<indexT>(this.path); } }
 
+        /// <summary>
+        /// Initializes a new instance of Connection calss
+        /// </summary>
+        /// <param name="weight">Weight of connection</param>
+        /// <param name="path">Connections' path in form of list of indices</param>
         public Connection(edgeWeightT weight, List<indexT> path)
         {
             this.weight = weight;
             this.path = path;
         }
 
+        /// <summary>
+        /// Return string containing only weight of a connection
+        /// </summary>
+        /// <returns>String representation of connection's weight</returns>
         public override string ToString()
         {
             return this.weight.ToString("n2");
         }
 
+        /// <summary>
+        /// Return string containing weight and path of a connection
+        /// </summary>
+        /// <returns>String representation of a full connection</returns>
         public string ToStringFull()
         {
             if (this.path.Count == 0)   // There shouldn't be a case where weight exists but path is empty, but hey
@@ -48,6 +61,11 @@ public class VerticesConnections
             }
         }
 
+        /// <summary>
+        /// Faster (but still safe) way to access connection's path elements
+        /// </summary>
+        /// <param name="idx">Index of element in connection's path</param>
+        /// <returns></returns>
         public indexT this[indexT idx]
         {
             get { return this.path[idx]; }
@@ -60,6 +78,10 @@ public class VerticesConnections
     private Connection[,] connectionMatrix;
 
 
+    /// <summary>
+    /// Rebuild connection matrix. Call this method after you finish updating graph
+    /// </summary>
+    /// <param name="graph">Graph from which connection matrix will be created</param>
     public void Rebuild(Graph graph)
     {
         this.graph = graph;
@@ -74,6 +96,10 @@ public class VerticesConnections
         }
     }
 
+    /// <summary>
+    /// Initializes a new instance of VerticesConnections class
+    /// </summary>
+    /// <param name="graph">Graph from which connection matrix will be created</param>
     public VerticesConnections(Graph graph)     // Yes I know of DRY, but VS2022 kept giving me warnings if I didn't do it like this
     {
         this.graph = graph;
@@ -88,6 +114,10 @@ public class VerticesConnections
         }
     }
 
+    /// <summary>
+    /// Get string representation of the current state of a connection matrix. Mainly useful for debugging
+    /// </summary>
+    /// <returns>String representing a matrix</returns>
     public override string ToString()
     {
         var keys = this.indexTranslate.Keys.ToList();
@@ -116,6 +146,9 @@ public class VerticesConnections
         return str;
     }
 
+    /// <summary>Calculate preceding vertices list and list of minimal costs using Dijkstra's algorithm.</summary>
+    /// <param name="startVertex">The vertex to start the search from.</param>
+    /// <returns>A tuple containing 2 lists: preceding vertices; minimal costs to vertices.</returns>
     private (indexT?[], edgeWeightT[]) CalcClassicDijkstra(indexT startVertex)
     {
         int verticesN = this.graph.GetVertexCount();
@@ -182,6 +215,11 @@ public class VerticesConnections
         return (precedingVertices, minCostToVertex);
     }
 
+    /// <summary>Calculates path and cost using preceding vertices list and minimal costs to vertices list.</summary>
+    /// <param name="precedingVertices">The list of vertex-predecessor on the path from starting vertex.</param>
+    /// <param name="minCostToVertex">The list of minimal costs of reaching individual vertices from the starting vertex.</param>
+    /// <param name="endVertex">The destination vertex of the search.</param>
+    /// <returns>A tuple containing the shortest path and the distance.</returns>
     private (List<indexT>, edgeWeightT) GetPathAndCost(indexT?[] precedingVertices, edgeWeightT[] minCostToVertex, indexT endVertex)
     {
         indexT? tempVertex = endVertex;
@@ -203,6 +241,15 @@ public class VerticesConnections
         return (shortestPath, totalCost);
     }
 
+
+    /// <summary>
+    /// Function called by class' indexer. Gives connection between two vertices using connection matrix. Automatically calls Dijkstra algorithm when needed
+    /// </summary>
+    /// <param name="start">Index of starting vertex (from Graph class)</param>
+    /// <param name="stop">Index of end vertex (from Graph class)</param>
+    /// <returns>Connection (that is weight and path) from start to end vertex</returns>
+    /// <exception cref="InvalidOperationException">Thrown if start vertex equals stop vertex</exception>
+    /// <exception cref="IndexOutOfRangeException">Thrown if one of given vertices is not uneven, or does not exist in Graph class</exception>
     public Connection GetConnection(indexT start, indexT stop)
     {
         if (start == stop)
@@ -245,6 +292,23 @@ public class VerticesConnections
         }
     }
 
+    /// <summary>
+    /// Get indices of uneven vertices of graph
+    /// </summary>
+    /// <returns>List of uneven vertices' indices</returns>
+    public List<indexT> GetUnevenVerticesIdxs()
+    {
+        return this.indexTranslate.Keys.ToList();
+    }
+
+    /// <summary>
+    /// Smart way to get connection between two, uneven vertices. Uses connection matrix that automatically calls Dijkstra algorithm when needed
+    /// </summary>
+    /// <param name="start">Index of starting vertex (from Graph class)</param>
+    /// <param name="stop">Index of end vertex (from Graph class)</param>
+    /// <returns>Connection (that is weight and path) from start to end vertex</returns>
+    /// <exception cref="InvalidOperationException">Thrown if start vertex equals stop vertex</exception>
+    /// <exception cref="IndexOutOfRangeException">Thrown if one of given vertices is not uneven, or does not exist in Graph class</exception>
     public Connection this[indexT start, indexT stop]
     {
         get { return this.GetConnection(start, stop); }

@@ -42,7 +42,7 @@ class Program
         var p1 = con[1];
         var con2 = vercon[0, 3];
         var con3 = vercon[2, 3];
-        Console.WriteLine();
+        Console.WriteLine("\n\n");
 
         Console.WriteLine(vercon.ToString());
 
