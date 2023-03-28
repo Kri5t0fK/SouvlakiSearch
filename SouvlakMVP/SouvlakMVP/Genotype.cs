@@ -10,12 +10,15 @@ namespace SouvlakMVP;
 /// </summary>
 public class Genotype
 {
+    // Declare two new Exceptions for Genotype constructing:
+    // NonUniqueVerticesException: raised when given list of Vertices has duplicates
     public class NonUniqueVerticesException : Exception
     {
         public NonUniqueVerticesException() : base("Duplicate edges with different weights are not allowed!") { }
         public NonUniqueVerticesException(string message) : base(message) { }
     }
 
+    // NonEvenNumberOfVerticesException: raised when given list has odd number of Vertices (which is impossible because graph theory)
     public class NonEvenNumberOfVerticesException : Exception
     {
         public NonEvenNumberOfVerticesException() : base("Genotype must have EVEN (ont odd) number of vertices!") { }
@@ -27,7 +30,10 @@ public class Genotype
     /// Odd vertices - vertices with odd number of neighbours.
     /// </summary>
     private readonly List<Graph.Vertex> _oddVertices;
+    
+    // Getter for field list of Veritces
     public List<Graph.Vertex> OddVertices { get { return new List<Graph.Vertex>(this._oddVertices); } }
+
     // Read-only Indexer for accesing the list
     public Graph.Vertex this[int i]
     {
@@ -51,6 +57,7 @@ public class Genotype
             throw new NonEvenNumberOfVerticesException();
         }
 
+        // If Valididty checks pass, create new Genotype instance
         this._oddVertices = _oddVertices;
     }
 
@@ -61,15 +68,19 @@ public class Genotype
 
         // Get number of pairs in vertex list, list count is always even
         int pairsCount = this.Size/2;
+
+        // Iterate thorugh list of Vertices, create tuple pairs and add them to output list
         for(int pairID=0; pairID < pairsCount; pairID++)
         {
-            (Graph.Vertex, Graph.Vertex) pair = (this[pairID], this[pairID+1]); 
+            (Graph.Vertex, Graph.Vertex) pair = (this[2*pairID], this[2*pairID+1]); 
             output.Add(pair);
         }
+
         // Return list of pairs
         return output;
     }
 
+    // Method for getting Genotype size (numeber of Vertices in private list)
     public genotypeSizeT Size
     {
         get { return this._oddVertices.Count; }
