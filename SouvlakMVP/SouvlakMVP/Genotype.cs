@@ -153,5 +153,21 @@ public partial class GeneticAlgorithm
             return str + "]";
         }
 
+        /// <summary>
+        /// Swaps two random values inside this object
+        /// </summary>
+        public void Mutate()
+        {
+            // Generate two, different idxs
+            Random rnd= new Random();
+            indexT idx1 = rnd.Next(0, this.Length);
+            indexT idx2 = rnd.Next(0, this.Length);
+            while (idx1 == idx2) { idx2 = rnd.Next(0, this.Length); }
+
+            // Swap two value
+            // Gotta love tuple unpacking :3
+            (this.unevenVerticesIdxs[idx1], this.unevenVerticesIdxs[idx2]) = (this.unevenVerticesIdxs[idx2], this.unevenVerticesIdxs[idx1]);
+        }
+
     }
 }
