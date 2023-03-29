@@ -37,16 +37,32 @@ public partial class GeneticAlgorithm
         /// Genotype: a list of even number of "uneven vertices" indexes.
         /// Odd vertices - vertices with odd number of neighbours.
         /// </summary>
-        private readonly indexT[] unevenVerticesIdxs;
-
+        private indexT[] unevenVerticesIdxs;
+        
         /// <summary>
-        /// Getter for a copy of Vertices indices list of Genotype.
+        /// Getter/Setter for array of uneven vertices
         /// </summary>
-        public indexT[] UnevenVerticesIdxs { get {
-                indexT[] output = new indexT[unevenVerticesIdxs.Length];
-                Array.Copy(this.unevenVerticesIdxs, output, unevenVerticesIdxs.Length);
-                return output; 
-            } }
+        public indexT[] UnevenVerticesIdxs
+        {
+            get
+            {
+                indexT[] output = new indexT[this.unevenVerticesIdxs.Length];
+                Array.Copy(this.unevenVerticesIdxs, output, this.unevenVerticesIdxs.Length);
+                return this.unevenVerticesIdxs; 
+            }
+            set 
+            { 
+                // Check whether new array contains the same elements as the previous one
+                if (value.Length == this.unevenVerticesIdxs.Length && new HashSet<indexT>(value) == new HashSet<indexT>(this.unevenVerticesIdxs))
+                {
+                    this.unevenVerticesIdxs = value;
+                }
+                else
+                {
+                    throw new InvalidDataException("New array contains different data");
+                }
+            }
+        }
 
         // Read-only Indexer for accesing the list
         public indexT this[int i]
