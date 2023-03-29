@@ -45,7 +45,11 @@ class Program
         Console.WriteLine("\n\n");
 
         Console.WriteLine(vercon.ToString());
+        (var child1, var child2) = GeneticAlgorithm.Crossover(new GeneticAlgorithm.Genotype(new indexT[] {0, 1, 2, 3, 4, 5, 6, 7}),
+                                   new GeneticAlgorithm.Genotype(new indexT[] {7, 4, 5, 6, 3, 0, 1, 2}));
 
+        Console.WriteLine(child1.ToString());
+        Console.WriteLine(child2.ToString());
         // Method1: Giving start and end vertex -> one path
         /*      
         indexT startstartVertex = 0;
