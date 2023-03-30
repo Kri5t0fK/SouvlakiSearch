@@ -33,15 +33,12 @@ public partial class GeneticAlgorithm
             public NonEvenNumberOfVerticesException(string message) : base(message) { }
         }
 
+
         /// <summary>
         /// Genotype: a list of even number of "uneven vertices" indexes.
         /// Odd vertices - vertices with odd number of neighbours.
         /// </summary>
         private indexT[] unevenVerticesIdxs;
-        
-        /// <summary>
-        /// Getter/Setter for array of uneven vertices
-        /// </summary>
         public indexT[] UnevenVerticesIdxs
         {
             get
@@ -63,6 +60,7 @@ public partial class GeneticAlgorithm
                 }
             }
         }
+
 
         // Read-only Indexer for accesing the list
         public indexT this[int i]
@@ -97,6 +95,15 @@ public partial class GeneticAlgorithm
         public genotypeSizeT Length
         {
             get { return this.unevenVerticesIdxs.Length; }
+        }
+
+        /// <summary>
+        /// Returns hash set containing all uneven vertices indices
+        /// </summary>
+        /// <returns></returns>
+        public HashSet<indexT> GetHashSet()
+        {
+            return new HashSet<indexT>(this.unevenVerticesIdxs);
         }
 
         /// <summary>
