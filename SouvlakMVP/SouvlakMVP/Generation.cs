@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using static SouvlakMVP.Genotype;
 
 namespace SouvlakMVP;
@@ -18,9 +19,27 @@ public partial class GeneticAlgorithm
     {
         // field rng is used for shuffling in generating population
         private static Random rng = new Random();
-        private int populationSize;
-        private Genotype[] population;
+        private int populationSize
+        {
+            get { return populationSize; }
+            set { populationSize = value; }
+        }
 
+        private Genotype[] population
+        {
+            get { return this.population; }   // get method
+            set // set method
+            { 
+                if (value.Length == populationSize)
+                {
+                    this.population = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Population size can`t be changed");
+                }
+            }
+        }
         /// <exception cref="ArgumentException"></exception>
         public Generation(List<Graph.Vertex> init_population, int size)
         {
