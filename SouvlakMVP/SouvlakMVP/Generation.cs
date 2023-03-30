@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using static SouvlakMVP.Genotype;
+﻿using System.Linq;
+
+using indexT = System.Int32;
+
 
 namespace SouvlakMVP;
 
@@ -17,74 +13,74 @@ public partial class GeneticAlgorithm
     /// </summary>
     public class Generation
     {
-        // field rng is used for shuffling in generating population
-        private static Random rng = new Random();
-        private int populationSize;
-        public int PopulationSize
-        {
-            get { return this.populationSize; }
-        }
-
+        /// <summary>
+        /// Readonly field storing size of a population
+        /// </summary>
+        private readonly int populationSize;
+        public int PopulationSize { get { return populationSize; } }
+        
+        /// <summary>
+        /// Array storing population aka. array of genotypes
+        /// Elements can be accessed via indexer
+        /// </summary>
         private Genotype[] population;
-        public Genotype[] Population
+        public Genotype this[indexT idx]
         {
-            get { return this.population; }   // get method
-            set // set method
+            get 
             { 
-                if (value.Length == populationSize)
+                // Should be safe because genotype has it's own safety measures
+                return this.population[idx]; 
+            }
+            set 
+            {
+                if (this.population[idx].Length == value.Length && this.population[idx].GetHashSet() == value.GetHashSet())
                 {
-                    this.population = value;
+                    this.population[idx] = value;
                 }
                 else
                 {
-                    throw new ArgumentException("Population size can`t be changed");
+                    throw new ArgumentException("New genotype does not contain all necessary vertices!");
                 }
             }
         }
-        /// <exception cref="ArgumentException"></exception>
-        public Generation(List<Graph.Vertex> init_population, int size)
+        
+        /// <summary>
+        /// Create initial population using a list of uneven vertices
+        /// </summary>
+        /// <param name="UnevenVertices">Vertices used to create initial population</param>
+        /// <param name="populationSize">How big should the population be</param>
+        public Generation(List<indexT> UnevenVertices, int populationSize)
         {
-            if(size > 0)
-            {
-                this.populationSize = size;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("Population size can't be negative!");
-            }
+            this.populationSize = populationSize;
             this.population = new Genotype[populationSize];
-            GeneratePopulation(init_population, this.populationSize);
+            Random random = new Random();
+            
+            // loop for creating population_size numbers of genotypes in population
+            for (int genotypeIdx = 0; genotypeIdx < populationSize; genotypeIdx++)
+            {
+                // Fisher-Yates algorithm for shuffling genotype members
+                indexT[] currentGenotype = UnevenVertices.ToArray();
+                int numOfVertices = currentGenotype.Length;
+                while (numOfVertices > 1)
+                {
+                    int randomIdx = random.Next(numOfVertices--);
+                    indexT vertexIdx = currentGenotype[randomIdx];
+                    currentGenotype[randomIdx] = currentGenotype[numOfVertices];
+                    currentGenotype[numOfVertices] = vertexIdx;
+                }
+                this.population[genotypeIdx] = new Genotype(currentGenotype);
+            }
         }
 
+        /// <summary>
+        /// Create population from the arrray of genotypes
+        /// </summary>
+        /// <param name="population"></param>
         public Generation(Genotype[] population)
         {
             // @TODO Verify length
             this.populationSize = population.Length;
             this.population = population;
-        }
-
-        /// <summary>
-        /// Method used in Generator constructor. Used for creating population.
-        /// </summary>
-        /// <param name="init_population">Initial genotype (list of Vertex) used for creating population.</param>
-        /// <param name="population_size">Specifies amount of subsets created in current generation.</param>
-        private void GeneratePopulation(List<Graph.Vertex> init_population, int population_size)
-        {
-            // loop for creating population_size numbers of genotypes in population
-            for(uint genotypeIdx = 0; genotypeIdx < population_size; genotypeIdx++)
-            {
-                // Fisher-Yates algorithm for shuffling genotype members
-                List<Graph.Vertex> curr_genotype = new List<Graph.Vertex>(init_population);
-                int no_of_vertices = curr_genotype.Count;
-                while (no_of_vertices > 1)
-                {
-                    int rand_vertex = Generation.rng.Next(no_of_vertices--);
-                    Graph.Vertex value = curr_genotype[rand_vertex];
-                    curr_genotype[rand_vertex] = curr_genotype[no_of_vertices];
-                    curr_genotype[no_of_vertices] = value;
-                }
-                this.population[genotypeIdx] = new Genotype(curr_genotype);
-            }
         }
     }
 }
