@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using genotypeSizeT = System.Int32;
 using indexT = System.Int32;
+using edgeWeightT = System.Single;
 
 
 namespace SouvlakMVP;
@@ -123,6 +124,24 @@ public partial class GeneticAlgorithm
             }
             // Return list of pairs
             return output;
+        }
+
+        /// <summary>
+        /// Returns weight of a genotype. The greater the value the weaker the genotype!
+        /// </summary>
+        /// <param name="vercon">VerticesConnections object (passed by reference) used to calculate connection's costs</param>
+        /// <returns></returns>
+        public edgeWeightT GetWeight(VerticesConnections vercon)
+        {
+            edgeWeightT weight = 0;
+            int pairsCount = this.Length / 2;
+
+            for (int pairID = 0; pairID < pairsCount; pairID++)
+            {
+                weight += vercon[this[2 * pairID], this[2 * pairID + 1]].Weight;
+            }
+
+            return weight;
         }
 
         /// <summary>
