@@ -1,11 +1,32 @@
 ﻿using System.Linq;
 using indexT = System.Int32;
+using edgeWeightT = System.Single;
 
 namespace SouvlakMVP;
 
 
 public partial class GeneticAlgorithm
 {
+    private readonly Graph graph;
+    private readonly VerticesConnections verticesConnections;
+    private readonly int generationSize;
+    private readonly Generation previousGeneration;
+    private readonly Generation currentGeneration;
+    
+    private readonly Random random;
+
+    public GeneticAlgorithm(Graph graph, int generationSize)
+    {
+        this.graph = graph;
+        this.verticesConnections = new VerticesConnections(this.graph);
+        this.generationSize = generationSize;
+        this.previousGeneration = new Generation(this.verticesConnections.GetUnevenVerticesIdxs(), this.generationSize);
+        this.currentGeneration = new Generation(new Genotype[this.generationSize]);
+
+        this.random = new Random();
+    }
+
+
     public static (Genotype child1, Genotype child2) Crossover(Genotype parent1, Genotype parent2)
     {
         // Get length and create children genes
@@ -72,5 +93,5 @@ public partial class GeneticAlgorithm
         return (new Genotype(gene1), new Genotype(gene2));
     }
 
-
+    
 }
