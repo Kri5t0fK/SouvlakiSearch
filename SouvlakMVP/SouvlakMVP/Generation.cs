@@ -19,13 +19,14 @@ public partial class GeneticAlgorithm
     {
         // field rng is used for shuffling in generating population
         private static Random rng = new Random();
-        private int populationSize
+        private int populationSize;
+        public int PopulationSize
         {
-            get { return populationSize; }
-            set { populationSize = value; }
+            get { return this.populationSize; }
         }
 
-        private Genotype[] population
+        private Genotype[] population;
+        public Genotype[] Population
         {
             get { return this.population; }   // get method
             set // set method
