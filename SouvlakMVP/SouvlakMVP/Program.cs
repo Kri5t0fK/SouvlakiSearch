@@ -37,7 +37,7 @@ class Program
 
         // VerticesConnections vercon = new VerticesConnections(ref graph);
         //Console.WriteLine(vercon.ToString());
-
+        
         //var con = vercon[0, 2];
         //var p1 = con[1];
         //var con2 = vercon[0, 3];
@@ -92,10 +92,5 @@ class Program
             Console.WriteLine("Minimal cost: " + pathAndCost.Item2);
         }
         */
-
-        // This code is correct but it will throw exception if there is no euler cycle in the graph
-        (List<indexT>, edgeWeightT) eluerCycleAndCost = Euler.FindEulerCycle(graph, genotype);
-        Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eluerCycleAndCost.Item1));
-        Console.WriteLine("Cost of cycle: " + eluerCycleAndCost.Item2);
     }
 }
