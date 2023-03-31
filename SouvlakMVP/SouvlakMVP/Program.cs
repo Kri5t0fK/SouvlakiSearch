@@ -35,21 +35,29 @@ class Program
         // Map visualization
         Console.WriteLine(graph.ToString());
 
-        VerticesConnections vercon = new VerticesConnections(graph);
-        Console.WriteLine(vercon.ToString());
+        // VerticesConnections vercon = new VerticesConnections(ref graph);
+        //Console.WriteLine(vercon.ToString());
         
-        var con = vercon[0, 2];
-        var p1 = con[1];
-        var con2 = vercon[0, 3];
-        var con3 = vercon[2, 3];
+        //var con = vercon[0, 2];
+        //var p1 = con[1];
+        //var con2 = vercon[0, 3];
+        //var con3 = vercon[2, 3];
+        //Console.WriteLine("\n\n");
+
+        // Console.WriteLine(vercon.ToString());
         Console.WriteLine("\n\n");
+        var geneticAlgorithm = new GeneticAlgorithm(graph);
+        (var weight, var genotype) = geneticAlgorithm.MainLoop();
+        Console.WriteLine(weight.ToString());
+        Console.WriteLine(genotype.ToString());
+        //(var child1, var child2) = GeneticAlgorithm.Crossover(new GeneticAlgorithm.Genotype(new indexT[] {0, 1, 2, 3, 4, 5, 6, 7}),
+        //                           new GeneticAlgorithm.Genotype(new indexT[] {7, 4, 5, 6, 3, 0, 1, 2}));
 
-        Console.WriteLine(vercon.ToString());
-        (var child1, var child2) = GeneticAlgorithm.Crossover(new GeneticAlgorithm.Genotype(new indexT[] {0, 1, 2, 3, 4, 5, 6, 7}),
-                                   new GeneticAlgorithm.Genotype(new indexT[] {7, 4, 5, 6, 3, 0, 1, 2}));
+        //Console.WriteLine(child1.ToString());
+        //Console.WriteLine(child2.ToString());
 
-        Console.WriteLine(child1.ToString());
-        Console.WriteLine(child2.ToString());
+
+
         // Method1: Giving start and end vertex -> one path
         /*      
         indexT startstartVertex = 0;

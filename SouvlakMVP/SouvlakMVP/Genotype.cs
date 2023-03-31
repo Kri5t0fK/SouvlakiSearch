@@ -46,7 +46,7 @@ public partial class GeneticAlgorithm
             {
                 indexT[] output = new indexT[this.unevenVerticesIdxs.Length];
                 Array.Copy(this.unevenVerticesIdxs, output, this.unevenVerticesIdxs.Length);
-                return this.unevenVerticesIdxs; 
+                return output; 
             }
             set 
             { 

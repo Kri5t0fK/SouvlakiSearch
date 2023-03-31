@@ -7,21 +7,44 @@ namespace SouvlakMVP;
 
 public partial class GeneticAlgorithm
 {
-    private readonly Graph graph;
-    private readonly VerticesConnections verticesConnections;
     private readonly int generationSize;
-    private readonly Generation previousGeneration;
-    private readonly Generation currentGeneration;
-    
+    private readonly int selectionSize;
+    private readonly int mutationChance;
+    private readonly int maxIterations;
+    private readonly int lastElementsToCheck;
+
+    private Graph graph;
+    private VerticesConnections verticesConnections;
+    private Generation previousGeneration;
+    private Generation currentGeneration;
+    private List<edgeWeightT> bestWeightHistory;
+    public List<edgeWeightT> BestWeightHistory
+    {
+        get { return bestWeightHistory; }
+    }
+
+
     private readonly Random random;
 
-    public GeneticAlgorithm(Graph graph, int generationSize)
+    public GeneticAlgorithm(Graph graph, uint generationSize=20, uint selectionSize=10, uint mutationChance=33, uint maxIterations=1000, uint lastElementsToCheck=10)
     {
+        if (generationSize % 2 == 1) { throw new ArgumentException("Generation size must be an even number!"); }
+        if (selectionSize >= generationSize) { throw new ArgumentException("You can not select more individuals then there is in population!"); }
+        if (selectionSize % 2 == 1) { throw new ArgumentException("Selection size must be an even number!"); }
+        if (mutationChance > 100) { throw new ArgumentException("Mutation chance cannot be greater then 100%!"); }
+        if (maxIterations <= lastElementsToCheck) { throw new ArgumentException("Can't check back more iterations then the allowed maximum number of iterations!"); }
+
+        this.generationSize = (int) generationSize;
+        this.selectionSize = (int) selectionSize;
+        this.mutationChance = (int) mutationChance;
+        this.maxIterations = (int) maxIterations;
+        this.lastElementsToCheck = (int) lastElementsToCheck;
+        
         this.graph = graph;
         this.verticesConnections = new VerticesConnections(this.graph);
-        this.generationSize = generationSize;
         this.previousGeneration = new Generation(this.verticesConnections.GetUnevenVerticesIdxs(), this.generationSize);
         this.currentGeneration = new Generation(new Genotype[this.generationSize]);
+        this.bestWeightHistory= new List<edgeWeightT>();
 
         this.random = new Random();
     }
@@ -93,5 +116,69 @@ public partial class GeneticAlgorithm
         return (new Genotype(gene1), new Genotype(gene2));
     }
 
-    
+    /// <summary>
+    /// Run this function in the loop to select "good enough" elements from previous generation and crossover + mutate them into current generation
+    /// Aaand swap current and previous generation
+    /// </summary>
+    /// <param name="sortedIndicesAndWeights"></param>
+    private void SelectionWithMutation((indexT index, edgeWeightT weight)[] sortedIndicesAndWeights)
+    {
+        for (int i = 0; i < this.generationSize; i += 2) 
+        { 
+            // Get two random and different indices, representing two "good enough" genotypes
+            indexT firstParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
+            indexT secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
+            while (firstParentIdx == secondParentIdx) { secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index; }
+
+            // Crossover those two genotypes
+            (this.currentGeneration[i], this.currentGeneration[i + 1]) = Crossover(this.previousGeneration[firstParentIdx], this.previousGeneration[secondParentIdx]);
+
+            // Try to mutate new genotypes
+            if (this.mutationChance > this.random.Next(0, 100)) { this.currentGeneration[i].Mutate(); }
+            if (this.mutationChance > this.random.Next(0, 100)) { this.currentGeneration[i+1].Mutate(); }
+
+            // Swap current and previous generation
+            (this.currentGeneration, this.previousGeneration) = (this.previousGeneration, this.currentGeneration);
+        }
+    }
+
+    /// <summary>
+    /// Check whether algorithm should run or not
+    /// </summary>
+    /// <param name="iteration"></param>
+    /// <returns></returns>
+    private bool StopCondition(int iteration)
+    {
+        // Check wheter number of iterations didn't exceed maximum value
+        if (iteration > this.maxIterations) { return true; }
+
+        // Check if last "lastElementsToCheck" elements are the same
+        var lastElems = this.bestWeightHistory.Skip(Math.Max(0, this.bestWeightHistory.Count() - this.lastElementsToCheck));
+        var lastValue = this.bestWeightHistory[this.bestWeightHistory.Count()-1];
+        if (lastElems.All(val => val == lastValue)) { return true; }
+
+        return false;
+    }
+
+    public (edgeWeightT weight, Genotype genotype) MainLoop()
+    {
+        indexT bestIndex = 0;
+        for (int i = 0; true; i++)  // I still prefer for loops over while loops
+        {
+            // Calculate fitness for previous population
+            var indicesAndWeights = previousGeneration.GetIndicesAndWeights(this.verticesConnections);
+
+            // Add best (smallest) weight to list and update best index
+            this.bestWeightHistory.Add(indicesAndWeights[0].weight);
+            bestIndex = indicesAndWeights[0].index;
+
+            // If conditions fulfilled -> Stop
+            if (this.StopCondition(i)) { break; }
+
+            // Selection, crossover, mutation and population swap
+            this.SelectionWithMutation(indicesAndWeights);
+        }
+
+        return (this.bestWeightHistory[this.bestWeightHistory.Count()-1], new Genotype(this.previousGeneration[bestIndex].UnevenVerticesIdxs));
+    }
 }

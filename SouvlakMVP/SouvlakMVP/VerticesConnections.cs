@@ -15,7 +15,7 @@ public class VerticesConnections
     public class Connection
     {
         private readonly edgeWeightT weight;
-        public edgeWeightT Weight { get; }
+        public edgeWeightT Weight { get { return this.weight; } }
         private readonly List<indexT> path;
         public List<indexT> Path { get { return new List<indexT>(this.path); } }
 

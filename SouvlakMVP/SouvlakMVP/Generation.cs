@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
 using indexT = System.Int32;
-
+using edgeWeightT = System.Single;
 
 namespace SouvlakMVP;
 
@@ -81,6 +81,22 @@ public partial class GeneticAlgorithm
             // @TODO Verify length
             this.populationSize = population.Length;
             this.population = population;
+        }
+
+        /// <summary>
+        /// Returns array of tuples, containing indices of genotypes in generation and their weights
+        /// </summary>
+        /// <param name="verticesConnections"></param>
+        /// <returns></returns>
+        public (indexT index, edgeWeightT weight)[] GetIndicesAndWeights(VerticesConnections verticesConnections)
+        {
+            (indexT index, edgeWeightT weight)[] weightArray = new (indexT index, edgeWeightT weight)[this.populationSize];
+            for (int i =0; i < this.populationSize; i++)
+            {
+                weightArray[i] = (i, this.population[i].GetWeight(verticesConnections));
+            }
+            weightArray = weightArray.OrderBy(tup => tup.weight).ToArray();
+            return weightArray;
         }
     }
 }
