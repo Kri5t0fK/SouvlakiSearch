@@ -8,6 +8,7 @@ using System.Numerics;
 using indexT = System.Int32;
 using edgeWeightT = System.Single;
 using static SouvlakMVP.Graph;
+using System.Data;
 
 namespace SouvlakMVP;
 
@@ -25,7 +26,7 @@ public class Euler
         // Check the correctness of the input parameter
         if (!HasEulerCycle(graph))
         {
-            throw new Exception("Graph does not have an euler cycle.");
+            throw new DataException("Graph does not have an euler cycle.");
         }
 
         if (startVertexP != null)
