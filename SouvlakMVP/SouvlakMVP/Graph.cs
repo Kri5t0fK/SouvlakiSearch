@@ -77,6 +77,17 @@ public class Graph
 
         public static bool operator ==(Edge r1, Edge r2) => r1.targetIdx == r2.targetIdx;
         public static bool operator !=(Edge r1, Edge r2) => r1.targetIdx != r2.targetIdx;
+
+        /// <summary>
+        /// Performs a deep copy of the current object
+        /// </summary>
+        /// <returns>A new instance of the object with all of its properties deeply copied</returns>
+        public Edge DeepCopy()
+        {
+            Edge deepCopyEdge = new Edge(this.targetIdx, this.weight, this.count);
+
+            return deepCopyEdge;
+        }
     }
 
 
@@ -369,6 +380,25 @@ public class Graph
         {
             get { return this.GetEdge(idx); }
             set { this.UpdateEdge(value); }
+        }
+
+        /// <summary>
+        /// Performs a deep copy of the current object
+        /// </summary>
+        /// <returns>A new instance of the object with all of its properties deeply copied</returns>
+        public Vertex DeepCopy() 
+        {
+            Vector2 deepCopyVector2 = new Vector2(this.position.X, this.position.Y);;
+            List<Edge> deepCopyEdges = new List<Edge>();
+
+            for (int i = 0; i < this.edgeList.Count; i++)
+            {
+                deepCopyEdges.Add(this.edgeList[i].DeepCopy());
+            }
+
+            Vertex deepCopyVertex = new Vertex(deepCopyVector2, deepCopyEdges);
+
+            return deepCopyVertex;
         }
     }
 
@@ -838,5 +868,23 @@ public class Graph
     {
         get { return this.GetEdge(idx1, idx2); }
         set { this.UpdateEdge(idx1, idx2, value.weight, value.count); }
+    }
+
+    /// <summary>
+    /// Performs a deep copy of the current object
+    /// </summary>
+    /// <returns>A new instance of the object with all of its properties deeply copied</returns>
+    public Graph DeepCopy() 
+    {
+        List<Vertex> deepCopyVertices = new List<Vertex>();
+
+        for(int i = 0; i < this.graph.Count; i++)
+        {
+            deepCopyVertices.Add(this.graph[i].DeepCopy());
+        }
+
+        Graph deepCopyGraph = new Graph(deepCopyVertices);
+
+        return deepCopyGraph;
     }
 }
