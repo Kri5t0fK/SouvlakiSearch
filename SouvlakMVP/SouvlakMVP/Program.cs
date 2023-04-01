@@ -92,28 +92,10 @@ class Program
             Console.WriteLine("Minimal cost: " + pathAndCost.Item2);
         }
         */
-/*
-        // Example map (graph) with 6 intersections (vertices) 
-        Graph graph = new Graph();
-        // Intersections from 0 to 5 
-        graph.AddVertex(new Graph.Vertex(new Vector2(0, 0)));
-        graph.AddVertex(new Graph.Vertex(new Vector2(1, 0)));
-        graph.AddVertex(new Graph.Vertex(new Vector2(0, 1)));
-        graph.AddVertex(new Graph.Vertex(new Vector2(1, 1)));
-        graph.AddVertex(new Graph.Vertex(new Vector2(2, 1)));
-        graph.AddVertex(new Graph.Vertex(new Vector2(1, 2)));
-        // 9 roads and their distances 
-        graph.AddEdge(0, 1, 4f);
-        graph.AddEdge(1, 2, 3f);
-        graph.AddEdge(2, 3, 2f);
-        graph.AddEdge(3, 0, 5f);
-        graph.AddEdge(3, 4, 2f);
-        graph.AddEdge(4, 5, 3f);
-        graph.AddEdge(5, 3, 2f);
-*/
-        
-        (List<indexT>, edgeWeightT) eluerCycleAndCost = Euler.FindEulerCycle(graph);
-        Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eluerCycleAndCost.Item1));
-        Console.WriteLine("Cost of cycle: " + eluerCycleAndCost.Item2);
+
+        // This code is correct but it will throw exception if there is no euler cycle in the graph
+        //(List<indexT>, edgeWeightT) eluerCycleAndCost = Euler.FindEulerCycle(graph);
+        //Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eluerCycleAndCost.Item1));
+        //Console.WriteLine("Cost of cycle: " + eluerCycleAndCost.Item2);
     }
 }

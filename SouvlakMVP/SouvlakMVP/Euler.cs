@@ -23,6 +23,11 @@ public class Euler
         indexT startVertex = 0;
 
         // Check the correctness of the input parameter
+        if (!HasEulerCycle(graph))
+        {
+            throw new Exception("Graph does not have an euler cycle.");
+        }
+
         if (startVertexP != null)
         {
             indexT tempID = startVertexP.Value;
@@ -66,5 +71,46 @@ public class Euler
         }
 
         return (eulerCycle, totalCost);
+    }
+
+    /// <summary>Checks if the given undirected graph contains an Euler cycle.</summary>
+    /// <param name="graph">The graph to search.</param>
+    /// <returns>True if the graph contains an Euler cycle, false otherwise.</returns>
+    public static bool HasEulerCycle(Graph graph)
+    {
+        int verticesN = graph.GetVertexCount();
+
+        for (int i = 0; i < verticesN; i++)
+        {
+            int edgesN = graph[i].GetEdgeCount();
+            if (edgesN == 0 || (edgesN % 2) != 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /// <summary>Checks if the given undirected graph contains an Euler path.</summary>
+    /// <param name="graph">The graph to search.</param>
+    /// <returns>True if the graph contains an Euler path, false otherwise.</returns>
+    public static bool HasEulerPath(Graph graph)
+    {
+        int verticesN = graph.GetVertexCount();
+        int oddVerticesCounter = 0;
+
+        for (int i = 0; i < verticesN; i++)
+        {
+            int edgesN = graph[i].GetEdgeCount();
+            if (edgesN == 0)
+            {
+                return false;
+            }
+            else if ((edgesN % 2) != 0 && ++oddVerticesCounter > 2)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
