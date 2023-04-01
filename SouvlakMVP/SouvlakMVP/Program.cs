@@ -37,7 +37,7 @@ class Program
 
         // VerticesConnections vercon = new VerticesConnections(ref graph);
         //Console.WriteLine(vercon.ToString());
-        
+
         //var con = vercon[0, 2];
         //var p1 = con[1];
         //var con2 = vercon[0, 3];
@@ -92,5 +92,27 @@ class Program
             Console.WriteLine("Minimal cost: " + pathAndCost.Item2);
         }
         */
+/*
+        // Example map (graph) with 6 intersections (vertices) 
+        Graph graph = new Graph();
+        // Intersections from 0 to 5 
+        graph.AddVertex(new Graph.Vertex(new Vector2(0, 0)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(1, 0)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(0, 1)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(1, 1)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(2, 1)));
+        graph.AddVertex(new Graph.Vertex(new Vector2(1, 2)));
+        // 9 roads and their distances 
+        graph.AddEdge(0, 1, 4f);
+        graph.AddEdge(1, 2, 3f);
+        graph.AddEdge(2, 3, 2f);
+        graph.AddEdge(3, 0, 5f);
+        graph.AddEdge(3, 4, 2f);
+        graph.AddEdge(4, 5, 3f);
+        graph.AddEdge(5, 3, 2f);
+*/
+        
+        List<indexT> eulerCycle = Euler.FindEulerCycle(graph, 0);
+        Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eulerCycle));
     }
 }
