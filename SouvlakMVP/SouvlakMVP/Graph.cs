@@ -84,9 +84,7 @@ public class Graph
         /// <returns>A new instance of the object with all of its properties deeply copied</returns>
         public Edge DeepCopy()
         {
-            Edge deepCopyEdge = new Edge(this.targetIdx, this.weight, this.count);
-
-            return deepCopyEdge;
+            return new Edge(this.targetIdx, this.weight, this.count);;
         }
     }
 
@@ -396,9 +394,7 @@ public class Graph
                 deepCopyEdges.Add(this.edgeList[i].DeepCopy());
             }
 
-            Vertex deepCopyVertex = new Vertex(deepCopyVector2, deepCopyEdges);
-
-            return deepCopyVertex;
+            return new Vertex(deepCopyVector2, deepCopyEdges);;
         }
     }
 
@@ -883,8 +879,6 @@ public class Graph
             deepCopyVertices.Add(this.graph[i].DeepCopy());
         }
 
-        Graph deepCopyGraph = new Graph(deepCopyVertices);
-
-        return deepCopyGraph;
+        return new Graph(deepCopyVertices);;
     }
 }
