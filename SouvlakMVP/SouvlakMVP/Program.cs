@@ -112,7 +112,8 @@ class Program
         graph.AddEdge(5, 3, 2f);
 */
         
-        List<indexT> eulerCycle = Euler.FindEulerCycle(graph, 0);
-        Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eulerCycle));
+        (List<indexT>, edgeWeightT) eluerCycleAndCost = Euler.FindEulerCycle(graph);
+        Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eluerCycleAndCost.Item1));
+        Console.WriteLine("Cost of cycle: " + eluerCycleAndCost.Item2);
     }
 }

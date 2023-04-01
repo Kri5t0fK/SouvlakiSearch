@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Numerics;
 
 using indexT = System.Int32;
+using edgeWeightT = System.Single;
 using static SouvlakMVP.Graph;
 
 namespace SouvlakMVP;
@@ -15,8 +16,8 @@ public class Euler
     /// <summary>Finds an Eulerian cycle in the given undirected graph using Hierholzer's algorithm.</summary>
     /// <param name="graph">The graph to search.</param>
     /// <param name="startVertexP">Optional starting vertex.</param>
-    /// <returns>The Eulerian cycle as a list of vertices.</returns>
-    public static List<indexT> FindEulerCycle(Graph graph, indexT? startVertexP = null)
+    /// <returns>Tuple with the Eulerian cycle as a list of vertices and total cost.</returns>
+    public static (List<indexT>, edgeWeightT) FindEulerCycle(Graph graph, indexT? startVertexP = null)
     {
         graph = graph.DeepCopy();
         indexT startVertex = 0;
@@ -37,8 +38,9 @@ public class Euler
 
         // Stack of vertices with non-zero degree
         Stack<indexT> nonIsolatedVerticesID = new Stack<indexT>(new[] { startVertex });
-        // List for final path 
+
         List<indexT> eulerCycle = new List<indexT>();
+        edgeWeightT totalCost = 0;
 
         while (nonIsolatedVerticesID.Count > 0)
         {
@@ -58,10 +60,11 @@ public class Euler
                 // Find any edge coming out of vertex, add its target to stack and remove it from graph
                 Edge edge = edgesFromVertex[0];
                 nonIsolatedVerticesID.Push(edge.targetIdx);
+                totalCost += edge.weight;
                 graph.RemoveEdge(tempVertexID, edge.targetIdx);
             }
         }
 
-        return eulerCycle;
+        return (eulerCycle, totalCost);
     }
 }
