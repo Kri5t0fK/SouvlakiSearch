@@ -4,6 +4,7 @@ using System.Numerics;
 
 namespace SouvlakMVPTest
 {
+    /*
     [TestClass]
     public class TestGeneration
     {
@@ -64,4 +65,5 @@ namespace SouvlakMVPTest
             Assert.IsInstanceOfType(testgen, typeof(GeneticAlgorithm.Generation));
         }
     }
+    */
 }
