@@ -60,16 +60,16 @@ class Program
 
 
         // Method1: Giving start and end vertex -> one path
-        /*      
+             
         indexT startstartVertex = 0;
         indexT endstartVertex = 5;
         (List<indexT>, edgeWeightT) result = Dijkstra.FindShortestPath(graph, startstartVertex, endstartVertex);
         Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Item1)); ;
         Console.WriteLine("Minimal cost: " + result.Item2);
-        */
+        
 
         // Method2: Giving only start vertex -> all paths from start vertex 
-        /*
+        
         indexT startVertex = 0;
         Dictionary<indexT, (List<indexT>, edgeWeightT)> results = Dijkstra.FindShortestPath(graph, startVertex);
         foreach (var result in results)
@@ -78,7 +78,7 @@ class Program
             Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Value.Item1));
             Console.WriteLine("Minimal cost: " + result.Value.Item2);
         }
-        */
+        
 
         // Method2: Giving list of vertices -> Paths and costs for every combination of vertices pairs 
         /*
@@ -92,8 +92,8 @@ class Program
             Console.WriteLine("Order of intersections: " + String.Join(" -> ", pathAndCost.Item1));
             Console.WriteLine("Minimal cost: " + pathAndCost.Item2);
         }
-        */
-/*
+        
+
         // Example map (graph) with 6 intersections (vertices) 
         Graph graph = new Graph();
         // Intersections from 0 to 5 
@@ -111,7 +111,7 @@ class Program
         graph.AddEdge(3, 4, 2f);
         graph.AddEdge(4, 5, 3f);
         graph.AddEdge(5, 3, 2f);
-*/
+
         
         List<indexT> eulerCycle = Euler.FindEulerCycle(graph, 0);
         Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eulerCycle));
