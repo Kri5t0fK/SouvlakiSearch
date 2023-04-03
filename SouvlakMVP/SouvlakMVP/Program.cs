@@ -11,6 +11,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        /*
         // Example map (graph) with 6 intersections (vertices) 
         Graph graph = new Graph();
         // Intersections from 0 to 5 
@@ -114,5 +115,6 @@ class Program
         
         List<indexT> eulerCycle = Euler.FindEulerCycle(graph, 0);
         Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eulerCycle));
+        */
     }
 }
