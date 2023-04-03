@@ -94,8 +94,8 @@ class Program
         */
 
         // This code is correct but it will throw exception if there is no euler cycle in the graph
-        //(List<indexT>, edgeWeightT) eluerCycleAndCost = Euler.FindEulerCycle(graph);
-        //Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eluerCycleAndCost.Item1));
-        //Console.WriteLine("Cost of cycle: " + eluerCycleAndCost.Item2);
+        (List<indexT>, edgeWeightT) eluerCycleAndCost = Euler.FindEulerCycle(graph, genotype);
+        Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eluerCycleAndCost.Item1));
+        Console.WriteLine("Cost of cycle: " + eluerCycleAndCost.Item2);
     }
 }

@@ -238,6 +238,27 @@ public class Graph
         {
             this.AddEdge(new Edge(targetIdx, weight, count));
         }
+
+        /// <summary>
+        /// Add given edge count to an edge count of an already existing edge
+        /// </summary>
+        /// <param name="targetIdx">Target Idx of an edge we want to update</param>
+        /// <param name="count">New edge count</param>
+        /// <exception cref="IndexOutOfRangeException">Thrown if edge we want to update does not exist</exception>
+        public void IncrementEdgeCount(indexT targetIdx, edgeCountT count = 1)
+        {
+            indexT edgeIdx = this.edgeList.FindIndex(e => e.targetIdx == targetIdx);
+            if (edgeIdx == -1)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            else
+            {
+                this.edgeList[edgeIdx] = new Edge(this.edgeList[edgeIdx].targetIdx,
+                                                  this.edgeList[edgeIdx].weight,
+                                                  this.edgeList[edgeIdx].count + count);   // once again, in C# structs are copied by default
+            }
+        }
         
         /// <summary>
         /// Update an already esisting edge with new weight and count
@@ -768,7 +789,7 @@ public class Graph
     /// <param name="idx2">Index of a second vertex</param>
     /// <param name="weight">Weight of an edge</param>
     /// <param name="count">Edge's count (by default equal to 1)</param>
-    /// <exception cref="IndexOutOfRangeException">Thrown if at least one of given vertices does not exist</exception>
+    /// <exception cref="IndexOutOfRangeException">Thrown if at one of given vertices or given edge does not exist</exception>
     /// <exception cref="DuplicateEdgeException">Thrown if an edge connecting those two vertices already exists and has different weight</exception>
     public void AddEdge(indexT idx1, indexT idx2, edgeWeightT weight, edgeCountT count = 1)
     {
@@ -776,6 +797,26 @@ public class Graph
         {
             this.graph[idx1].AddEdge(idx2, weight, count);
             this.graph[idx2].AddEdge(idx1, weight, count);
+        }
+        else
+        {
+            throw new IndexOutOfRangeException("Vertex does not exist!");
+        }
+    }
+
+    /// <summary>
+    /// Increment count of given two-way edge
+    /// </summary>
+    /// <param name="idx1">Index of a first vertex</param>
+    /// <param name="idx2">Index of a second vertex</param>
+    /// <param name="count">Edge's count (by default equal to 1)</param>
+    /// <exception cref="IndexOutOfRangeException">Thrown if at least one of given vertices does not exist</exception>
+    public void IncrementEdgeCount(indexT idx1, indexT idx2, edgeCountT count = 1)
+    {
+        if ((0 <= idx1 && idx1 < this.GetVertexCount()) && (0 <= idx2 && idx2 < this.GetVertexCount()))
+        {
+            this.graph[idx1].IncrementEdgeCount(idx2, count);
+            this.graph[idx2].IncrementEdgeCount(idx1, count);
         }
         else
         {
