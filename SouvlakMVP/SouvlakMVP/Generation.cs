@@ -33,7 +33,7 @@ public partial class GeneticAlgorithm
             }
             set 
             {
-                if (this.population[idx].Length == value.Length && this.population[idx].GetHashSet() == value.GetHashSet())
+                if (this.population[idx].Length == value.Length && this.population[idx].GetHashSet().SetEquals(value.GetHashSet()))
                 {
                     this.population[idx] = value;
                 }
