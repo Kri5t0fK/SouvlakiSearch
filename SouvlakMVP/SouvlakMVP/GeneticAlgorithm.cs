@@ -136,10 +136,10 @@ public partial class GeneticAlgorithm
             // Try to mutate new genotypes
             if (this.mutationChance > this.random.Next(0, 100)) { this.currentGeneration[i].Mutate(); }
             if (this.mutationChance > this.random.Next(0, 100)) { this.currentGeneration[i+1].Mutate(); }
-
-            // Swap current and previous generation
-            (this.currentGeneration, this.previousGeneration) = (this.previousGeneration, this.currentGeneration);
         }
+
+        // Swap current and previous generation
+        (this.currentGeneration, this.previousGeneration) = (this.previousGeneration, this.currentGeneration);
     }
 
     /// <summary>
