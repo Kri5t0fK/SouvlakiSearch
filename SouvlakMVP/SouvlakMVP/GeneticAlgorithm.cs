@@ -43,7 +43,7 @@ public partial class GeneticAlgorithm
         this.graph = graph;
         this.verticesConnections = new VerticesConnections(this.graph);
         this.previousGeneration = new Generation(this.verticesConnections.GetUnevenVerticesIdxs(), this.generationSize);
-        this.currentGeneration = new Generation(new Genotype[this.generationSize]);
+        this.currentGeneration = new Generation(this.verticesConnections.GetUnevenVerticesIdxs(), this.generationSize);
         this.bestWeightHistory= new List<edgeWeightT>();
 
         this.random = new Random();
@@ -153,9 +153,12 @@ public partial class GeneticAlgorithm
         if (iteration > this.maxIterations) { return true; }
 
         // Check if last "lastElementsToCheck" elements are the same
-        var lastElems = this.bestWeightHistory.Skip(Math.Max(0, this.bestWeightHistory.Count() - this.lastElementsToCheck));
-        var lastValue = this.bestWeightHistory[this.bestWeightHistory.Count()-1];
-        if (lastElems.All(val => val == lastValue)) { return true; }
+        if (iteration > this.lastElementsToCheck)
+        {
+            var lastElems = this.bestWeightHistory.Skip(this.bestWeightHistory.Count - this.lastElementsToCheck);
+            var lastValue = this.bestWeightHistory[this.bestWeightHistory.Count - 1];
+            if (lastElems.All(val => val == lastValue)) { return true; }
+        }
 
         return false;
     }
