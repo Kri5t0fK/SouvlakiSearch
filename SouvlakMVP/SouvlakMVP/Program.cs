@@ -45,11 +45,11 @@ class Program
         //Console.WriteLine("\n\n");
 
         // Console.WriteLine(vercon.ToString());
-        Console.WriteLine("\n\n");
+        // Console.WriteLine("\n\n");
         var geneticAlgorithm = new GeneticAlgorithm(graph);
         (var weight, var genotype) = geneticAlgorithm.MainLoop();
         Console.WriteLine("\nBest weight history: " + String.Join(", ", geneticAlgorithm.BestWeightHistory));
-        Console.WriteLine(genotype.ToString());
+        Console.WriteLine("Best genotype:" + genotype.ToString());
         //(var child1, var child2) = GeneticAlgorithm.Crossover(new GeneticAlgorithm.Genotype(new indexT[] {0, 1, 2, 3, 4, 5, 6, 7}),
         //                           new GeneticAlgorithm.Genotype(new indexT[] {7, 4, 5, 6, 3, 0, 1, 2}));
 
