@@ -22,6 +22,16 @@ public partial class GeneticAlgorithm
     {
         get { return bestWeightHistory; }
     }
+    private List<edgeWeightT> medianWeightHistory;
+    public List<edgeWeightT> MedianWeightHistory
+    {
+        get { return medianWeightHistory; }
+    }
+    private List<edgeWeightT> worstWeightHistory;
+    public List<edgeWeightT> WorstWeightHistory
+    {
+        get { return worstWeightHistory; }
+    }
 
 
     private readonly Random random;
@@ -45,6 +55,8 @@ public partial class GeneticAlgorithm
         this.previousGeneration = new Generation(this.verticesConnections.GetUnevenVerticesIdxs(), this.generationSize);
         this.currentGeneration = new Generation(this.verticesConnections.GetUnevenVerticesIdxs(), this.generationSize);
         this.bestWeightHistory= new List<edgeWeightT>();
+        this.medianWeightHistory = new List<edgeWeightT>();
+        this.worstWeightHistory = new List<edgeWeightT>();
 
         this.random = new Random();
     }
@@ -173,6 +185,8 @@ public partial class GeneticAlgorithm
 
             // Add best (smallest) weight to list and update best index
             this.bestWeightHistory.Add(indicesAndWeights[0].weight);
+            this.medianWeightHistory.Add(indicesAndWeights[this.generationSize / 2].weight);  // division of two ints gives an int
+            this.worstWeightHistory.Add(indicesAndWeights[this.generationSize - 1].weight);
             bestIndex = indicesAndWeights[0].index;
 
             // If conditions fulfilled -> Stop
