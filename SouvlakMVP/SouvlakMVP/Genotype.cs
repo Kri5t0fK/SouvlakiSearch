@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 
 using genotypeSizeT = System.Int32;
+using indexT = System.Int32;
+using edgeWeightT = System.Single;
 
 
 namespace SouvlakMVP;
@@ -32,68 +34,166 @@ public partial class GeneticAlgorithm
             public NonEvenNumberOfVerticesException(string message) : base(message) { }
         }
 
+
         /// <summary>
-        /// Genotype: a list of even number of "odd vertices".
+        /// Genotype: a list of even number of "uneven vertices" indexes.
         /// Odd vertices - vertices with odd number of neighbours.
         /// </summary>
-        private readonly List<Graph.Vertex> _oddVertices;
+        private indexT[] unevenVerticesIdxs;
+        public indexT[] UnevenVerticesIdxs
+        {
+            get
+            {
+                indexT[] output = new indexT[this.unevenVerticesIdxs.Length];
+                Array.Copy(this.unevenVerticesIdxs, output, this.unevenVerticesIdxs.Length);
+                return output; 
+            }
+            set 
+            { 
+                // Check whether new array contains the same elements as the previous one
+                if (value.Length == this.unevenVerticesIdxs.Length && new HashSet<indexT>(value) == new HashSet<indexT>(this.unevenVerticesIdxs))
+                {
+                    this.unevenVerticesIdxs = value;
+                }
+                else
+                {
+                    throw new InvalidDataException("New array contains different data");
+                }
+            }
+        }
 
-        /// <summary>
-        /// Getter for a copy of Vertices list of Genotype.
-        /// </summary>
-        public List<Graph.Vertex> OddVertices { get { return new List<Graph.Vertex>(this._oddVertices); } }
 
         // Read-only Indexer for accesing the list
-        public Graph.Vertex this[int i]
+        public indexT this[int i]
         {
-            get { return this._oddVertices[i]; }
+            get { return this.unevenVerticesIdxs[i]; }
         }
 
         /// <summary>
-        /// Genotype class constructor. receives a list of Vertices that represent the Genotype.
+        /// Genotype class constructor. Eeceives an array of Vertices indices that represent the Genotype.
         /// </summary>
-        /// <param name="_oddVertices"></param>
+        /// <param name="unevenVerticesIdxs"></param>
         /// <exception cref="ArgumentException"></exception>
-        public Genotype(List<Graph.Vertex> _oddVertices)
+        public Genotype(indexT[] unevenVerticesIdxs)
         {
             // Validity checks
-            if (!(_oddVertices.Distinct().Count() == _oddVertices.Count()))
+            if (!(unevenVerticesIdxs.Distinct().Count() == unevenVerticesIdxs.Length))
             {
                 throw new NonUniqueVerticesException();
             }
-            if (!(_oddVertices.Count() % 2 == 0))
+            if (!(unevenVerticesIdxs.Length % 2 == 0))
             {
                 throw new NonEvenNumberOfVerticesException();
             }
 
-            this._oddVertices = _oddVertices;
+            this.unevenVerticesIdxs = new indexT[unevenVerticesIdxs.Length];
+            Array.Copy(unevenVerticesIdxs, this.unevenVerticesIdxs, unevenVerticesIdxs.Length);
         }
 
         /// <summary>
-        /// Returns list of tuple pairs of Vertices of Genotype.
+        /// Getter for Genotype indices array size.
         /// </summary>
-        public List<(Graph.Vertex, Graph.Vertex)> GetPairs()
+        public genotypeSizeT Length
         {
-            // Define output list
-            List<(Graph.Vertex, Graph.Vertex)> output = new();
+            get { return this.unevenVerticesIdxs.Length; }
+        }
 
-            // Get number of pairs in vertex list, list count is always even
-            int pairsCount = this.Size / 2;
+        /// <summary>
+        /// Returns hash set containing all uneven vertices indices
+        /// </summary>
+        /// <returns></returns>
+        public HashSet<indexT> GetHashSet()
+        {
+            return new HashSet<indexT>(this.unevenVerticesIdxs);
+        }
+
+        /// <summary>
+        /// Returns array of tuple pairs of Vertices indices of Genotype.
+        /// </summary>
+        public (indexT start, indexT stop)[] GetPairs()
+        {
+            // Get number of pairs in indices array, array length is always even
+            int pairsCount = this.Length / 2;
+
+            // Define output array
+            (indexT start, indexT stop)[] output = new (indexT start, indexT stop)[pairsCount];
+
             for (int pairID = 0; pairID < pairsCount; pairID++)
             {
-                (Graph.Vertex, Graph.Vertex) pair = (this[2*pairID], this[2*pairID + 1]);
-                output.Add(pair);
+                output[pairID] = (this[2 * pairID], this[2 * pairID + 1]);
             }
             // Return list of pairs
             return output;
         }
 
         /// <summary>
-        /// Getter for Genotype Vertex list size.
+        /// Returns weight of a genotype. The greater the value the weaker the genotype!
         /// </summary>
-        public genotypeSizeT Size
+        /// <param name="vercon">VerticesConnections object (passed by reference) used to calculate connection's costs</param>
+        /// <returns></returns>
+        public edgeWeightT GetWeight(VerticesConnections vercon)
         {
-            get { return this._oddVertices.Count; }
+            edgeWeightT weight = 0;
+            int pairsCount = this.Length / 2;
+
+            for (int pairID = 0; pairID < pairsCount; pairID++)
+            {
+                weight += vercon[this[2 * pairID], this[2 * pairID + 1]].Weight;
+            }
+
+            return weight;
         }
+
+        /// <summary>
+        /// Check whether genotype contains a value
+        /// </summary>
+        /// <param name="value">Value to check</param>
+        /// <param name="start">Optional: from where to start search</param>
+        /// <param name="stop">Optional: where to end search</param>
+        /// <returns></returns>
+        public bool Contains(indexT value, int? start = null, int? stop = null)
+        {
+            if (start == null)
+            {
+                start = 0;
+            }
+            if (stop == null)
+            {
+                stop = this.Length;
+            }
+            for (int i=start.Value; i<stop.Value; i++)
+            {
+                if (this.unevenVerticesIdxs[i] == value) { return true; }
+            }
+
+            return false;
+        }
+
+        public override string ToString()
+        {
+            string str = "[ ";
+            foreach (indexT idx in this.unevenVerticesIdxs) 
+            {
+                str += idx.ToString() + " ";
+            }
+            return str + "]";
+        }
+
+        /// <summary>
+        /// Swaps two random values inside this object
+        /// </summary>
+        public void Mutate()
+        {
+            // Generate two, different idxs
+            Random rnd= new Random();
+            indexT idx1 = rnd.Next(0, this.Length);
+            indexT idx2 = rnd.Next(0, this.Length);
+            while (idx1 == idx2) { idx2 = rnd.Next(0, this.Length); }
+
+            // Swap two value
+            // Gotta love tuple unpacking :3
+            (this.unevenVerticesIdxs[idx1], this.unevenVerticesIdxs[idx2]) = (this.unevenVerticesIdxs[idx2], this.unevenVerticesIdxs[idx1]);
+        }
+
     }
 }
