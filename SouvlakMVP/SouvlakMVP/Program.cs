@@ -97,5 +97,8 @@ class Program
         (List<indexT>, edgeWeightT) eluerCycleAndCost = Euler.FindEulerCycle(graph, genotype);
         Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eluerCycleAndCost.Item1));
         Console.WriteLine("Cost of cycle: " + eluerCycleAndCost.Item2);
+
+        Console.WriteLine("\npress any key to exit the process...");
+        Console.ReadKey();
     }
 }
