@@ -5,6 +5,8 @@ using System.Linq;
 using indexT = System.Int32;
 using edgeWeightT = System.Single;    // no maidens?
 using edgeCountT = System.Int32;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 
 /// <summary>
@@ -31,9 +33,9 @@ public class Graph
     /// </summary>
     public struct Edge
     {
-        public indexT targetIdx;
-        public edgeWeightT weight;
-        public edgeCountT count;
+        public indexT targetIdx { get; set; }
+        public edgeWeightT weight { get; set; }
+        public edgeCountT count { get; set; }
 
         /// <summary>
         /// Initializes a new instance of Edge class
@@ -94,8 +96,8 @@ public class Graph
     /// </summary>
     public struct Vertex
     {
-        public Vector2 position;
-        public List<Edge> edgeList;
+        public Vector2 position { get; set; }
+        public List<Edge> edgeList { get; set; }
 
         /// <summary>
         /// Initializes new instance of Vertex class
@@ -458,7 +460,13 @@ public class Graph
     /// <param name="path">Path to JSON file containing graph's structure</param>
     public Graph(string path)
     {
-        throw new NotImplementedException();
+        JsonSerializerOptions _options = new()
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Converters = { new Vector2Converter() }
+        };
+        using FileStream graphJSON = File.OpenRead(path);
+        this.graph = JsonSerializer.Deserialize<List<Vertex>>(graphJSON, _options);
     }
 
     /// <summary>
@@ -475,7 +483,15 @@ public class Graph
     /// <param name="path"></param>
     public void ToFile(string path)
     {
-        throw new NotImplementedException();
+        JsonSerializerOptions _options = new()
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Converters = { new Vector2Converter() },
+            WriteIndented = true
+        };
+
+        var jsonString = JsonSerializer.Serialize(this.graph, _options);
+        File.WriteAllText(path, jsonString);
     }
 
     /// <summary>
