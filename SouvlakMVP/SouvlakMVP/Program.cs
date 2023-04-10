@@ -31,9 +31,12 @@ class Program
         graph.AddEdge(3, 5, 1f);
         graph.AddEdge(4, 5, 2f);
 
-        // TwojaStara
         // Map visualization
         Console.WriteLine(graph.ToString());
+
+        // Writing/saving graph to/from .JSON file
+        graph.ToFile("Test.json");
+        graph = new Graph("Test.json");
 
         // VerticesConnections vercon = new VerticesConnections(ref graph);
         //Console.WriteLine(vercon.ToString());
