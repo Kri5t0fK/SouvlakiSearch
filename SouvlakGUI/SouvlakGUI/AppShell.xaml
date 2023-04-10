@@ -7,9 +7,20 @@
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False">
 
-    <ShellContent
-        Title="Graph"
-        ContentTemplate="{DataTemplate views:GraphPage}"
-    />
+    <TabBar>
+        <ShellContent
+            Title="Graph selection"
+            ContentTemplate="{DataTemplate views:GraphSelectPage}"
+            />
+        <ShellContent
+            Title="Algorithm options"
+            ContentTemplate="{DataTemplate views:AlgorithmOptionsPage}"
+            />
+        <ShellContent
+            Title="Result"
+            ContentTemplate="{DataTemplate views:ResultPage}"
+            />
+
+    </TabBar>
 
 </Shell>

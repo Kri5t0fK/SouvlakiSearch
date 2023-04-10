@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SouvlakGUI.Views.GraphSelectPage"
+             Title="GraphSelectPage">
+    <Grid ColumnDefinitions="*, 300" Margin="5">
+        <Border Grid.Column="0" Margin="5" Stroke="black" >
+            <Label Text="Display selected, original graph" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Border>
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Margin="5" Spacing="5">
+                <Grid ColumnDefinitions="*, *">
+                    <Button Grid.Column="1" ImageSource="{FontImage Glyph='→', Color=White, Size=25}" Text="Calculate" CornerRadius="25" ContentLayout="Right" FontAttributes="Bold"/>
+                </Grid>
+                <Label Text=""/>
+                <Label Text="Add list of available graphs"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
