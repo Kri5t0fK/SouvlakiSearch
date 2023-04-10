@@ -2,7 +2,6 @@ using genotypeSizeT = System.Int32;
 using indexT = System.Int32;
 using edgeWeightT = System.Single;
 
-
 namespace SouvlakGUI.Models;
 
 
