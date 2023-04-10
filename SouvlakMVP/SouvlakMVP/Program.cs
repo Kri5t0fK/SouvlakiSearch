@@ -31,7 +31,7 @@ class Program
         graph.AddEdge(3, 5, 1f);
         graph.AddEdge(4, 5, 2f);
 
-
+        // TwojaStara
         // Map visualization
         Console.WriteLine(graph.ToString());
 
