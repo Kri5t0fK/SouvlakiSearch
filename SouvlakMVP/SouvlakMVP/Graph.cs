@@ -466,7 +466,12 @@ public class Graph
             Converters = { new Vector2Converter() }
         };
         using FileStream graphJSON = File.OpenRead(path);
-        this.graph = JsonSerializer.Deserialize<List<Vertex>>(graphJSON, _options);
+        List<Vertex>? tempGraph = JsonSerializer.Deserialize<List<Vertex>>(graphJSON, _options);
+        if (tempGraph == null)
+        {
+            throw new Exception("Json file is not correct");
+        }
+        this.graph = tempGraph;
     }
 
     /// <summary>
