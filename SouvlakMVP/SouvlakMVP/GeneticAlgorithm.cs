@@ -13,8 +13,8 @@ public partial class GeneticAlgorithm
     private readonly int maxIterations;
     private readonly int lastElementsToCheck;
 
-    private Graph graph;
-    private VerticesConnections verticesConnections;
+    public Graph graph { get; }
+    public VerticesConnections verticesConnections { get; }
     private Generation previousGeneration;
     private Generation currentGeneration;
     private List<edgeWeightT> bestWeightHistory;
@@ -197,5 +197,36 @@ public partial class GeneticAlgorithm
         }
 
         return (this.bestWeightHistory[this.bestWeightHistory.Count()-1], new Genotype(this.previousGeneration[bestIndex].UnevenVerticesIdxs));
+    }
+
+    /// <summary>
+    /// Create copy of GeneticAlgorithms graph and (if asked) fill it paths given by genotype
+    /// </summary>
+    /// <param name="genotype"></param>
+    /// <returns></returns>
+    public Graph GetUpdatedGraph(Genotype? genotype = null)
+    {
+        // Create copy
+        Graph newGraph = this.graph.DeepCopy();
+        
+        // If asked fill it with paths from genotype
+        if (genotype != null)
+        {
+            // Each genotype has pairs of edges, that have to be connected
+            foreach ((indexT start, indexT stop) in genotype.GetPairs())
+            {
+                // Get path that connects those pairs of edges
+                List<indexT> path = this.verticesConnections[start, stop].Path;
+                
+                // Separate this path into individual edges
+                for (int i = 0; i < path.Count-1; i++)
+                {
+                    // Increment right edge
+                    newGraph.IncrementEdgeCount(path[i], path[i+1]);
+                }
+            }
+        }
+
+        return newGraph;
     }
 }

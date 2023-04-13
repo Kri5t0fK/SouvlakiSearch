@@ -37,10 +37,9 @@ class Program
         // graph.ToFile("../../../exampleGraphs/test.json");
 
         // Example of reading graph from .json
-        Graph graph = new Graph("../../../exampleGraphs/graphV4E5.json");
-
+        Graph graph = new Graph("../../../exampleGraphs/graphV10E15.json");
         // Map visualization
-        Console.WriteLine(graph.ToString());
+        // Console.WriteLine(graph.ToString());
 
         // VerticesConnections vercon = new VerticesConnections(ref graph);
         //Console.WriteLine(vercon.ToString());
@@ -54,11 +53,25 @@ class Program
         // Console.WriteLine(vercon.ToString());
         // Console.WriteLine("\n\n");
         var geneticAlgorithm = new GeneticAlgorithm(graph);
+        var vercon = new VerticesConnections(graph);
+
         (var weight, var genotype) = geneticAlgorithm.MainLoop();
         Console.WriteLine("\nBest weight history: " + String.Join(", ", geneticAlgorithm.BestWeightHistory));
         Console.WriteLine("Worst weight history: " + String.Join(", ", geneticAlgorithm.WorstWeightHistory));
         Console.WriteLine("Best genotype:" + genotype.ToString());
-        
+        //VerticesConnections vercon = geneticAlgorithm.verticesConnections;
+        //Console.WriteLine(vercon[7, 9].ToStringFull());
+        //Console.WriteLine(vercon[0, 1].ToStringFull());
+        //Console.WriteLine(vercon[5, 4].ToStringFull());
+        //Console.WriteLine(vercon.ToString());
+        Graph filledGraph = geneticAlgorithm.GetUpdatedGraph(genotype);
+        (List<indexT>, edgeWeightT) eluerCycleAndCost = Euler.FindEulerCycle(filledGraph);
+        Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eluerCycleAndCost.Item1));
+        Console.WriteLine("Cost of cycle: " + eluerCycleAndCost.Item2);
+
+        //Console.WriteLine("\npress any key to exit the process...");
+        //Console.ReadKey();
+
         //(var child1, var child2) = GeneticAlgorithm.Crossover(new GeneticAlgorithm.Genotype(new indexT[] {0, 1, 2, 3, 4, 5, 6, 7}),
         //                           new GeneticAlgorithm.Genotype(new indexT[] {7, 4, 5, 6, 3, 0, 1, 2}));
 
@@ -66,11 +79,15 @@ class Program
         //Console.WriteLine(child2.ToString());
 
 
-
+        //indexT startstartVertex = 7;
+        //indexT endstartVertex = 9;
+        //(List<indexT>, edgeWeightT) result = Dijkstra.GetPathAndCost(graph, startstartVertex, endstartVertex);
+        //Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Item1)); ;
+        //Console.WriteLine("Minimal cost: " + result.Item2);
         // Method1: Giving start and end vertex -> one path
         /*      
-        indexT startstartVertex = 0;
-        indexT endstartVertex = 5;
+        indexT startstartVertex = 7;
+        indexT endstartVertex = 9;
         (List<indexT>, edgeWeightT) result = Dijkstra.FindShortestPath(graph, startstartVertex, endstartVertex);
         Console.WriteLine("Order of intersections: " + String.Join(" -> ", result.Item1)); ;
         Console.WriteLine("Minimal cost: " + result.Item2);
@@ -103,11 +120,6 @@ class Program
         */
 
         // This code is correct but it will throw exception if there is no euler cycle in the graph
-        (List<indexT>, edgeWeightT) eluerCycleAndCost = Euler.FindEulerCycle(graph, genotype);
-        Console.WriteLine("\nEuler cycle: " + String.Join(" -> ", eluerCycleAndCost.Item1));
-        Console.WriteLine("Cost of cycle: " + eluerCycleAndCost.Item2);
 
-        Console.WriteLine("\npress any key to exit the process...");
-        Console.ReadKey();
     }
 }
