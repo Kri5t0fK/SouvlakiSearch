@@ -53,7 +53,10 @@ class Program
         // Console.WriteLine(vercon.ToString());
         // Console.WriteLine("\n\n");
         var geneticAlgorithm = new GeneticAlgorithm(graph);
-        var vercon = new VerticesConnections(graph);
+        //var vercon = new VerticesConnections(graph);
+        //var v = vercon[1, 3];
+        //Console.WriteLine(vercon.ToString());
+        //Console.WriteLine(vercon[1, 3].ToStringFull());
 
         (var weight, var genotype) = geneticAlgorithm.MainLoop();
         Console.WriteLine("\nBest weight history: " + String.Join(", ", geneticAlgorithm.BestWeightHistory));

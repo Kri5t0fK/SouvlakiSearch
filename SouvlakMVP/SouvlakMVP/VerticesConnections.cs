@@ -271,11 +271,11 @@ public class VerticesConnections
                 (indexT?[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcClassicDijkstra(start);
 
                 List<indexT> endVertices = new List<indexT>();
-                for (indexT j = 0; j < this.connectionMatrix.GetLength(1); j++)
+                foreach (indexT j in this.indexTranslate.Keys)
                 {
-                    if (j != start && this.connectionMatrix[this.indexTranslate[start], j] == null)
+                    if (j != start && this.connectionMatrix[this.indexTranslate[start], this.indexTranslate[j]] == null)
                     {
-                        endVertices.Add(this.indexTranslate.First(e => e.Value == j).Key);
+                        endVertices.Add(j);
                     }
                 }
 
