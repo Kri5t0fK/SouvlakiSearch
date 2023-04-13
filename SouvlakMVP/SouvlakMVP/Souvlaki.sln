@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SouvlakMVP", "SouvlakMVP.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SouvlakMVPTest", "..\SouvlakMVPTest\SouvlakMVPTest.csproj", "{B42F54B4-8C28-4FF6-A928-17F0E9A9F322}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SouvlakGUI", "..\SouvlakGUI\SouvlakGUI.csproj", "{92BB1B6B-6F25-431A-A7D9-A2CBEAF1EE34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{B42F54B4-8C28-4FF6-A928-17F0E9A9F322}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B42F54B4-8C28-4FF6-A928-17F0E9A9F322}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B42F54B4-8C28-4FF6-A928-17F0E9A9F322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92BB1B6B-6F25-431A-A7D9-A2CBEAF1EE34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92BB1B6B-6F25-431A-A7D9-A2CBEAF1EE34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92BB1B6B-6F25-431A-A7D9-A2CBEAF1EE34}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{92BB1B6B-6F25-431A-A7D9-A2CBEAF1EE34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92BB1B6B-6F25-431A-A7D9-A2CBEAF1EE34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92BB1B6B-6F25-431A-A7D9-A2CBEAF1EE34}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
