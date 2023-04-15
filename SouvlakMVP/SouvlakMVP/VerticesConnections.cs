@@ -3,6 +3,7 @@
 using System.Linq;
 using indexT = System.Int32;
 using edgeWeightT = System.Single;
+using System.Linq.Expressions;
 
 /// <summary>
 /// Interface for easy use of dijkstra algorithm
@@ -262,17 +263,17 @@ public class VerticesConnections
         }
         else
         {
-            start = this.indexTranslate[start];
-            stop = this.indexTranslate[stop];
+            //start = this.indexTranslate[start];
+            //stop = this.indexTranslate[stop];
 
-            if (this.connectionMatrix[start, stop] == null)
+            if (this.connectionMatrix[this.indexTranslate[start], this.indexTranslate[stop]] == null)
             {
                 (indexT?[] precedingVertices, edgeWeightT[] minCostToVertex) = CalcClassicDijkstra(start);
 
                 List<indexT> endVertices = new List<indexT>();
-                for (indexT j = 0; j < this.connectionMatrix.GetLength(1); j++)
+                foreach (indexT j in this.indexTranslate.Keys)
                 {
-                    if (j != start && this.connectionMatrix[start, j] == null)
+                    if (j != start && this.connectionMatrix[this.indexTranslate[start], this.indexTranslate[j]] == null)
                     {
                         endVertices.Add(j);
                     }
@@ -281,14 +282,21 @@ public class VerticesConnections
                 foreach (indexT endVertex in endVertices)
                 {
                     (List<indexT> path, edgeWeightT weight) pAc = GetPathAndCost(precedingVertices, minCostToVertex, endVertex);
+                    //List<indexT> path = new();
+                    //foreach (indexT elem in pAc.path)
+                    //{
+                    //    path.Add(this.indexTranslate.FirstOrDefault(e => e.Value == elem).Key);
+                    //}
                     List<indexT> pathReverse = Enumerable.Reverse(pAc.path).ToList();
 
-                    this.connectionMatrix[start, endVertex] = new Connection(pAc.weight, pAc.path);
-                    this.connectionMatrix[endVertex, start] = new Connection(pAc.weight, pathReverse);
+                    this.connectionMatrix[this.indexTranslate[start], this.indexTranslate[endVertex]] = new Connection(pAc.weight, pAc.path);
+                    this.connectionMatrix[this.indexTranslate[endVertex], this.indexTranslate[start]] = new Connection(pAc.weight, pathReverse);
+                    
+                    // Console.WriteLine(String.Join(" -> ", path));
                 }
             }
             
-            return this.connectionMatrix[start, stop];
+            return this.connectionMatrix[this.indexTranslate[start], this.indexTranslate[stop]];
         }
     }
 

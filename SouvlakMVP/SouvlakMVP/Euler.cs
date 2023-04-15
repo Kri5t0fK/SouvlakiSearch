@@ -18,20 +18,15 @@ public class Euler
     /// <param name="graph">The graph to search.</param>
     /// <param name="startVertexP">Optional starting vertex.</param>
     /// <returns>Tuple with the Eulerian cycle as a list of vertices and total cost.</returns>
-    public static (List<indexT>, edgeWeightT) FindEulerCycle(Graph graph, GeneticAlgorithm.Genotype? genotype = null, indexT? startVertexP = null)
+    public static (List<indexT>, edgeWeightT) FindEulerCycle(Graph graph, indexT? startVertexP = null, bool copyGraph = true)
     {
+        // If aksed, operate on copy of graph
+        if (copyGraph)
+        {
+            graph = graph.DeepCopy();
+        }
         graph = graph.DeepCopy();
         indexT startVertex = 0;
-
-        // If genotype has been given, add necessary edges to the graph
-        // This functionality is kept inside FindEulerCycle() method, to reduce the number of times graph has to be copied
-        if (genotype != null)
-        {
-            foreach (var pair in genotype.GetPairs())
-            {
-                graph.IncrementEdgeCount(pair.start, pair.stop);
-            }
-        }
 
         // Check the correctness of the input parameter
         if (!HasEulerCycle(graph))
