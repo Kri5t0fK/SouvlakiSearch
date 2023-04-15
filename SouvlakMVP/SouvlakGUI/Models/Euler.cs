@@ -51,7 +51,7 @@ public class Euler
             // Get the vertexID from top of the stack (without removing)
             indexT tempVertexID = nonIsolatedVerticesID.Peek();
             // Get the list of the edges coming out from the vertex
-            List<Edge> edgesFromVertex = graph[tempVertexID].edgeList;
+            List<Graph.Edge> edgesFromVertex = graph[tempVertexID].edgeList;
 
             if (edgesFromVertex.Count == 0)
             {
@@ -62,7 +62,7 @@ public class Euler
             else
             {
                 // Find any edge coming out of vertex, add its target to stack and remove it from graph
-                Edge edge = edgesFromVertex[0];
+                Graph.Edge edge = edgesFromVertex[0];
                 nonIsolatedVerticesID.Push(edge.targetIdx);
                 totalCost += edge.weight;
                 graph.RemoveEdge(tempVertexID, edge.targetIdx);

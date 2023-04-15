@@ -190,7 +190,7 @@ public class Graph
         /// <summary>
         /// Check whether vertex contains a specific edge
         /// </summary>
-        /// <param name="targetIdx">Edge that existence we want to confirm</param>
+        /// <param name="edge">Edge that existence we want to confirm</param>
         /// <returns>True if connection exists, otherwise false</returns>
         public bool ContainsEdge(Edge edge)
         {

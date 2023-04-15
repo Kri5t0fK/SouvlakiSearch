@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SouvlakGUI.Views.AlgorithmOptionsPage"
+             xmlns:models="clr-namespace:SouvlakGUI.Models"
              Title="AlgorithmOptionsPage">
+
     <Grid ColumnDefinitions="*, 300" Margin="5">
         <Border Grid.Column="0" Margin="5" Stroke="black" >
             <Label Text="Add plot displaying GA's values history" VerticalOptions="Center" HorizontalOptions="Center"/>

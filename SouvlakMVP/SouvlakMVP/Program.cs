@@ -52,7 +52,7 @@ class Program
 
         // Console.WriteLine(vercon.ToString());
         // Console.WriteLine("\n\n");
-        var geneticAlgorithm = new GeneticAlgorithm(graph);
+        var geneticAlgorithm = new GeneticAlgorithm(graph, generationSize: 6, selectionSize: 4);
         //var vercon = new VerticesConnections(graph);
         //var v = vercon[1, 3];
         //Console.WriteLine(vercon.ToString());

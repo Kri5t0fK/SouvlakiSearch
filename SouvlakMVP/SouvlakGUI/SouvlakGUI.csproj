@@ -49,6 +49,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiAsset Remove="Resources\Raw\graphV10E15.json" />
+	  <MauiAsset Remove="Resources\Raw\graphV4E4.json" />
+	  <MauiAsset Remove="Resources\Raw\graphV4E5.json" />
+	  <MauiAsset Remove="Resources\Raw\graphV6E9.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
