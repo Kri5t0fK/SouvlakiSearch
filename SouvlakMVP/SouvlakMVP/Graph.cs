@@ -492,7 +492,6 @@ public class Graph
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             Converters = { new Vector2Converter() }
-            // WriteIndented = true
         };
 
         var jsonString = JsonSerializer.Serialize(this.graph, _options);
