@@ -425,7 +425,7 @@ public class Graph
     /// <summary>
     /// Field that holds all intersections, aka. graph
     /// </summary>
-    private List<Vertex> graph;
+    public List<Vertex> graph { get; set; }
 
     /// <summary>
     /// Create new instance of Graph class
@@ -491,8 +491,8 @@ public class Graph
         JsonSerializerOptions _options = new()
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            Converters = { new Vector2Converter() },
-            WriteIndented = true
+            Converters = { new Vector2Converter() }
+            // WriteIndented = true
         };
 
         var jsonString = JsonSerializer.Serialize(this.graph, _options);

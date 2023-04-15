@@ -11,7 +11,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        /*
+        
                 // Example map (graph) with 6 intersections (vertices) 
                 Graph graph = new Graph();
                 // Intersections from 0 to 5 
@@ -31,13 +31,13 @@ class Program
                 graph.AddEdge(2, 5, 1f);
                 graph.AddEdge(3, 5, 1f);
                 graph.AddEdge(4, 5, 2f);
-        */
+        
 
         // Example of saving graph to .json
-        // graph.ToFile("../../../exampleGraphs/test.json");
+        graph.ToFile("../../../exampleGraphs/test.json");
 
         // Example of reading graph from .json
-        Graph graph = new Graph("../../../exampleGraphs/graphV10E15.json");
+        //Graph graph = new Graph("../../../exampleGraphs/graphV10E15.json");
         // Map visualization
         // Console.WriteLine(graph.ToString());
 

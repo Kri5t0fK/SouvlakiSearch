@@ -30,23 +30,34 @@ public partial class GraphSelectPage : ContentPage
 
             try
             {
-                var stream = FileSystem.Current.OpenAppPackageFileAsync(filename).Result;
+                //var assembly = typeof(App).GetTypeInfo().Assembly;
+                //var assemblyName = assembly.GetName().Name;
+                //var stream = assembly.GetManifestResourceStream($"{assemblyName}/{filename}");
+                //if ( stream == null )
+                //{
+                //    ((RadioButton)sender).IsChecked = false;
+                //    ((App)Application.Current).Manager.ReloadGraph(null);
+                //    Application.Current.MainPage.DisplayAlert("ERROR", "Couldn't open file " + filename + "!", "OK");
+                //}
+                var stream = FileSystem.OpenAppPackageFileAsync(filename).Result;
 
-                //List<Graph.Vertex>? tempGraph = JsonSerializer.Deserialize<List<Graph.Vertex>>(stream);
-                //if (tempGraph == null)
-                //{
-                //    await Application.Current.MainPage.DisplayAlert("ERROR", "Failed to load selected JSON file!", "OK");
-                //}
-                //else
-                //{
-                //    ((App)Application.Current).Manager.ReloadGraph(new Graph(tempGraph));
-                //}
+                List<Graph.Vertex>? tempGraph = JsonSerializer.Deserialize<List<Graph.Vertex>>(stream, _options);
+                if (tempGraph == null)
+                {
+                    ((RadioButton)sender).IsChecked = false;
+                    ((App)Application.Current).Manager.ReloadGraph(null);
+                    Application.Current.MainPage.DisplayAlert("ERROR", "Selected JSON file contains errors!", "OK");
+                }
+                else
+                {
+                    ((App)Application.Current).Manager.ReloadGraph(new Graph(tempGraph));
+                }
             }
             catch (Exception ex)
             {
-                ((RadioButton)sender).IsChecked= false;
+                ((RadioButton)sender).IsChecked = false;
                 ((App)Application.Current).Manager.ReloadGraph(null);
-                Application.Current.MainPage.DisplayAlert("ERROR", "Couldn't find file " + filename + "!", "OK");
+                Application.Current.MainPage.DisplayAlert("ERROR", "Couldn't load file " + filename + "!", "OK");
             }
         }
     }
