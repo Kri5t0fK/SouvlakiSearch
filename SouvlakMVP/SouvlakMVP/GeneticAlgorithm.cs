@@ -141,21 +141,45 @@ public partial class GeneticAlgorithm
         return (new Genotype(gene1), new Genotype(gene2));
     }
 
+     private static indexT RankSelection((indexT index, edgeWeightT weight)[] sortedIndicesAndWeights){
+        int sum_of_ranks = (sortedIndicesAndWeights.Length * sortedIndicesAndWeights.Length + 1) / 2;
+        float pick = 0f;
+        Random rnd = new Random();
+        int stop = rnd.Next(0, sum_of_ranks);
+        for(int i=0; i<sortedIndicesAndWeights.Length; i++){
+            pick += i + 1;
+            if (pick > (float)stop){
+                return sortedIndicesAndWeights[i].index;
+            }
+        }
+        return sortedIndicesAndWeights.Last().index;
+     }
+
 
     /// <summary>
     /// Run this function in the loop to select "good enough" elements from previous generation and crossover + mutate them into current generation
     /// Aaand swap current and previous generation
     /// </summary>
     /// <param name="sortedIndicesAndWeights"></param>
-    private void SelectionWithMutation((indexT index, edgeWeightT weight)[] sortedIndicesAndWeights, String crossoverType)
+    private void SelectionWithMutation((indexT index, edgeWeightT weight)[] sortedIndicesAndWeights, String crossoverType, String selectionType)
     {
         for (int i = 0; i < this.generationSize; i += 2) 
         { 
-            // Get two random and different indices, representing two "good enough" genotypes
-            indexT firstParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
-            indexT secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
-            while (firstParentIdx == secondParentIdx) { secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index; }
-
+            indexT firstParentIdx;
+            indexT secondParentIdx;
+            if (selectionType == "rank-selection"){
+                // rank selection
+                firstParentIdx = RankSelection(sortedIndicesAndWeights);
+                secondParentIdx = RankSelection(sortedIndicesAndWeights);
+            }
+            else {
+                // Get two random and different indices, representing two "good enough" genotypes
+                // Giga Vlad Adrjan random Odłamek Wymiocin selection 
+                firstParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
+                secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
+                while (firstParentIdx == secondParentIdx) { secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index; }
+            }
+          
             // Crossover those two genotypes
             (this.currentGeneration[i], this.currentGeneration[i + 1]) = Crossover(this.previousGeneration[firstParentIdx], this.previousGeneration[secondParentIdx], crossoverType);
 
@@ -189,7 +213,7 @@ public partial class GeneticAlgorithm
         return false;
     }
 
-    public (edgeWeightT weight, Genotype genotype) MainLoop(String crossoverType)
+    public (edgeWeightT weight, Genotype genotype) MainLoop(String crossoverType, String selectionType = "")
     {
         indexT bestIndex = 0;
         for (int i = 0; true; i++)  // I still prefer for loops over while loops
@@ -207,7 +231,7 @@ public partial class GeneticAlgorithm
             if (this.StopCondition(i)) { break; }
 
             // Selection, crossover, mutation and population swap
-            this.SelectionWithMutation(indicesAndWeights, crossoverType);
+            this.SelectionWithMutation(indicesAndWeights, crossoverType, selectionType);
         }
 
         return (this.bestWeightHistory[this.bestWeightHistory.Count()-1], new Genotype(this.previousGeneration[bestIndex].UnevenVerticesIdxs));

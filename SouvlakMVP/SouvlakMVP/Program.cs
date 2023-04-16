@@ -58,7 +58,7 @@ class Program
         //Console.WriteLine(vercon.ToString());
         //Console.WriteLine(vercon[1, 3].ToStringFull());
 
-        (var weight, var genotype) = geneticAlgorithm.MainLoop("one-point");
+        (var weight, var genotype) = geneticAlgorithm.MainLoop("one-point", "rank-selection");
         Console.WriteLine("\nBest weight history: " + String.Join(", ", geneticAlgorithm.BestWeightHistory));
         Console.WriteLine("Worst weight history: " + String.Join(", ", geneticAlgorithm.WorstWeightHistory));
         Console.WriteLine("Best genotype:" + genotype.ToString());
