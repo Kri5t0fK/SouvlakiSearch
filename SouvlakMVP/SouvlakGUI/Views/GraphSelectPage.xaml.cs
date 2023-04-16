@@ -1,7 +1,4 @@
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;
 using SouvlakGUI.Models;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -62,4 +59,16 @@ public partial class GraphSelectPage : ContentPage
         }
     }
     #nullable disable
+
+    private void Calculate(object sender, EventArgs e)
+    {
+        if (((App)Application.Current).Manager.SelectedGraph != null)
+        {
+            ((App)Application.Current).Manager.Calculate();
+        } 
+        else
+        {
+            Application.Current.MainPage.DisplayAlert("Warning", "Please select a graph before calculating!", "OK");
+        }
+    }
 }

@@ -11,10 +11,11 @@
         </Border>
         <ScrollView Grid.Column="1">
             <VerticalStackLayout Margin="5" Spacing="5">
-                <Grid ColumnDefinitions="*, *">
-                    <Button Grid.Column="1" ImageSource="{FontImage Glyph='→', Color=White, Size=25}" Text="Calculate" CornerRadius="25" ContentLayout="Right" FontAttributes="Bold"/>
+                <Grid ColumnDefinitions="*, 3*, *">
+                    <Button Grid.Column="1" ImageSource="{FontImage Glyph='✓', Color=White, Size=25}" Text="Calculate" CornerRadius="25" ContentLayout="Right" FontAttributes="Bold" Clicked="Calculate"/>
                 </Grid>
-                <Label Text="Example graphs:"/>
+                <Label/>
+                <Label Text="Select graph:" FontSize="20"/>
                 <CollectionView ItemsSource="{Binding ExampleGraphs}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>

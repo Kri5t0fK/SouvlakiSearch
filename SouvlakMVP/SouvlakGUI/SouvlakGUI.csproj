@@ -53,10 +53,7 @@
 	  <MauiAsset Remove="Resources\Raw\graphV4E4.json" />
 	  <MauiAsset Remove="Resources\Raw\graphV4E5.json" />
 	  <MauiAsset Remove="Resources\Raw\graphV6E9.json" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="Resources\Raw\person.json" />
+	  <MauiAsset Remove="Resources\Raw\graphV77E123.json" />
 	</ItemGroup>
 
 	<ItemGroup>
