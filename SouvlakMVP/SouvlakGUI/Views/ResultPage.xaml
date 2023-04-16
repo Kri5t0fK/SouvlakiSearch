@@ -10,12 +10,23 @@
             <Label Text="Display modified graph" VerticalOptions="Center" HorizontalOptions="Center"/>
         </Border>
         <ScrollView Grid.Column="1">
-            <VerticalStackLayout Margin="5" Spacing="5">
-                <Grid ColumnDefinitions="*, *">
-                    <Button Grid.Column="1" ImageSource="{FontImage Glyph='→', Color=White, Size=25}" Text="Calculate" CornerRadius="25" ContentLayout="Right" FontAttributes="Bold"/>
+            <VerticalStackLayout  Margin="5" Spacing="5">
+                <Grid ColumnDefinitions="*, 3*, *">
+                    <Button Grid.Column="1" ImageSource="{FontImage Glyph='🖩', Color=White, Size=25}" Text="Calculate" CornerRadius="25" ContentLayout="Right" FontAttributes="Bold" Clicked="Calculate"/>
                 </Grid>
                 <Label Text=""/>
-                <Label Text="Display road and weight"/>
+                <Label Text="{Binding TotalCost, StringFormat='Total Euler cost: {0:F2}'}" FontSize="18"/>
+                <Label Text=""/>
+                <Label Text="Euler cycle:" FontSize="18"/>
+                <ListView ItemsSource="{Binding EulerCycle}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}" HorizontalTextAlignment="Center"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

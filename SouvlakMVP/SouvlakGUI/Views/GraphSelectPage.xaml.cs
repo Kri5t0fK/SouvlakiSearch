@@ -60,15 +60,15 @@ public partial class GraphSelectPage : ContentPage
     }
     #nullable disable
 
-    private void Calculate(object sender, EventArgs e)
+    private async void Calculate(object sender, EventArgs e)
     {
         if (((App)Application.Current).Manager.SelectedGraph != null)
         {
-            ((App)Application.Current).Manager.Calculate();
+            await Task.Run(() => ((App)Application.Current).Manager.Calculate());
         } 
         else
         {
-            Application.Current.MainPage.DisplayAlert("Warning", "Please select a graph before calculating!", "OK");
+            await Application.Current.MainPage.DisplayAlert("Warning", "Please select a graph before calculating!", "OK");
         }
     }
 }
