@@ -62,7 +62,7 @@ public partial class GeneticAlgorithm
     }
 
 
-    public static (Genotype child1, Genotype child2) Crossover(Genotype parent1, Genotype parent2)
+    public static (Genotype child1, Genotype child2) Crossover(Genotype parent1, Genotype parent2, String crossoverType)
     {
         // Get length and create children genes
         if (parent1.Length != parent2.Length)
@@ -82,7 +82,20 @@ public partial class GeneticAlgorithm
         Dictionary<indexT, indexT> gene1Exchange = new Dictionary<indexT, indexT>();
         Dictionary<indexT, indexT> gene2Exchange = new Dictionary<indexT, indexT>();
 
-        for (int i = crossoverRange[0]; i < crossoverRange[1]; i++)
+        // simple one-point crossover adjustment
+        if(crossoverType == "one-point"){
+            // this way we will copy beginning of the genotype and cross the end
+            crossoverRange[0] = 0;
+        }
+        else if(crossoverType == "two-point"){
+            // do nothing xd
+        }
+        else{
+            // undefined crossover, throw error
+            throw new InvalidDataException("Undefined crossover type! Possible types are: \"two-point\" and \"one-point\"");
+        }
+
+        for (int i = 0; i < crossoverRange[1]; i++)
         {
             // Copy crossover range into children
             gene1[i] = parent1[i];
@@ -128,12 +141,13 @@ public partial class GeneticAlgorithm
         return (new Genotype(gene1), new Genotype(gene2));
     }
 
+
     /// <summary>
     /// Run this function in the loop to select "good enough" elements from previous generation and crossover + mutate them into current generation
     /// Aaand swap current and previous generation
     /// </summary>
     /// <param name="sortedIndicesAndWeights"></param>
-    private void SelectionWithMutation((indexT index, edgeWeightT weight)[] sortedIndicesAndWeights)
+    private void SelectionWithMutation((indexT index, edgeWeightT weight)[] sortedIndicesAndWeights, String crossoverType)
     {
         for (int i = 0; i < this.generationSize; i += 2) 
         { 
@@ -143,7 +157,7 @@ public partial class GeneticAlgorithm
             while (firstParentIdx == secondParentIdx) { secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index; }
 
             // Crossover those two genotypes
-            (this.currentGeneration[i], this.currentGeneration[i + 1]) = Crossover(this.previousGeneration[firstParentIdx], this.previousGeneration[secondParentIdx]);
+            (this.currentGeneration[i], this.currentGeneration[i + 1]) = Crossover(this.previousGeneration[firstParentIdx], this.previousGeneration[secondParentIdx], crossoverType);
 
             // Try to mutate new genotypes
             if (this.mutationChance > this.random.Next(0, 100)) { this.currentGeneration[i].Mutate(); }
@@ -175,7 +189,7 @@ public partial class GeneticAlgorithm
         return false;
     }
 
-    public (edgeWeightT weight, Genotype genotype) MainLoop()
+    public (edgeWeightT weight, Genotype genotype) MainLoop(String crossoverType)
     {
         indexT bestIndex = 0;
         for (int i = 0; true; i++)  // I still prefer for loops over while loops
@@ -193,7 +207,7 @@ public partial class GeneticAlgorithm
             if (this.StopCondition(i)) { break; }
 
             // Selection, crossover, mutation and population swap
-            this.SelectionWithMutation(indicesAndWeights);
+            this.SelectionWithMutation(indicesAndWeights, crossoverType);
         }
 
         return (this.bestWeightHistory[this.bestWeightHistory.Count()-1], new Genotype(this.previousGeneration[bestIndex].UnevenVerticesIdxs));

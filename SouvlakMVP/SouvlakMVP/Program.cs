@@ -12,32 +12,32 @@ class Program
     static void Main(string[] args)
     {
         
-                // Example map (graph) with 6 intersections (vertices) 
-                Graph graph = new Graph();
-                // Intersections from 0 to 5 
-                graph.AddVertex(new Graph.Vertex(new Vector2(0, 0)));
-                graph.AddVertex(new Graph.Vertex(new Vector2(1, 0)));
-                graph.AddVertex(new Graph.Vertex(new Vector2(0, 1)));
-                graph.AddVertex(new Graph.Vertex(new Vector2(1, 1)));
-                graph.AddVertex(new Graph.Vertex(new Vector2(2, 1)));
-                graph.AddVertex(new Graph.Vertex(new Vector2(1, 2)));
-                // 9 roads and their distances 
-                graph.AddEdge(0, 1, 3f);
-                graph.AddEdge(0, 5, 6f);
-                graph.AddEdge(0, 4, 3f);
-                graph.AddEdge(1, 2, 1f);
-                graph.AddEdge(1, 3, 3f);
-                graph.AddEdge(2, 3, 3f);
-                graph.AddEdge(2, 5, 1f);
-                graph.AddEdge(3, 5, 1f);
-                graph.AddEdge(4, 5, 2f);
+                // // Example map (graph) with 6 intersections (vertices) 
+                // Graph graph = new Graph();
+                // // Intersections from 0 to 5 
+                // graph.AddVertex(new Graph.Vertex(new Vector2(0, 0)));
+                // graph.AddVertex(new Graph.Vertex(new Vector2(1, 0)));
+                // graph.AddVertex(new Graph.Vertex(new Vector2(0, 1)));
+                // graph.AddVertex(new Graph.Vertex(new Vector2(1, 1)));
+                // graph.AddVertex(new Graph.Vertex(new Vector2(2, 1)));
+                // graph.AddVertex(new Graph.Vertex(new Vector2(1, 2)));
+                // // 9 roads and their distances 
+                // graph.AddEdge(0, 1, 3f);
+                // graph.AddEdge(0, 5, 6f);
+                // graph.AddEdge(0, 4, 3f);
+                // graph.AddEdge(1, 2, 1f);
+                // graph.AddEdge(1, 3, 3f);
+                // graph.AddEdge(2, 3, 3f);
+                // graph.AddEdge(2, 5, 1f);
+                // graph.AddEdge(3, 5, 1f);
+                // graph.AddEdge(4, 5, 2f);
         
 
         // Example of saving graph to .json
-        graph.ToFile("../../../exampleGraphs/test.json");
+        // graph.ToFile("../../../exampleGraphs/test.json");
 
         // Example of reading graph from .json
-        //Graph graph = new Graph("../../../exampleGraphs/graphV10E15.json");
+        Graph graph = new Graph("exampleGraphs/graphV10E15.json");
         // Map visualization
         // Console.WriteLine(graph.ToString());
 
@@ -58,7 +58,7 @@ class Program
         //Console.WriteLine(vercon.ToString());
         //Console.WriteLine(vercon[1, 3].ToStringFull());
 
-        (var weight, var genotype) = geneticAlgorithm.MainLoop();
+        (var weight, var genotype) = geneticAlgorithm.MainLoop("one-point");
         Console.WriteLine("\nBest weight history: " + String.Join(", ", geneticAlgorithm.BestWeightHistory));
         Console.WriteLine("Worst weight history: " + String.Join(", ", geneticAlgorithm.WorstWeightHistory));
         Console.WriteLine("Best genotype:" + genotype.ToString());
