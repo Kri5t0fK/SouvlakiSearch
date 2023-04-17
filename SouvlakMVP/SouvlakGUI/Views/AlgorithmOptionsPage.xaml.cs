@@ -40,6 +40,32 @@ public partial class AlgorithmOptionsPage : ContentPage
     }
 
 
+    //private void SelectionChosen(object sender, CheckedChangedEventArgs e)
+    //{
+    //    if (sender.ToString() == "n-best genotypes")
+    //    {
+    //        ((App)Application.Current).Manager.selectionType = Models.GeneticAlgorithm.SelectionType.NBest;
+    //    }
+    //    else if (sender.ToString() == "rank")
+    //    {
+    //        ((App)Application.Current).Manager.selectionType = Models.GeneticAlgorithm.SelectionType.Rank;
+    //    }
+        
+    //}
+
+    //private void CrossoverChosen(object sender, CheckedChangedEventArgs e)
+    //{
+    //    if (sender.ToString() == "two-point")
+    //    {
+    //        ((App)Application.Current).Manager.crossoverType = Models.GeneticAlgorithm.CrossoverType.TwoPoint;
+    //    } else if (sender.ToString() == "one-point")
+    //    {
+    //        ((App)Application.Current).Manager.crossoverType = Models.GeneticAlgorithm.CrossoverType.OnePoint;
+    //    }
+
+    //}
+
+
     private async void Calculate(object sender, EventArgs e)
     {
         if (((App)Application.Current).Manager.SelectedGraph != null)

@@ -127,6 +127,11 @@ public class Manager : INotifyPropertyChanged
         OnPropertyChanged(nameof(EulerCycle));
     }
 
+    //public GeneticAlgorithm.SelectionType selectionType { get; set; } = GeneticAlgorithm.SelectionType.NBest;
+    //public GeneticAlgorithm.CrossoverType crossoverType { get; set; } = GeneticAlgorithm.CrossoverType.TwoPoint;
+    public bool UseRankSelection { get; set; } = false;
+    public bool UseOnePointCrossover { get; set; } = false;
+
 
     public void Calculate()
     {

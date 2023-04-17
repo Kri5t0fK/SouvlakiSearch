@@ -34,11 +34,28 @@
                 <Label Text="Elements to check in stop condition:" FontSize="16"/>
                 <Entry Keyboard="Numeric" Text="{Binding StopConditionSize, Mode=TwoWay}" Completed="ValidateStopConditionSize" TextColor="DimGray">
                 </Entry>
+
+                <!--<Label Text="Selection type:" FontSize="16"/>
+                <VerticalStackLayout Margin="0" Spacing="0">
+                    <RadioButton Content="n-best genotypes" CheckedChanged="SelectionChosen" IsChecked="True"/>
+                    <RadioButton Content="rank" CheckedChanged="SelectionChosen"/>
+                </VerticalStackLayout>
+
+                <Label Text="Crossover type:" FontSize="16"/>
+                <VerticalStackLayout Margin="0" Spacing="0">
+                    <RadioButton Content="two-point" CheckedChanged="CrossoverChosen" IsChecked="True"/>
+                    <RadioButton Content="one-point" CheckedChanged="CrossoverChosen"/>
+                </VerticalStackLayout>-->
                 
-                <!--<HorizontalStackLayout>
-                    <CheckBox/>
-                    <Label Text="Allow parent-children crossover" VerticalOptions="Center"/>
-                </HorizontalStackLayout>-->
+                <HorizontalStackLayout>
+                    <CheckBox IsChecked="{Binding UseRankSelection}"/>
+                    <Label Text="Use rank selection instead of n-best" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout>
+                    <CheckBox IsChecked="{Binding UseOnePointCrossover}"/>
+                    <Label Text="Use one-point crossover instead of two-point" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

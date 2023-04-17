@@ -7,6 +7,18 @@ namespace SouvlakGUI.Models;
 
 public partial class GeneticAlgorithm
 {
+    //public enum SelectionType
+    //{
+    //    NBest,
+    //    Rank
+    //}
+
+    //public enum CrossoverType
+    //{
+    //    TwoPoint,
+    //    OnePoint
+    //}
+
     private readonly int generationSize;
     private readonly int selectionSize;
     private readonly int mutationChance;
@@ -62,7 +74,7 @@ public partial class GeneticAlgorithm
     }
 
 
-    public static (Genotype child1, Genotype child2) Crossover(Genotype parent1, Genotype parent2)
+    public static (Genotype child1, Genotype child2) Crossover(Genotype parent1, Genotype parent2, bool onePointCrossover = false)
     {
         // Get length and create children genes
         if (parent1.Length != parent2.Length)
@@ -76,7 +88,13 @@ public partial class GeneticAlgorithm
         // Get random crossover range
         Random rnd = new Random();
         indexT[] crossoverRange = { rnd.Next(0, len), rnd.Next(0, len) };
-        Array.Sort(crossoverRange); // I know it has only two values, but one line functions look cool
+        if (onePointCrossover)
+        {
+            crossoverRange[0] = 0;
+        } else
+        {
+            Array.Sort(crossoverRange); // I know it has only two values, but one line functions look cool
+        }
 
         // Create exchange pairs
         Dictionary<indexT, indexT> gene1Exchange = new Dictionary<indexT, indexT>();
@@ -128,22 +146,51 @@ public partial class GeneticAlgorithm
         return (new Genotype(gene1), new Genotype(gene2));
     }
 
+    private static indexT RankSelection((indexT index, edgeWeightT weight)[] sortedIndicesAndWeights)
+    {
+        int sum_of_ranks = (sortedIndicesAndWeights.Length * sortedIndicesAndWeights.Length + 1) / 2;
+        float pick = 0f;
+        Random rnd = new Random();
+        int stop = rnd.Next(0, sum_of_ranks);
+        for (int i = 0; i < sortedIndicesAndWeights.Length; i++)
+        {
+            pick += i + 1;
+            if (pick > (float)stop)
+            {
+                return sortedIndicesAndWeights[i].index;
+            }
+        }
+        return sortedIndicesAndWeights.Last().index;
+    }
+
+
     /// <summary>
     /// Run this function in the loop to select "good enough" elements from previous generation and crossover + mutate them into current generation
     /// Aaand swap current and previous generation
     /// </summary>
     /// <param name="sortedIndicesAndWeights"></param>
-    private void SelectionWithMutation((indexT index, edgeWeightT weight)[] sortedIndicesAndWeights)
+    private void SelectionWithMutation((indexT index, edgeWeightT weight)[] sortedIndicesAndWeights, bool rankSelection = false, bool onePointCrossover = false)
     {
         for (int i = 0; i < this.generationSize; i += 2) 
-        { 
-            // Get two random and different indices, representing two "good enough" genotypes
-            indexT firstParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
-            indexT secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
-            while (firstParentIdx == secondParentIdx) { secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index; }
+        {
+            indexT firstParentIdx;
+            indexT secondParentIdx;
+            if (rankSelection)
+            {
+                // Rank selection
+                firstParentIdx = RankSelection(sortedIndicesAndWeights);
+                secondParentIdx = RankSelection(sortedIndicesAndWeights);
+            }
+            else
+            {
+                // Get two random and different indices, representing two "good enough" genotypes
+                firstParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
+                secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index;
+                while (firstParentIdx == secondParentIdx) { secondParentIdx = sortedIndicesAndWeights[this.random.Next(0, this.selectionSize)].index; }
+            }
 
             // Crossover those two genotypes
-            (this.currentGeneration[i], this.currentGeneration[i + 1]) = Crossover(this.previousGeneration[firstParentIdx], this.previousGeneration[secondParentIdx]);
+            (this.currentGeneration[i], this.currentGeneration[i + 1]) = Crossover(this.previousGeneration[firstParentIdx], this.previousGeneration[secondParentIdx], onePointCrossover);
 
             // Try to mutate new genotypes
             if (this.mutationChance > this.random.Next(0, 100)) { this.currentGeneration[i].Mutate(); }
