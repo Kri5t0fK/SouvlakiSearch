@@ -1,3 +1,4 @@
+using SouvlakGUI.Drawables;
 using SouvlakGUI.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,6 +15,14 @@ public partial class GraphSelectPage : ContentPage
     }
 
     #nullable enable
+    public void RedrawGraph(Graph? graph)
+    {
+        var graphicsView = this.GraphDrawableView;
+        var graphDrawable = (GraphDrawable)graphicsView.Drawable;
+        graphDrawable.Graph = graph;
+        graphicsView.Invalidate();
+    }
+
     private void NewExampleGraphSelected(object sender, CheckedChangedEventArgs e)    // At this point I don't care about warnings...
     {
         if (e.Value)
@@ -43,17 +52,21 @@ public partial class GraphSelectPage : ContentPage
                 {
                     ((RadioButton)sender).IsChecked = false;
                     ((App)Application.Current).Manager.ReloadGraph(null);
+                    RedrawGraph(null);
                     Application.Current.MainPage.DisplayAlert("ERROR", "Selected JSON file contains errors!", "OK");
                 }
                 else
                 {
-                    ((App)Application.Current).Manager.ReloadGraph(new Graph(tempGraph));
+                    Graph newGraph = new Graph(tempGraph);
+                    ((App)Application.Current).Manager.ReloadGraph(newGraph);
+                    RedrawGraph(newGraph);
                 }
             }
             catch (Exception ex)
             {
                 ((RadioButton)sender).IsChecked = false;
                 ((App)Application.Current).Manager.ReloadGraph(null);
+                RedrawGraph(null);
                 Application.Current.MainPage.DisplayAlert("ERROR", "Couldn't load file " + filename + "!", "OK");
             }
         }

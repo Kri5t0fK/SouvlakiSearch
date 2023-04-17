@@ -139,7 +139,8 @@ public class Manager : INotifyPropertyChanged
         this.Algorithm = new GeneticAlgorithm(this.SelectedGraph, (uint) this._generationSize, (uint) this._selectionSize, (uint) this._mutationChance, (uint) this._iterations, (uint) this._stopConditionSize);
         (this.BestGenotypeWeight, this.BestGenotype) = this.Algorithm.MainLoop();
         this.UpdatedGraph = this.Algorithm.GetUpdatedGraph(this.BestGenotype);
-        (this.EulerCycle, this.TotalCost) = Euler.FindEulerCycle(this.UpdatedGraph, copyGraph: false);
+
+        (this.EulerCycle, this.TotalCost) = Euler.FindEulerCycle(this.UpdatedGraph, copyGraph: true);
 
         OnPropertyChanged(nameof(BestGenotypeWeight));
         OnPropertyChanged(nameof(TotalCost));

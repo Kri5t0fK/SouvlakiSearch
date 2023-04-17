@@ -1,3 +1,5 @@
+using SouvlakGUI.Drawables;
+using SouvlakGUI.Models;
 namespace SouvlakGUI.Views;
 
 public partial class ResultPage : ContentPage
@@ -8,15 +10,25 @@ public partial class ResultPage : ContentPage
 		BindingContext = ((App)Application.Current).Manager;
     }
 
+    public void RedrawGraph()
+    {
+        var graphicsView = this.GraphDrawableView;
+        var graphDrawable = (GraphDrawable)graphicsView.Drawable;
+        graphDrawable.Graph = ((App)Application.Current).Manager.UpdatedGraph;
+        graphicsView.Invalidate();
+    }
+
     private async void Calculate(object sender, EventArgs e)
     {
         if (((App)Application.Current).Manager.SelectedGraph != null)
         {
             await Task.Run(() => ((App)Application.Current).Manager.Calculate());
+            RedrawGraph();
         }
         else
         {
             await Application.Current.MainPage.DisplayAlert("Warning", "Please select a graph before calculating!", "OK");
+            RedrawGraph();
         }
     }
 }

@@ -428,7 +428,7 @@ public class Graph
     /// <summary>
     /// Field that holds all intersections, aka. graph
     /// </summary>
-    private List<Vertex> graph;
+    public List<Vertex> graph { get; set; }
 
     /// <summary>
     /// Create new instance of Graph class

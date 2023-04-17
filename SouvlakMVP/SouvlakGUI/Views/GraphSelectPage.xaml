@@ -3,11 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SouvlakGUI.Views.GraphSelectPage"
              xmlns:models="clr-namespace:SouvlakGUI.Models"
+             xmlns:drawables="clr-namespace:SouvlakGUI.Drawables"
              Title="GraphSelectPage">
 
+    <ContentPage.Resources>
+        <drawables:GraphDrawable x:Key="graphDrawable"/>
+    </ContentPage.Resources>
+    
     <Grid ColumnDefinitions="*, 300" Margin="5">
         <Border Grid.Column="0" Margin="5" Stroke="black" >
-            <Label Text="Display selected, original graph" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <GraphicsView Drawable="{StaticResource graphDrawable}" x:Name="GraphDrawableView"/>
         </Border>
         <ScrollView Grid.Column="1">
             <VerticalStackLayout Margin="5" Spacing="5">
