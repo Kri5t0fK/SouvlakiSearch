@@ -196,7 +196,7 @@ public partial class GeneticAlgorithm
             this.SelectionWithMutation(indicesAndWeights);
         }
 
-        return (this.bestWeightHistory[this.bestWeightHistory.Count()-1], new Genotype(this.previousGeneration[bestIndex].UnevenVerticesIdxs));
+        return (this.bestWeightHistory[this.bestWeightHistory.Count() - 1], new Genotype(this.previousGeneration[bestIndex].UnevenVerticesIdxs));
     }
 
     /// <summary>

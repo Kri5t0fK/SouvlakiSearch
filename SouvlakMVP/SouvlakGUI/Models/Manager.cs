@@ -12,7 +12,7 @@ public class Manager : INotifyPropertyChanged
     }
 
     #nullable enable
-    public List<string> ExampleGraphs { get; set; } = new List<string>() { "test", "graphV4E4", "graphV4E5", "graphV6E9", "graphV10E15", "graphV77E123" };
+    public List<string> ExampleGraphs { get; set; } = new List<string>() { "Vertices4Edges5", "Vertices6Edges9", "Vertices10Edges15" };
 
     public Graph? SelectedGraph { get; set; } = null;
     public Graph? UpdatedGraph { get; set; } = null;
@@ -122,6 +122,9 @@ public class Manager : INotifyPropertyChanged
         this.Algorithm = null;
 
         OnPropertyChanged(nameof(SelectedGraph));
+        OnPropertyChanged(nameof(BestGenotypeWeight));
+        OnPropertyChanged(nameof(TotalCost));
+        OnPropertyChanged(nameof(EulerCycle));
     }
 
 
