@@ -8,6 +8,8 @@ public partial class ResultPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = ((App)Application.Current).Manager;
+        MessagingCenter.Subscribe<GraphSelectPage>(this, "Calculate", (sender) => { DoCalculations(); });
+        MessagingCenter.Subscribe<AlgorithmOptionsPage>(this, "Calculate", (sender) => { DoCalculations(); });
     }
 
     public void RedrawGraph()
@@ -18,7 +20,8 @@ public partial class ResultPage : ContentPage
         graphicsView.Invalidate();
     }
 
-    private async void Calculate(object sender, EventArgs e)
+
+    private async void DoCalculations()
     {
         if (((App)Application.Current).Manager.SelectedGraph != null)
         {
@@ -30,5 +33,11 @@ public partial class ResultPage : ContentPage
             await Application.Current.MainPage.DisplayAlert("Warning", "Please select a graph before calculating!", "OK");
             RedrawGraph();
         }
+    }
+
+
+    private void Calculate(object sender, EventArgs e)
+    {
+        DoCalculations();
     }
 }

@@ -73,15 +73,8 @@ public partial class GraphSelectPage : ContentPage
     }
     #nullable disable
 
-    private async void Calculate(object sender, EventArgs e)
+    private void Calculate(object sender, EventArgs e)
     {
-        if (((App)Application.Current).Manager.SelectedGraph != null)
-        {
-            await Task.Run(() => ((App)Application.Current).Manager.Calculate());
-        } 
-        else
-        {
-            await Application.Current.MainPage.DisplayAlert("Warning", "Please select a graph before calculating!", "OK");
-        }
+        MessagingCenter.Send(this, "Calculate");
     }
 }
