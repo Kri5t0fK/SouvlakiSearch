@@ -18,7 +18,8 @@ public class GraphDrawable : IDrawable
         if (Graph == null)
         {
             canvas.FontSize = 24;
-            canvas.DrawString("Please select a graph to see preview", width/2, height/2, HorizontalAlignment.Center);
+            canvas.Font = Microsoft.Maui.Graphics.Font.Default;
+            canvas.DrawString("Please select graph / run algoritm to see preview", width/2, height/2, HorizontalAlignment.Center);
         }
         else
         {

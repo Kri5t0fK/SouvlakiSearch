@@ -8,6 +8,7 @@ public partial class ResultPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = ((App)Application.Current).Manager;
+        MessagingCenter.Subscribe<GraphSelectPage>(this, "Clear", (sender) => { RedrawGraph(); });
         MessagingCenter.Subscribe<GraphSelectPage>(this, "Calculate", (sender) => { DoCalculations(); });
         MessagingCenter.Subscribe<AlgorithmOptionsPage>(this, "Calculate", (sender) => { DoCalculations(); });
     }

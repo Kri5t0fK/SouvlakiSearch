@@ -21,6 +21,7 @@ public partial class GraphSelectPage : ContentPage
         var graphDrawable = (GraphDrawable)graphicsView.Drawable;
         graphDrawable.Graph = graph;
         graphicsView.Invalidate();
+        MessagingCenter.Send(this, "Clear");
     }
 
     private void NewExampleGraphSelected(object sender, CheckedChangedEventArgs e)    // At this point I don't care about warnings...
