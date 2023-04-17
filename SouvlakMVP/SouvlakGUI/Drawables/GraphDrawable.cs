@@ -2,7 +2,9 @@
 
 public class GraphDrawable : IDrawable
 {
+    #nullable enable
     public Models.Graph? Graph { get; set; } = null;
+    #nullable disable
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
