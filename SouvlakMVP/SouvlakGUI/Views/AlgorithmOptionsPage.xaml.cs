@@ -1,3 +1,5 @@
+using SouvlakGUI.Drawables;
+
 namespace SouvlakGUI.Views;
 
 public partial class AlgorithmOptionsPage : ContentPage
@@ -6,6 +8,8 @@ public partial class AlgorithmOptionsPage : ContentPage
 	{
 		InitializeComponent();
         BindingContext = ((App)Application.Current).Manager;
+        MessagingCenter.Subscribe<GraphSelectPage>(this, "Clear", (sender) => { RedrawPlot(); });
+        MessagingCenter.Subscribe<ResultPage>(this, "Redraw", (sender) => { RedrawPlot(); });
     }
 
 
@@ -69,5 +73,25 @@ public partial class AlgorithmOptionsPage : ContentPage
     private void Calculate(object sender, EventArgs e)
     {
         MessagingCenter.Send(this, "Calculate");
+    }
+
+    private void RedrawPlot()
+    {
+        var graphicsView = this.PlotDrawableView;
+        var plotDrawable = (PlotDrawable)graphicsView.Drawable;
+        if (((App)Application.Current).Manager.Algorithm != null)
+        {
+            plotDrawable.bestWeights = ((App)Application.Current).Manager.Algorithm.BestWeightHistory;
+            plotDrawable.medianWeights = ((App)Application.Current).Manager.Algorithm.MedianWeightHistory;
+            plotDrawable.worstWeights = ((App)Application.Current).Manager.Algorithm.WorstWeightHistory;
+        }
+        else
+        {
+            plotDrawable.bestWeights = new List<float>();
+            plotDrawable.medianWeights = new List<float>();
+            plotDrawable.worstWeights = new List<float> ();
+        }
+        
+        graphicsView.Invalidate();
     }
 }

@@ -34,6 +34,7 @@ public partial class ResultPage : ContentPage
             await Application.Current.MainPage.DisplayAlert("Warning", "Please select a graph before calculating!", "OK");
             RedrawGraph();
         }
+        MessagingCenter.Send(this, "Redraw");
     }
 
 

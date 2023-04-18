@@ -3,11 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SouvlakGUI.Views.AlgorithmOptionsPage"
              xmlns:models="clr-namespace:SouvlakGUI.Models"
+             xmlns:drawables="clr-namespace:SouvlakGUI.Drawables"
              Title="AlgorithmOptionsPage">
+
+    <ContentPage.Resources>
+        <drawables:PlotDrawable x:Key="plotDrawable"/>
+    </ContentPage.Resources>
 
     <Grid ColumnDefinitions="*, 300" Margin="5">
         <Border Grid.Column="0" Margin="5" Stroke="black" >
-            <Label Text="Add plot displaying GA's values history" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <GraphicsView Drawable="{StaticResource plotDrawable}" x:Name="PlotDrawableView" Margin="5"/>
         </Border>
         <ScrollView Grid.Column="1">
             <VerticalStackLayout Margin="5" Spacing="3">
