@@ -1,4 +1,6 @@
-﻿namespace SouvlakGUI.Drawables;
+﻿using Microsoft.Maui.Graphics;
+
+namespace SouvlakGUI.Drawables;
 
 public class PlotDrawable : IDrawable
 {
@@ -14,10 +16,10 @@ public class PlotDrawable : IDrawable
         Color bestColor = Colors.DarkGreen;
         Color medianColor = Colors.DarkOrange;
         Color worstColor = Colors.DarkRed;
-        Color AxisColor = Colors.DarkGray;
+        Color AxisColor = Colors.Black;
 
         float basicStrokeSize = 3;
-        float boldStrokesize = 5;
+        float boldStrokesize = 4;
 
         int numOfWei = bestWeights.Count;
 
@@ -53,8 +55,8 @@ public class PlotDrawable : IDrawable
             canvas.DrawLine(areaXLims.low - 1, areaYLims.low, areaXLims.low + arrowSize, areaYLims.low + arrowSize);
 
             // Axis scale limits
-            float minWeight = new List<float>() { bestWeights.Min(), medianWeights.Min(), worstWeights.Min() }.Min();
-            float maxWeight = new List<float>() { bestWeights.Max(), medianWeights.Max(), worstWeights.Max() }.Max();
+            float minWeight = bestWeights.Min();
+            float maxWeight = worstWeights.Max();
             (float low, float hig) yAxisLims = (minWeight / maxWeight < 0.25 ? 0 : minWeight, maxWeight);
             (float low, float hig) xAxisLims = (0, numOfWei);
 
@@ -94,6 +96,11 @@ public class PlotDrawable : IDrawable
 
             canvas.StrokeSize = basicStrokeSize;
 
+            float prevXData = 0;
+            float prevYDataBest = 0;
+            float prevYDataMedian = 0;
+            float prevYDataWorst = 0;
+
             for (int i = 0; i < numOfWei; i++)
             {
                 float xData = xDataList[i];
@@ -113,13 +120,28 @@ public class PlotDrawable : IDrawable
                     yDataMedian = areaYLims.hig - arrowSize - ((medianWeights[i] - yAxisLims.low) / den) * yPlotableAxisLen;
                     yDataWorst = areaYLims.hig - arrowSize - ((worstWeights[i] - yAxisLims.low) / den) * yPlotableAxisLen;
                 }
+                if (i > 0)
+                {
+                    canvas.StrokeColor = worstColor;
+                    canvas.DrawLine(xData, yDataWorst, prevXData, prevYDataWorst);
+                    canvas.StrokeColor = medianColor;
+                    canvas.DrawLine(xData, yDataMedian, prevXData, prevYDataMedian);
+                    canvas.StrokeColor = bestColor;
+                    canvas.DrawLine(xData, yDataBest, prevXData, prevYDataBest);
+                }
 
-                canvas.StrokeColor = bestColor;
-                canvas.DrawCircle(xData, yDataBest, radius);
-                canvas.StrokeColor = medianColor;
-                canvas.DrawCircle(xData, yDataMedian, radius);
                 canvas.StrokeColor = worstColor;
                 canvas.DrawCircle(xData, yDataWorst, radius);
+                canvas.StrokeColor = medianColor;
+                canvas.DrawCircle(xData, yDataMedian, radius);
+                canvas.StrokeColor = bestColor;
+                canvas.DrawCircle(xData, yDataBest, radius);
+
+                prevXData = xData;
+                prevYDataBest = yDataBest;
+                prevYDataMedian = yDataMedian;
+                prevYDataWorst = yDataWorst;
+
             }
         }
         

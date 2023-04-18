@@ -91,7 +91,7 @@ public class Manager : INotifyPropertyChanged
     public int StopConditionSize { get; set; }
     public bool StopConditionSizeValidate()
     {
-        if (StopConditionSize >= 0 && StopConditionSize < this._generationSize)
+        if (StopConditionSize >= 0 && StopConditionSize < this._iterations)
         {
             this._stopConditionSize = this.StopConditionSize;
             return true;
@@ -125,6 +125,7 @@ public class Manager : INotifyPropertyChanged
         OnPropertyChanged(nameof(BestGenotypeWeight));
         OnPropertyChanged(nameof(TotalCost));
         OnPropertyChanged(nameof(EulerCycle));
+        OnPropertyChanged(nameof(Algorithm));
     }
 
     //public GeneticAlgorithm.SelectionType selectionType { get; set; } = GeneticAlgorithm.SelectionType.NBest;
@@ -145,6 +146,7 @@ public class Manager : INotifyPropertyChanged
         OnPropertyChanged(nameof(BestGenotypeWeight));
         OnPropertyChanged(nameof(TotalCost));
         OnPropertyChanged(nameof(EulerCycle));
+        OnPropertyChanged(nameof(Algorithm));
     }
     
 

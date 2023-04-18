@@ -1,15 +1,19 @@
 using SouvlakGUI.Drawables;
+using System.ComponentModel;
 
 namespace SouvlakGUI.Views;
 
 public partial class AlgorithmOptionsPage : ContentPage
 {
-	public AlgorithmOptionsPage()
+    private Models.Manager manager = ((App) Application.Current).Manager;
+
+    public AlgorithmOptionsPage()
 	{
 		InitializeComponent();
         BindingContext = ((App)Application.Current).Manager;
-        MessagingCenter.Subscribe<GraphSelectPage>(this, "Clear", (sender) => { RedrawPlot(); });
-        MessagingCenter.Subscribe<ResultPage>(this, "Redraw", (sender) => { RedrawPlot(); });
+        //MessagingCenter.Subscribe<GraphSelectPage>(this, "Clear", (sender) => { RedrawPlot(); });
+        //MessagingCenter.Subscribe<ResultPage>(this, "Redraw", (sender) => { RedrawPlot(); });
+        manager.PropertyChanged += OnWeightHistoryChanged;
     }
 
 
@@ -40,7 +44,7 @@ public partial class AlgorithmOptionsPage : ContentPage
     private void ValidateStopConditionSize(object sender, EventArgs e)
     {
         bool isOk = ((App)Application.Current).Manager.StopConditionSizeValidate();
-        if (!isOk) { Application.Current.MainPage.DisplayAlert("Invalid data", "In stop condition you can't check more elements than there is generations!", "OK"); }
+        if (!isOk) { Application.Current.MainPage.DisplayAlert("Invalid data", "In stop condition you can't check more elements than there is iterations!", "OK"); }
     }
 
 
@@ -54,7 +58,7 @@ public partial class AlgorithmOptionsPage : ContentPage
     //    {
     //        ((App)Application.Current).Manager.selectionType = Models.GeneticAlgorithm.SelectionType.Rank;
     //    }
-        
+
     //}
 
     //private void CrossoverChosen(object sender, CheckedChangedEventArgs e)
@@ -93,5 +97,15 @@ public partial class AlgorithmOptionsPage : ContentPage
         }
         
         graphicsView.Invalidate();
+    }
+
+
+    private void OnWeightHistoryChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "Algorithm")
+        {
+            RedrawPlot();
+        }
+        
     }
 }
