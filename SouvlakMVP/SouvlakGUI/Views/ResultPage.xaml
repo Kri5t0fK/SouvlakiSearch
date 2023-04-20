@@ -10,7 +10,7 @@
         <drawables:GraphDrawable x:Key="graphDrawable"/>
     </ContentPage.Resources>
 
-    <Grid ColumnDefinitions="*, 300" Margin="5">
+    <Grid ColumnDefinitions="*, 360" Margin="5">
         <Border Grid.Column="0" Margin="5" Stroke="black" >
             <GraphicsView Drawable="{StaticResource graphDrawable}" x:Name="GraphDrawableView"/>
         </Border>

@@ -10,7 +10,7 @@
         <drawables:PlotDrawable x:Key="plotDrawable"/>
     </ContentPage.Resources>
 
-    <Grid ColumnDefinitions="*, 300" Margin="5">
+    <Grid ColumnDefinitions="*, 360" Margin="5">
         <Border Grid.Column="0" Margin="5" Stroke="black" >
             <GraphicsView Drawable="{StaticResource plotDrawable}" x:Name="PlotDrawableView" Margin="5"/>
         </Border>
@@ -52,12 +52,12 @@
                     <RadioButton Content="one-point" CheckedChanged="CrossoverChosen"/>
                 </VerticalStackLayout>-->
                 
-                <HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0" Spacing="0">
                     <CheckBox IsChecked="{Binding UseRankSelection}"/>
                     <Label Text="Use rank selection instead of n-best" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0" Spacing="0">
                     <CheckBox IsChecked="{Binding UseOnePointCrossover}"/>
                     <Label Text="Use one-point crossover instead of two-point" VerticalOptions="Center"/>
                 </HorizontalStackLayout>

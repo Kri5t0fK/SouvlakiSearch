@@ -57,6 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Raw\BigGraph.json" />
 	  <None Remove="Resources\Raw\g4e5test.json" />
 	  <None Remove="Resources\Raw\Vertices10Edges15.json" />
 	  <None Remove="Resources\Raw\Vertices4Edges5.json" />

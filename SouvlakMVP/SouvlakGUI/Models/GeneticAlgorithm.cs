@@ -152,7 +152,7 @@ public partial class GeneticAlgorithm
         float pick = 0f;
         Random rnd = new Random();
         int stop = rnd.Next(0, sum_of_ranks);
-        for (int i = 0; i < sortedIndicesAndWeights.Length; i++)
+        for (int i = sortedIndicesAndWeights.Length - 1; i >= 0; i--)
         {
             pick += i + 1;
             if (pick > (float)stop)

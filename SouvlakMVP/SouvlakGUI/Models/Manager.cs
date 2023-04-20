@@ -12,7 +12,7 @@ public class Manager : INotifyPropertyChanged
     }
 
     #nullable enable
-    public List<string> ExampleGraphs { get; set; } = new List<string>() { "Vertices4Edges5", "Vertices6Edges9", "Vertices10Edges15" };
+    public List<string> ExampleGraphs { get; set; } = new List<string>() { "Vertices4Edges5", "Vertices6Edges9", "Vertices10Edges15", "BigGraph" };
 
     public Graph? SelectedGraph { get; set; } = null;
     public Graph? UpdatedGraph { get; set; } = null;

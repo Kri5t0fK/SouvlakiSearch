@@ -32,7 +32,7 @@ public class PlotDrawable : IDrawable
         else
         {
             float heightOffset = 30;
-            float widthOffset = 30;
+            float widthOffset = 50;
 
             float arrowSize = 10;
 

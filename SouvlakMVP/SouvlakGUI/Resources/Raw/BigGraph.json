@@ -1,0 +1,1162 @@
+[
+  {
+    "position": {
+      "X": 0.9541622925016509,
+      "Y": 0.4375086525092783
+    },
+    "edgeList": [
+      {
+        "targetIdx": 23,
+        "weight": 23,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.40381976000016373,
+      "Y": 0.41297648786491503
+    },
+    "edgeList": [
+      {
+        "targetIdx": 14,
+        "weight": 19,
+        "count": 1
+      },
+      {
+        "targetIdx": 15,
+        "weight": 17,
+        "count": 1
+      },
+      {
+        "targetIdx": 27,
+        "weight": 25,
+        "count": 1
+      },
+      {
+        "targetIdx": 28,
+        "weight": 26,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.2834454469116432,
+      "Y": 0.16137039352819238
+    },
+    "edgeList": [
+      {
+        "targetIdx": 15,
+        "weight": 19,
+        "count": 1
+      },
+      {
+        "targetIdx": 27,
+        "weight": 17,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.39501460895736096,
+      "Y": 0.052227088546367706
+    },
+    "edgeList": [
+      {
+        "targetIdx": 15,
+        "weight": 12,
+        "count": 1
+      },
+      {
+        "targetIdx": 16,
+        "weight": 13,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.29166240294528534,
+      "Y": 0.934501153326066
+    },
+    "edgeList": [
+      {
+        "targetIdx": 22,
+        "weight": 12,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.588985506833873,
+      "Y": 0.5926188374014172
+    },
+    "edgeList": [
+      {
+        "targetIdx": 28,
+        "weight": 15,
+        "count": 1
+      },
+      {
+        "targetIdx": 36,
+        "weight": 21,
+        "count": 1
+      },
+      {
+        "targetIdx": 44,
+        "weight": 25,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.5019856526602683,
+      "Y": 0.4750491986185038
+    },
+    "edgeList": [
+      {
+        "targetIdx": 7,
+        "weight": 20,
+        "count": 1
+      },
+      {
+        "targetIdx": 27,
+        "weight": 28,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.8917886724076083,
+      "Y": 0.9972012868145977
+    },
+    "edgeList": [
+      {
+        "targetIdx": 6,
+        "weight": 20,
+        "count": 1
+      },
+      {
+        "targetIdx": 43,
+        "weight": 18,
+        "count": 1
+      },
+      {
+        "targetIdx": 44,
+        "weight": 27,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.14109959139981676,
+      "Y": 0.5301011823824542
+    },
+    "edgeList": [
+      {
+        "targetIdx": 20,
+        "weight": 16,
+        "count": 1
+      },
+      {
+        "targetIdx": 24,
+        "weight": 13,
+        "count": 1
+      },
+      {
+        "targetIdx": 27,
+        "weight": 26,
+        "count": 1
+      },
+      {
+        "targetIdx": 44,
+        "weight": 13,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.23432339286745552,
+      "Y": 0.900522866586283
+    },
+    "edgeList": [
+      {
+        "targetIdx": 31,
+        "weight": 15,
+        "count": 1
+      },
+      {
+        "targetIdx": 35,
+        "weight": 23,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.504054157479248,
+      "Y": 0.4163282337112222
+    },
+    "edgeList": [
+      {
+        "targetIdx": 23,
+        "weight": 16,
+        "count": 1
+      },
+      {
+        "targetIdx": 37,
+        "weight": 22,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.7450762373358045,
+      "Y": 0.46529277372780287
+    },
+    "edgeList": [
+      {
+        "targetIdx": 47,
+        "weight": 15,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.27799948645247874,
+      "Y": 0.053881357598591695
+    },
+    "edgeList": [
+      {
+        "targetIdx": 16,
+        "weight": 13,
+        "count": 1
+      },
+      {
+        "targetIdx": 22,
+        "weight": 30,
+        "count": 1
+      },
+      {
+        "targetIdx": 27,
+        "weight": 13,
+        "count": 1
+      },
+      {
+        "targetIdx": 42,
+        "weight": 16,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.22140709071079523,
+      "Y": 0.10782504488725053
+    },
+    "edgeList": [
+      {
+        "targetIdx": 26,
+        "weight": 18,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.39601230957503264,
+      "Y": 0.07981304944312773
+    },
+    "edgeList": [
+      {
+        "targetIdx": 1,
+        "weight": 19,
+        "count": 1
+      },
+      {
+        "targetIdx": 16,
+        "weight": 22,
+        "count": 1
+      },
+      {
+        "targetIdx": 22,
+        "weight": 14,
+        "count": 1
+      },
+      {
+        "targetIdx": 26,
+        "weight": 24,
+        "count": 1
+      },
+      {
+        "targetIdx": 38,
+        "weight": 19,
+        "count": 1
+      },
+      {
+        "targetIdx": 44,
+        "weight": 21,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.3486974149374752,
+      "Y": 0.1687186585837862
+    },
+    "edgeList": [
+      {
+        "targetIdx": 1,
+        "weight": 17,
+        "count": 1
+      },
+      {
+        "targetIdx": 2,
+        "weight": 19,
+        "count": 1
+      },
+      {
+        "targetIdx": 3,
+        "weight": 12,
+        "count": 1
+      },
+      {
+        "targetIdx": 16,
+        "weight": 29,
+        "count": 1
+      },
+      {
+        "targetIdx": 22,
+        "weight": 25,
+        "count": 1
+      },
+      {
+        "targetIdx": 25,
+        "weight": 30,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.34920272266733343,
+      "Y": 0.09397036795012315
+    },
+    "edgeList": [
+      {
+        "targetIdx": 3,
+        "weight": 13,
+        "count": 1
+      },
+      {
+        "targetIdx": 12,
+        "weight": 13,
+        "count": 1
+      },
+      {
+        "targetIdx": 14,
+        "weight": 22,
+        "count": 1
+      },
+      {
+        "targetIdx": 15,
+        "weight": 29,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.5774446753704783,
+      "Y": 0.12895567686225073
+    },
+    "edgeList": [
+      {
+        "targetIdx": 28,
+        "weight": 22,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.25822172690281264,
+      "Y": 0.6245451848991374
+    },
+    "edgeList": [
+      {
+        "targetIdx": 21,
+        "weight": 27,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.6544781088939841,
+      "Y": 0.3968823696997198
+    },
+    "edgeList": [
+      {
+        "targetIdx": 23,
+        "weight": 26,
+        "count": 1
+      },
+      {
+        "targetIdx": 28,
+        "weight": 10,
+        "count": 1
+      },
+      {
+        "targetIdx": 33,
+        "weight": 25,
+        "count": 1
+      },
+      {
+        "targetIdx": 37,
+        "weight": 28,
+        "count": 1
+      },
+      {
+        "targetIdx": 38,
+        "weight": 17,
+        "count": 1
+      },
+      {
+        "targetIdx": 46,
+        "weight": 14,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.20234786218892342,
+      "Y": 0.37453781593629165
+    },
+    "edgeList": [
+      {
+        "targetIdx": 8,
+        "weight": 16,
+        "count": 1
+      },
+      {
+        "targetIdx": 27,
+        "weight": 13,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.6571858477885817,
+      "Y": 0.8141858063416957
+    },
+    "edgeList": [
+      {
+        "targetIdx": 18,
+        "weight": 27,
+        "count": 1
+      },
+      {
+        "targetIdx": 29,
+        "weight": 15,
+        "count": 1
+      },
+      {
+        "targetIdx": 32,
+        "weight": 28,
+        "count": 1
+      },
+      {
+        "targetIdx": 33,
+        "weight": 27,
+        "count": 1
+      },
+      {
+        "targetIdx": 34,
+        "weight": 19,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.3881267877084096,
+      "Y": 0.15101614912223205
+    },
+    "edgeList": [
+      {
+        "targetIdx": 4,
+        "weight": 12,
+        "count": 1
+      },
+      {
+        "targetIdx": 12,
+        "weight": 30,
+        "count": 1
+      },
+      {
+        "targetIdx": 14,
+        "weight": 14,
+        "count": 1
+      },
+      {
+        "targetIdx": 15,
+        "weight": 25,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.4746459073948758,
+      "Y": 0.47592226060784704
+    },
+    "edgeList": [
+      {
+        "targetIdx": 0,
+        "weight": 23,
+        "count": 1
+      },
+      {
+        "targetIdx": 10,
+        "weight": 16,
+        "count": 1
+      },
+      {
+        "targetIdx": 19,
+        "weight": 26,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.24852443485024633,
+      "Y": 0.5401211511810639
+    },
+    "edgeList": [
+      {
+        "targetIdx": 8,
+        "weight": 13,
+        "count": 1
+      },
+      {
+        "targetIdx": 33,
+        "weight": 10,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.8738335618416414,
+      "Y": 0.26953929656692377
+    },
+    "edgeList": [
+      {
+        "targetIdx": 15,
+        "weight": 30,
+        "count": 1
+      },
+      {
+        "targetIdx": 45,
+        "weight": 16,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.3648816198345073,
+      "Y": 0.10914489678869044
+    },
+    "edgeList": [
+      {
+        "targetIdx": 13,
+        "weight": 18,
+        "count": 1
+      },
+      {
+        "targetIdx": 14,
+        "weight": 24,
+        "count": 1
+      },
+      {
+        "targetIdx": 31,
+        "weight": 28,
+        "count": 1
+      },
+      {
+        "targetIdx": 38,
+        "weight": 18,
+        "count": 1
+      },
+      {
+        "targetIdx": 46,
+        "weight": 23,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.17493158344957727,
+      "Y": 0.3952356971178368
+    },
+    "edgeList": [
+      {
+        "targetIdx": 1,
+        "weight": 25,
+        "count": 1
+      },
+      {
+        "targetIdx": 2,
+        "weight": 17,
+        "count": 1
+      },
+      {
+        "targetIdx": 6,
+        "weight": 28,
+        "count": 1
+      },
+      {
+        "targetIdx": 8,
+        "weight": 26,
+        "count": 1
+      },
+      {
+        "targetIdx": 12,
+        "weight": 13,
+        "count": 1
+      },
+      {
+        "targetIdx": 20,
+        "weight": 13,
+        "count": 1
+      },
+      {
+        "targetIdx": 31,
+        "weight": 14,
+        "count": 1
+      },
+      {
+        "targetIdx": 42,
+        "weight": 22,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.5719266958694297,
+      "Y": 0.5898826194144512
+    },
+    "edgeList": [
+      {
+        "targetIdx": 1,
+        "weight": 26,
+        "count": 1
+      },
+      {
+        "targetIdx": 5,
+        "weight": 15,
+        "count": 1
+      },
+      {
+        "targetIdx": 17,
+        "weight": 22,
+        "count": 1
+      },
+      {
+        "targetIdx": 19,
+        "weight": 10,
+        "count": 1
+      },
+      {
+        "targetIdx": 35,
+        "weight": 29,
+        "count": 1
+      },
+      {
+        "targetIdx": 44,
+        "weight": 24,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.1860531659556981,
+      "Y": 0.7667010601424153
+    },
+    "edgeList": [
+      {
+        "targetIdx": 21,
+        "weight": 15,
+        "count": 1
+      },
+      {
+        "targetIdx": 35,
+        "weight": 16,
+        "count": 1
+      },
+      {
+        "targetIdx": 40,
+        "weight": 21,
+        "count": 1
+      },
+      {
+        "targetIdx": 43,
+        "weight": 26,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.0051212571403320695,
+      "Y": 0.8329567318800534
+    },
+    "edgeList": [
+      {
+        "targetIdx": 48,
+        "weight": 26,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.10448752133764327,
+      "Y": 0.5672761155708338
+    },
+    "edgeList": [
+      {
+        "targetIdx": 9,
+        "weight": 15,
+        "count": 1
+      },
+      {
+        "targetIdx": 26,
+        "weight": 28,
+        "count": 1
+      },
+      {
+        "targetIdx": 27,
+        "weight": 14,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.7763510002272289,
+      "Y": 0.9312302911045204
+    },
+    "edgeList": [
+      {
+        "targetIdx": 21,
+        "weight": 28,
+        "count": 1
+      },
+      {
+        "targetIdx": 39,
+        "weight": 14,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.594445312845978,
+      "Y": 0.306870185486137
+    },
+    "edgeList": [
+      {
+        "targetIdx": 19,
+        "weight": 25,
+        "count": 1
+      },
+      {
+        "targetIdx": 21,
+        "weight": 27,
+        "count": 1
+      },
+      {
+        "targetIdx": 24,
+        "weight": 10,
+        "count": 1
+      },
+      {
+        "targetIdx": 36,
+        "weight": 26,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.16492703201925518,
+      "Y": 0.9203656543670874
+    },
+    "edgeList": [
+      {
+        "targetIdx": 21,
+        "weight": 19,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.39965794022779866,
+      "Y": 0.6977290450396211
+    },
+    "edgeList": [
+      {
+        "targetIdx": 9,
+        "weight": 23,
+        "count": 1
+      },
+      {
+        "targetIdx": 28,
+        "weight": 29,
+        "count": 1
+      },
+      {
+        "targetIdx": 29,
+        "weight": 16,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.871870122059883,
+      "Y": 0.625557662233739
+    },
+    "edgeList": [
+      {
+        "targetIdx": 5,
+        "weight": 21,
+        "count": 1
+      },
+      {
+        "targetIdx": 33,
+        "weight": 26,
+        "count": 1
+      },
+      {
+        "targetIdx": 41,
+        "weight": 10,
+        "count": 1
+      },
+      {
+        "targetIdx": 43,
+        "weight": 11,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.6251172259820343,
+      "Y": 0.5720740113138623
+    },
+    "edgeList": [
+      {
+        "targetIdx": 10,
+        "weight": 22,
+        "count": 1
+      },
+      {
+        "targetIdx": 19,
+        "weight": 28,
+        "count": 1
+      },
+      {
+        "targetIdx": 44,
+        "weight": 25,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.5323572833491673,
+      "Y": 0.18263593319418236
+    },
+    "edgeList": [
+      {
+        "targetIdx": 14,
+        "weight": 19,
+        "count": 1
+      },
+      {
+        "targetIdx": 19,
+        "weight": 17,
+        "count": 1
+      },
+      {
+        "targetIdx": 26,
+        "weight": 18,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.8448166576225563,
+      "Y": 0.9813935599605574
+    },
+    "edgeList": [
+      {
+        "targetIdx": 32,
+        "weight": 14,
+        "count": 1
+      },
+      {
+        "targetIdx": 49,
+        "weight": 14,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.2525339199414821,
+      "Y": 0.7374847874338615
+    },
+    "edgeList": [
+      {
+        "targetIdx": 29,
+        "weight": 21,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.8589492874895669,
+      "Y": 0.5427364557425862
+    },
+    "edgeList": [
+      {
+        "targetIdx": 36,
+        "weight": 10,
+        "count": 1
+      },
+      {
+        "targetIdx": 47,
+        "weight": 14,
+        "count": 1
+      },
+      {
+        "targetIdx": 48,
+        "weight": 14,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.06165246940543223,
+      "Y": 0.1350189443867531
+    },
+    "edgeList": [
+      {
+        "targetIdx": 12,
+        "weight": 16,
+        "count": 1
+      },
+      {
+        "targetIdx": 27,
+        "weight": 22,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.9193876977936634,
+      "Y": 0.6363670344530943
+    },
+    "edgeList": [
+      {
+        "targetIdx": 7,
+        "weight": 18,
+        "count": 1
+      },
+      {
+        "targetIdx": 29,
+        "weight": 26,
+        "count": 1
+      },
+      {
+        "targetIdx": 36,
+        "weight": 11,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.5784495253419569,
+      "Y": 0.5884011793588497
+    },
+    "edgeList": [
+      {
+        "targetIdx": 5,
+        "weight": 25,
+        "count": 1
+      },
+      {
+        "targetIdx": 7,
+        "weight": 27,
+        "count": 1
+      },
+      {
+        "targetIdx": 8,
+        "weight": 13,
+        "count": 1
+      },
+      {
+        "targetIdx": 14,
+        "weight": 21,
+        "count": 1
+      },
+      {
+        "targetIdx": 28,
+        "weight": 24,
+        "count": 1
+      },
+      {
+        "targetIdx": 37,
+        "weight": 25,
+        "count": 1
+      },
+      {
+        "targetIdx": 46,
+        "weight": 24,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.9784054727283439,
+      "Y": 0.05789796035759409
+    },
+    "edgeList": [
+      {
+        "targetIdx": 25,
+        "weight": 16,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.6504458858828867,
+      "Y": 0.6409469053306401
+    },
+    "edgeList": [
+      {
+        "targetIdx": 19,
+        "weight": 14,
+        "count": 1
+      },
+      {
+        "targetIdx": 26,
+        "weight": 23,
+        "count": 1
+      },
+      {
+        "targetIdx": 44,
+        "weight": 24,
+        "count": 1
+      },
+      {
+        "targetIdx": 49,
+        "weight": 30,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.875198138762793,
+      "Y": 0.43811505130258666
+    },
+    "edgeList": [
+      {
+        "targetIdx": 11,
+        "weight": 15,
+        "count": 1
+      },
+      {
+        "targetIdx": 41,
+        "weight": 14,
+        "count": 1
+      },
+      {
+        "targetIdx": 48,
+        "weight": 11,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.8865157034647358,
+      "Y": 0.4984626181896066
+    },
+    "edgeList": [
+      {
+        "targetIdx": 30,
+        "weight": 26,
+        "count": 1
+      },
+      {
+        "targetIdx": 41,
+        "weight": 14,
+        "count": 1
+      },
+      {
+        "targetIdx": 47,
+        "weight": 11,
+        "count": 1
+      }
+    ]
+  },
+  {
+    "position": {
+      "X": 0.708348716031507,
+      "Y": 0.9568305479606545
+    },
+    "edgeList": [
+      {
+        "targetIdx": 39,
+        "weight": 14,
+        "count": 1
+      },
+      {
+        "targetIdx": 46,
+        "weight": 30,
+        "count": 1
+      }
+    ]
+  }
+]
