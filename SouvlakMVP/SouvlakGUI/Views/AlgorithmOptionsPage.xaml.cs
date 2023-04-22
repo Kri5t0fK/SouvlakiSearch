@@ -20,13 +20,13 @@ public partial class AlgorithmOptionsPage : ContentPage
     private void ValidateIterations(object sender, EventArgs e)
     {
         bool isOk = ((App)Application.Current).Manager.IterationsValidate();
-        if (!isOk) { Application.Current.MainPage.DisplayAlert("Invalid data", "Number of iterations must be grater than 0!", "OK"); }
+        if (!isOk) { Application.Current.MainPage.DisplayAlert("Invalid data", "Number of iterations must be grater than elements checked in stop condition!", "OK"); }
     }
 
     private void ValidateGenerationSize(object sender, EventArgs e)
     {
         bool isOk = ((App)Application.Current).Manager.GenerationSizeValidate();
-        if (!isOk) { Application.Current.MainPage.DisplayAlert("Invalid data", "Generation size must be an even number grater than 0!", "OK"); }
+        if (!isOk) { Application.Current.MainPage.DisplayAlert("Invalid data", "Generation size must be an even number grater than selection size!", "OK"); }
     }
 
     private void ValidateSelectionSize(object sender, EventArgs e)

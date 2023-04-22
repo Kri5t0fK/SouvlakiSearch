@@ -30,7 +30,7 @@ public class Manager : INotifyPropertyChanged
     public int Iterations { get; set; }
     public bool IterationsValidate()
     {
-        if (Iterations > 0)
+        if (Iterations > 0 && Iterations > this._stopConditionSize)
         {
             this._iterations = this.Iterations;
             return true;
@@ -47,7 +47,7 @@ public class Manager : INotifyPropertyChanged
     public int GenerationSize { get; set; }
     public bool GenerationSizeValidate()
     {
-        if (GenerationSize % 2 == 0 && GenerationSize >= 2)
+        if (GenerationSize % 2 == 0 && GenerationSize >= 2 && GenerationSize > this._selectionSize)
         {
             this._generationSize = this.GenerationSize;
             return true;
