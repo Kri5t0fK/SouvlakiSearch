@@ -57,11 +57,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Raw\BigGraph.json" />
 	  <None Remove="Resources\Raw\g4e5test.json" />
-	  <None Remove="Resources\Raw\Vertices10Edges15.json" />
-	  <None Remove="Resources\Raw\Vertices4Edges5.json" />
-	  <None Remove="Resources\Raw\Vertices6Edges9.json" />
+	  <None Remove="Resources\Raw\Vertices10.json" />
+	  <None Remove="Resources\Raw\Vertices100.json" />
+	  <None Remove="Resources\Raw\Vertices4.json" />
+	  <None Remove="Resources\Raw\Vertices40.json" />
+	  <None Remove="Resources\Raw\Vertices50.json" />
+	  <None Remove="Resources\Raw\Vertices6.json" />
+	  <None Remove="Resources\Raw\Vertices75.json" />
 	</ItemGroup>
 
 	<ItemGroup>
